@@ -10,7 +10,7 @@ class Sheet
   
   scope_builder_for :search
   
-  search_scope :query, :page, :url_title
+  search_scope :query, :page, :parent_url_title
   search_helper :all, ->{ connection.where(attributes).fetch.to_a }
   search_helper :connection, -> { self.class.parent }
 
@@ -18,25 +18,25 @@ class Sheet
     delegate *Array.forwardable_methods, to: :all
   end
   
-  class << self
-    
-    def find_by_url_title(title)
-      where( url_title: title ).find('show')
-    end
-    
-  end
-  
   # ORM
   include Her::Model
   use_api Client.her_api
-  attributes :title, :url_title, :content
+  attributes :title, :content, :url_title, :full_url_title
   
   def html
-    @html ||= @attributes['html'] || Sheet.find(self.url_title).instance_variable_get('@attributes')['data']
+    @html ||= self.attributes[:html] || Sheet.find(full_url_title).attributes[:html]
   end
-    
-  def id
-    'show'
+  
+  def parent
+    @parent ||= Sheet.find(parent_url_title)
+  end
+  
+  def children
+    Sheet.parent_url_title(self.full_url_title)
+  end
+  
+  def parent_url_title
+    @parent_url_title ||= self.full_url_title.split('/')[0..-2].join()
   end
   
 end

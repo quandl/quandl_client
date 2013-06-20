@@ -105,7 +105,7 @@ sheets = Quandl::Client::Sheet.query('canada').all
 
 ```ruby
 
-sheet = Quandl::Client::Sheet.find_by_url_title('housing/hood')
+sheet = Quandl::Client::Sheet.find('housing/hood')
 
 ```
 
@@ -116,10 +116,10 @@ sheet = Quandl::Client::Sheet.find_by_url_title('housing/hood')
 ```ruby
 
 s = Quandl::Client::Sheet.create( title: 'ocean' )
-s = Quandl::Client::Sheet.create( url_title: 'ocean/river', title: 'River' )
-s = Quandl::Client::Sheet.create( url_title: 'ocean/river/lake', title: 'Lake!' )
+s = Quandl::Client::Sheet.create( full_url_title: 'ocean/river', title: 'River' )
+s = Quandl::Client::Sheet.create( full_url_title: 'ocean/river/lake', title: 'Lake!' )
 
-s = Quandl::Client::Sheet.find_by_url_title('ocean')
+s = Quandl::Client::Sheet.find('ocean')
 
 s = Quandl::Client::Sheet.create(url_title: 'housing/city/hi_there', title: 'Hi there', content: 'magic')
 
@@ -147,7 +147,7 @@ s.save
 require 'quandl/client'
 
 Quandl::Client.use 'http://localhost:3000/api/'
-Quandl::Client.token = 'uzTCmFhg24dZzCSNyATo'
+Quandl::Client.token = 'xyz'
 
 
 s = Quandl::Client::Sheet.find_by_url_title('testing')
