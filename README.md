@@ -64,16 +64,16 @@ d.data_table
 
 
 
-## Quandl::Client::Sheet
+## Quandl::Client::Source
 
 
 #### Search
 
 ```ruby
 
-sheets = Quandl::Client::Sheet.url_title('housing').query('hood').page(2).all
+sources = Quandl::Client::Source.query('canada').page(2).all
 
-=> [#<Quandl::Client::Sheet(sheets) title="hood" url_title="housing/hood">,...]
+=> [#<Quandl::Client::Source(sources) code="STATCAN1" title="Stat Can">,...]
 
 ```
 
@@ -82,7 +82,7 @@ sheets = Quandl::Client::Sheet.url_title('housing').query('hood').page(2).all
 
 ```ruby
 
-sheet = Quandl::Client::Sheet.find_by_url_title('housing/hood')
+sheet = Quandl::Client::Source.find('STATCAN1')
 
 ```
 
@@ -95,16 +95,8 @@ sheet = Quandl::Client::Sheet.find_by_url_title('housing/hood')
 
 ```ruby
 
-require 'quandl/client'
-
-Quandl::Client.use 'http://localhost:3000/api/'
-
-sources = Quandl::Client::Source.query('canada').all
-=> [#<Quandl::Client::Source(sources) code="STATSCAN5" datasets_count=1>,...]
-
-source = Quandl::Client::Source.find('STATSCAN5')
-dataset = source.datasets.page(2).first
-dataset.data_table
+sheets = Quandl::Client::Sheet.query('canada').all
+=> [[#<Quandl::Client::Sheet(sheets) title="La Canada Flintridge>,...]
 
 ```
 
@@ -123,9 +115,13 @@ sheet = Quandl::Client::Sheet.find_by_url_title('housing/hood')
 
 ```ruby
 
-Quandl::Client.token = 'xyz'
+s = Quandl::Client::Sheet.create( title: 'ocean' )
+s = Quandl::Client::Sheet.create( url_title: 'ocean/river', title: 'River' )
+s = Quandl::Client::Sheet.create( url_title: 'ocean/river/lake', title: 'Lake!' )
 
-s = Quandl::Client::Sheet.create(title: 'Hi there', content: 'magic')
+s = Quandl::Client::Sheet.find_by_url_title('ocean')
+
+s = Quandl::Client::Sheet.create(url_title: 'housing/city/hi_there', title: 'Hi there', content: 'magic')
 
 ```
 
@@ -151,7 +147,8 @@ s.save
 require 'quandl/client'
 
 Quandl::Client.use 'http://localhost:3000/api/'
-Quandl::Client.token = 'xyz'
+Quandl::Client.token = 'uzTCmFhg24dZzCSNyATo'
+
 
 s = Quandl::Client::Sheet.find_by_url_title('testing')
 s.title = 'more testing'

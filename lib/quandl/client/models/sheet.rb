@@ -34,7 +34,7 @@ class Sheet
   def html
     @html ||= @attributes['html'] || Sheet.find(self.url_title).instance_variable_get('@attributes')['data']
   end
-  
+    
   def id
     'show'
   end
