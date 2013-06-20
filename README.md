@@ -115,13 +115,14 @@ sheet = Quandl::Client::Sheet.find('housing/hood')
 
 ```ruby
 
-s = Quandl::Client::Sheet.create( title: 'ocean' )
-s = Quandl::Client::Sheet.create( full_url_title: 'ocean/river', title: 'River' )
-s = Quandl::Client::Sheet.create( full_url_title: 'ocean/river/lake', title: 'Lake!' )
+include Quandl::Client
 
-s = Quandl::Client::Sheet.find('ocean')
+s = Sheet.create( title: 'ocean' )
+s = Sheet.create( full_url_title: 'ocean/river', title: 'River' )
+s = Sheet.create( full_url_title: 'ocean/river/lake', title: 'Lake!' )
 
-s = Quandl::Client::Sheet.create(url_title: 'housing/city/hi_there', title: 'Hi there', content: 'magic')
+Sheet.find('ocean').children.first.title
+=> River
 
 ```
 
