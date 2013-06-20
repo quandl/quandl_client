@@ -72,7 +72,7 @@ attributes = {
   source_code:  'OFDP',
   name:         "Test Upload #{Time.now.to_i}",
   frequency:    'daily',
-  locations_attributes: 
+  locations: 
   [
     { 
       type:       'http', 
@@ -115,8 +115,6 @@ d.data
 
 
 
-
-
 ## Quandl::Client::Source
 
 
@@ -138,6 +136,7 @@ sources = Quandl::Client::Source.query('canada').page(2).all
 sheet = Quandl::Client::Source.find('STATCAN1')
 
 ```
+
 
 
 
@@ -165,7 +164,6 @@ sheet = Quandl::Client::Sheet.find('housing/hood')
 
 #### Create
 
-
 ```ruby
 
 include Quandl::Client
@@ -182,7 +180,6 @@ Sheet.find('ocean').children.first.title
 
 #### Update
 
-
 ```ruby
 
 Quandl::Client.token = 'xyz'
@@ -192,6 +189,8 @@ s.title = 'another title'
 s.save
 
 ```
+
+
 
 
 # Authentication
