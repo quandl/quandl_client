@@ -63,6 +63,59 @@ d.data_table
 ```
 
 
+#### Create
+
+```ruby
+
+attributes = {
+  code:         "TEST_12345",
+  source_code:  'OFDP',
+  name:         "Test Upload #{Time.now.to_i}",
+  frequency:    'daily',
+  locations_attributes: 
+  [
+    { 
+      type:       'http', 
+      url:        'http://test.com',
+      post_data:  '[magic]', 
+      cookie_url: 'http://cookies.com' 
+    }
+  ]
+}
+d = Dataset.create( attributes )
+
+```
+
+##### Errors
+
+```ruby
+
+d = Dataset.create(code: 'TEST', source_code: 'OFDP', locations_attributes: [{ type: 'http', url: 'test.com' }] )
+d.errors
+=>  {"locations.post_data"=>["can't be blank"], "locations.cookie_url"=>["can't be blank"], "name"=>["can't be blank"], "frequency"=>["is not included in the list"]}
+
+```
+
+
+#### Update
+
+```ruby
+
+d = Dataset.find("OFDP/TEST_12345")
+d.name = 'New Name'
+d.data = Quandl::Data::Random.table.to_csv
+d.save
+
+d = Dataset.collapse(:weekly).find("OFDP/TEST_12345")
+d.data
+=> [[...],...]
+
+```
+
+
+
+
+
 
 ## Quandl::Client::Source
 
