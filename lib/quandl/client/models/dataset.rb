@@ -13,10 +13,6 @@ class Dataset
     @source ||= Source.find(self.source_code)
   end
   
-  def id
-    'show'
-  end
-  
 end
 
 end
