@@ -21,6 +21,10 @@ module Properties
     alias_method :locations, :locations_attributes
     alias_method :locations=, :locations_attributes=
     
+    validates :source_code, presence: true, length: { minimum: 2 }, format: { with: /^([A-Z][A-Z0-9_]+)$/ }
+    validates :code, presence: true, length: { minimum: 2 }, format: { with: /^([A-Z][A-Z0-9_]+)$/ }
+    validates :name, presence: true
+    
     def errors
       self.attributes[:errors]
     end

@@ -4,37 +4,21 @@ require 'quandl/client/models/dataset/properties'
 module Quandl
 module Client
 
-class Source
+class Source < Quandl::Client::Base
 
-  include ScopeBuilder::Model
-  
-  scope_builder_for :search
-  
   search_scope :query
   search_scope :page, ->(p){ where( page: p.to_i )}
   search_scope :code, ->(c){ where( code: c.to_s.upcase )}
   
-  search_helper :all, ->{ connection.where(attributes).fetch }
-  search_helper :connection, -> { self.class.parent }
-
-  search_scope.class_eval do
-    delegate *Array.forwardable_methods, to: :all
-  end
-  
-  # ORM
-  include Her::Model
   use_api Client.her_api
 
   attributes :code, :name, :host, :description, :datasets_count, :use_proxy, :type, :concurrency
-  
-  
+
+  validates :code, presence: true, length: { minimum: 2 }, format: { with: /^([A-Z][A-Z0-9_]+)$/ }
+  validates :host, :name, presence: true
   
   def datasets
     Dataset.source_code(code)
-  end
-  
-  def id
-    'show'
   end
   
 end
