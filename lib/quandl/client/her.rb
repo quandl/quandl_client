@@ -1,3 +1,6 @@
+require 'her'
+require 'quandl/her/patch'
+
 module Quandl
 module Client
   class << self
