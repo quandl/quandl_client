@@ -29,7 +29,7 @@ module Client
     end
 
     def rest_url
-      @rest_url ||= 'http://www.quandl.com/api/'
+      @rest_url ||= "http://www.quandl.com/api/#{API_VERSION}/"
     end
     
     def rest_url=(url)
