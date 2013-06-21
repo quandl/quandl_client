@@ -6,8 +6,8 @@ module Client
 
 class Source
   
-  include Client::Concerns::Search
-  include Client::Concerns::Properties
+  include Concerns::Search
+  include Concerns::Properties
 
   search_scope :query
   search_scope :page, ->(p){ where( page: p.to_i )}

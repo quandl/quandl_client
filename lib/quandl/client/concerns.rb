@@ -4,6 +4,7 @@ require "active_support/core_ext/hash"
 require "active_support/core_ext/object"
 
 require 'quandl/client/concerns/search'
+require 'quandl/client/concerns/properties'
 
 module Quandl
 module Client
