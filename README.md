@@ -86,16 +86,6 @@ d = Dataset.create( attributes )
 
 ```
 
-##### Errors
-
-```ruby
-
-d = Dataset.create(code: 'TEST', source_code: 'OFDP', locations: [{ type: 'http', url: 'test.com' }] )
-d.errors
-=>  {"locations.post_data"=>["can't be blank"], "locations.cookie_url"=>["can't be blank"], "name"=>["can't be blank"], "frequency"=>["is not included in the list"]}
-
-```
-
 
 #### Update
 
@@ -109,6 +99,17 @@ d.save
 d = Dataset.collapse(:weekly).find("OFDP/TEST_12345")
 d.data
 => [[...],...]
+
+```
+
+
+#### Errors
+
+```ruby
+
+d = Dataset.create(code: 'TEST', source_code: 'OFDP', locations: [{ type: 'http', url: 'test.com' }] )
+d.errors
+=>  {"locations.post_data"=>["can't be blank"], "locations.cookie_url"=>["can't be blank"], "name"=>["can't be blank"], "frequency"=>["is not included in the list"]}
 
 ```
 
