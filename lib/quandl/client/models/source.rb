@@ -1,6 +1,3 @@
-require 'quandl/client/models/dataset/searchable'
-require 'quandl/client/models/dataset/properties'
-
 module Quandl
 module Client
 

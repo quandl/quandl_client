@@ -68,7 +68,7 @@ d.data_table
 ```ruby
 
 attributes = {
-  code:         "TEST_12345",
+  code:         "TEST_#{Time.now.to_i}",
   source_code:  'OFDP',
   name:         "Test Upload #{Time.now.to_i}",
   frequency:    'daily',
@@ -91,25 +91,42 @@ d = Dataset.create( attributes )
 
 ```ruby
 
-d = Dataset.find("OFDP/TEST_12345")
+d = Dataset.find( d.full_code )
 d.name = 'New Name'
 d.data = Quandl::Data::Random.table.to_csv
 d.save
 
-d = Dataset.collapse(:weekly).find("OFDP/TEST_12345")
+d = Dataset.collapse(:weekly).find( d.full_code )
 d.data
 => [[...],...]
 
 ```
 
 
-#### Errors
+#### Delete
+
+```ruby
+
+Dataset.destroy_existing('SOME_SOURCE/SOME_CODE')
+Dataset.destroy_existing(52352)
+
+Dataset.find('SOME_SOURCE/SOME_CODE')
+=> nil
+
+```
+
+
+#### Error Handling
 
 ```ruby
 
 d = Dataset.create(code: 'TEST', source_code: 'OFDP', locations: [{ type: 'http', url: 'test.com' }] )
 d.error_messages
-=>  {"locations.post_data"=>["can't be blank"], "locations.cookie_url"=>["can't be blank"], "name"=>["can't be blank"], "frequency"=>["is not included in the list"]}
+=>  {:name=>["can't be blank"]}
+
+d = Dataset.create(name: 'asdfs', code: 'TEST', source_code: 'OFDP', locations: [{ type: 'http', url: 'test.com' }] )
+d.error_messages
+=>  {"code"=>["has already been taken"], "frequency"=>["is not included in the list"]}
 
 ```
 
@@ -123,9 +140,9 @@ d.error_messages
 
 ```ruby
 
-sources = Quandl::Client::Source.query('canada').page(2).all
+sources = Quandl::Client::Source.query('can').all
 
-=> [#<Quandl::Client::Source(sources) code="STATCAN1" title="Stat Can">,...]
+=> [#<Quandl::Client::Source(sources/413) code="STATSCAN5" datasets_count=1>...]
 
 ```
 
@@ -134,7 +151,7 @@ sources = Quandl::Client::Source.query('canada').page(2).all
 
 ```ruby
 
-sheet = Quandl::Client::Source.find('STATCAN1')
+s = Quandl::Client::Source.find('STATSCAN5')
 
 ```
 
@@ -146,14 +163,11 @@ sheet = Quandl::Client::Source.find('STATCAN1')
 s = Source.create( code: 'test' )
 s.valid?
 s.error_messages
-=> {:code=>["can't be blank", "is too short (minimum is 2 characters)", "is invalid"], :host=>["can't be blank"], :name=>["can't be blank"]}
+=> {:code=>["is invalid"], :host=>["can't be blank"], :name=>["can't be blank"]}
 
 s = Source.create(code: %Q{TEST_#{Time.now.to_i}}, name: 'asdf', host: "http://asdf#{Time.now}.com" )
-s.valid?
+s.saved?
 => true
-
-s.id
-=> 863
 
 ```
 
@@ -162,16 +176,22 @@ s.id
 
 ```ruby
 
-s = Source.find(863) || Source.find("TEST_1371839708")
-s.name = 'updated name'
-s.code = 'DATA123'
+s = Source.find(s.code)
+s.name = "Updated Name #{Time.now.to_i}"
+s.code = "DATA_#{Time.now.to_i}"
 s.save
-s.saved?
-=> true
 
 ```
 
 
+#### Delete
+
+```ruby
+
+Source.destroy_existing('SOMESOURCE')
+Source.destroy_existing(52352)
+
+```
 
 
 
@@ -202,11 +222,12 @@ sheet = Quandl::Client::Sheet.find('housing/hood')
 
 ```ruby
 
-include Quandl::Client
+s = Quandl::Client::Sheet.create( title: 'ocean' )
+s = Quandl::Client::Sheet.create( full_url_title: 'ocean/river', title: 'River' )
+s = Quandl::Client::Sheet.create( full_url_title: 'ocean/river/lake', title: 'Lake!' )
 
-s = Sheet.create( title: 'ocean' )
-s = Sheet.create( full_url_title: 'ocean/river', title: 'River' )
-s = Sheet.create( full_url_title: 'ocean/river/lake', title: 'Lake!' )
+Sheet.find('ocean/river/lake').title
+=> 'Lake!'
 
 Sheet.find('ocean').children.first.title
 => River
@@ -218,11 +239,20 @@ Sheet.find('ocean').children.first.title
 
 ```ruby
 
-Quandl::Client.token = 'xyz'
-
-s = Quandl::Client::Sheet.find_by_url_title('hi_there')
-s.title = 'another title'
+s = Quandl::Client::Sheet.find('ocean/river')
+s.title = "River #{Time.now.to_i}"
 s.save
+
+```
+
+
+#### Delete
+
+```ruby
+
+Quandl::Client::Sheet.destroy_existing('ocean/river/lake')
+
+Quandl::Client::Sheet.destroy_existing(15252)
 
 ```
 
