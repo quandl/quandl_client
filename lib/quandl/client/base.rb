@@ -1,7 +1,3 @@
-require 'quandl/client/models/source'
-require 'quandl/client/models/dataset'
-require 'quandl/client/models/sheet'
-
 module Quandl
   module Client
     class Base

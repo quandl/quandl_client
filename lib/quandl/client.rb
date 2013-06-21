@@ -11,6 +11,7 @@ require 'scope_builder'
 require "quandl/data"
 
 require 'quandl/client/her'
+require 'quandl/client/base'
 require 'quandl/client/models'
 
 module Quandl
