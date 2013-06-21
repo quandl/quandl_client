@@ -108,7 +108,7 @@ d.data
 ```ruby
 
 d = Dataset.create(code: 'TEST', source_code: 'OFDP', locations: [{ type: 'http', url: 'test.com' }] )
-d.errors
+d.error_messages
 =>  {"locations.post_data"=>["can't be blank"], "locations.cookie_url"=>["can't be blank"], "name"=>["can't be blank"], "frequency"=>["is not included in the list"]}
 
 ```
@@ -137,6 +137,41 @@ sources = Quandl::Client::Source.query('canada').page(2).all
 sheet = Quandl::Client::Source.find('STATCAN1')
 
 ```
+
+
+#### Create
+
+```ruby
+
+s = Source.create( code: 'test' )
+s.valid?
+s.error_messages
+=> {:code=>["can't be blank", "is too short (minimum is 2 characters)", "is invalid"], :host=>["can't be blank"], :name=>["can't be blank"]}
+
+s = Source.create(code: %Q{TEST_#{Time.now.to_i}}, name: 'asdf', host: "http://asdf#{Time.now}.com" )
+s.valid?
+=> true
+
+s.id
+=> 863
+
+```
+
+
+#### Update
+
+```ruby
+
+s = Source.find(863) || Source.find("TEST_1371839708")
+s.name = 'updated name'
+s.code = 'DATA123'
+s.save
+s.saved?
+=> true
+
+```
+
+
 
 
 
