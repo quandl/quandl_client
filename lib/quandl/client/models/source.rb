@@ -24,7 +24,10 @@ class Source
   # ORM
   include Her::Model
   use_api Client.her_api
-  attributes :code, :datasets_count, :description, :name, :host
+
+  attributes :code, :name, :host, :description, :datasets_count, :use_proxy, :type, :concurrency
+  
+  
   
   def datasets
     Dataset.source_code(code)
