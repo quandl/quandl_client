@@ -14,8 +14,8 @@ module Properties
     
     def error_messages
       valid?
-      m = errors.messages.to_h || {}
-      e = self.attributes[:errors].to_h || {}
+      m = errors.messages || {}
+      e = self.attributes[:errors] || {}
       m.deep_merge(e)
     end
     
