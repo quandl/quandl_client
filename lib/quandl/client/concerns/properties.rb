@@ -13,18 +13,30 @@ module Properties
     before_save :halt_unless_valid!
     
     def valid_with_server?
-      r = valid_without_server?
-      r = self.attributes[:errors].blank? if r == true
-      r
+      return false unless valid_without_server?
+      return false unless errors_params.blank?
+      return false unless errors_server.blank?
+      true
     end
     alias_method_chain :valid?, :server
     
     def error_messages
       valid?
-      m = errors.messages || {}
-      e = self.attributes[:errors] || {}
-      m.deep_merge(e)
+      errors_client.deep_merge(errors_server).deep_merge(errors_params)
     end
+    
+    def errors_client
+      errors.messages || {}
+    end
+    
+    def errors_server
+      self.attributes[:errors] || {}
+    end
+    
+    def errors_params
+      response_errors.present? ? { response_errors: response_errors } : {}
+    end
+    
     
     protected
   
