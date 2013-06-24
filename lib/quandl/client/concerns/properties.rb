@@ -12,6 +12,13 @@ module Properties
   
     before_save :halt_unless_valid!
     
+    def valid_with_server?
+      r = valid_without_server?
+      r = self.attributes[:errors].blank? if r == true
+      r
+    end
+    alias_method_chain :valid?, :server
+    
     def error_messages
       valid?
       m = errors.messages || {}
