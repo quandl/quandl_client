@@ -12,14 +12,6 @@ module Properties
   
     before_save :halt_unless_valid!
     
-    def valid_with_server?
-      return false unless valid_without_server?
-      return false unless errors_params.blank?
-      return false unless errors_server.blank?
-      true
-    end
-    alias_method_chain :valid?, :server
-    
     def error_messages
       valid?
       errors_client.deep_merge(errors_server).deep_merge(errors_params)

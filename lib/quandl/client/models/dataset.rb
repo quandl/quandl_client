@@ -36,8 +36,8 @@ class Dataset
   # VALIDATIONS #
   ###############
    
-  validates :source_code, presence: true, length: { minimum: 2 }, format: { with: /^([A-Z][A-Z0-9_]+)$/ }
-  validates :code, presence: true, length: { minimum: 2 }, format: { with: /^([A-Z][A-Z0-9_]+)$/ }
+  validates :source_code, presence: true, length: { minimum: 2 }, format: { with: /([A-Z][A-Z0-9_]+)/ }
+  validates :code, presence: true, length: { minimum: 2 }, format: { with: /([A-Z][A-Z0-9_]+)/ }
   validates :name, presence: true
   
   

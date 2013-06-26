@@ -14,9 +14,9 @@ class Sheet
   search_scope :query, :page, :parent_url_title
   
   
-  ###############
+  ################
   # ASSOCIATIONS #
-  ###############
+  ################
   
   def parent
     @parent ||= Sheet.find(parent_url_title)
