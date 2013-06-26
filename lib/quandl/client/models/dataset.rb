@@ -47,7 +47,7 @@ class Dataset
     
   attributes :data, :source_code, :code, :name, :urlize_name, 
     :description, :updated_at, :frequency, :from_date, 
-    :to_date, :column_names, :private, :type
+    :to_date, :column_names, :private, :type, :display_url
     
   attributes :locations_attributes
   
