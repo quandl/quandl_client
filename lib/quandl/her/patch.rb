@@ -1,3 +1,5 @@
+require 'yajl'
+
 module Her
   module Model
     # remove deprecated data method since cassinatra returns data: []
