@@ -11,7 +11,7 @@ module Client
     
     def token
       @token
-    end    
+    end
     def token=(token)
       @token = token
       reload_models
@@ -23,7 +23,8 @@ module Client
       api.setup url: rest_url do |c|
         c.use TokenAuthentication
         c.use Faraday::Request::UrlEncoded
-        c.use Parser
+        # c.use Her::Middleware::DefaultParseJSON
+        c.use Quandl::Client::Middleware::ParseJSON
         c.use Faraday::Adapter::NetHttp
       end
     end

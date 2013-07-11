@@ -28,7 +28,7 @@ class Source
   # VALIDATIONS #
   ###############
    
-  validates :code, presence: true, length: { minimum: 2 }, format: { with: /([A-Z][A-Z0-9_]+)/ }
+  validates :code, presence: true, length: { minimum: 2 }, format: { with: /([A-Z0-9_]+)/ }
   validates :host, :name, presence: true
   
 

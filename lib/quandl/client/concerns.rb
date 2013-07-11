@@ -8,7 +8,7 @@ require 'quandl/client/concerns/properties'
 
 module Quandl
 module Client
-  
+
 module Concerns
 
 end

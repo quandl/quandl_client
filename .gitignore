@@ -3,3 +3,5 @@
 /tmp
 quandl_client-*
 .rvmrc
+*.gem
+*.log
