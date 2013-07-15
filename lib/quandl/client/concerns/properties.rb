@@ -22,6 +22,10 @@ module Properties
       true
     end
     
+    def save!
+      save
+    end
+    
     def saved?
       status == 200 || status == 201
     end
