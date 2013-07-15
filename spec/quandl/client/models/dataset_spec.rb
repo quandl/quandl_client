@@ -5,7 +5,7 @@ describe Dataset do
   
   describe "#update" do
     
-    before(:all){ Quandl::Client.token = '93yzptKyhdkrqLhmezdi' }
+    before(:all){ Quandl::Client.token = AUTH_TOKEN }
   
     let(:source){ create(:source) }
     let(:dataset){ create(:dataset, source_code: source.code ) }
@@ -22,7 +22,7 @@ describe Dataset do
   
   describe "#find" do
     
-    before(:all){ Quandl::Client.token = '93yzptKyhdkrqLhmezdi' }
+    before(:all){ Quandl::Client.token = AUTH_TOKEN }
   
     let(:source){ create(:source) }
     let(:dataset){ create(:dataset, source_code: source.code ) }
@@ -61,7 +61,7 @@ describe Dataset do
   
     context "with token" do
       
-      before(:all){ Quandl::Client.token = '93yzptKyhdkrqLhmezdi' }
+      before(:all){ Quandl::Client.token = AUTH_TOKEN }
     
       let(:source){ create(:source) }
       let(:dataset){ create(:dataset, source_code: source.code ) }
