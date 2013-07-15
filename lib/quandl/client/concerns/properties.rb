@@ -22,6 +22,18 @@ module Properties
       true
     end
     
+    def saved?
+      status == 200 || status == 201
+    end
+    
+    def status
+      metadata[:status].to_i
+    end
+    
+    def parse_error
+      error_messages[:response_errors].try( :[], :parse_error )
+    end
+    
     def error_messages
       valid?
       errors_client.deep_merge(errors_server).deep_merge(errors_params)

@@ -23,11 +23,13 @@ class ParseJSON < Faraday::Response::Middleware
       headers:                env[:response_headers],
       })
     # return object
-    {
+    object = {
       :data => json,
       :errors => errors,
       :metadata => metadata
     }
+    env[:status] = 200
+    object
   end
 
   def parse_json(body = nil)
@@ -37,10 +39,11 @@ class ParseJSON < Faraday::Response::Middleware
     json = begin
       Yajl.load(body, :symbolize_keys => true)
     rescue Yajl::ParseError
-      raise Her::Errors::ParseError, message
+      { id: 1, errors: { parse_error: message } }
+      
+      # raise Her::Errors::ParseError, message
     end
-
-    raise Her::Errors::ParseError, message unless json.is_a?(Hash) or json.is_a?(Array)
+    # raise Her::Errors::ParseError, message unless json.is_a?(Hash) or json.is_a?(Array)
 
     json
   end

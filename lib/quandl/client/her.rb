@@ -30,7 +30,7 @@ module Client
     end
 
     def rest_url
-      @rest_url ||= "http://www.quandl.com/api/#{API_VERSION}/"
+      @rest_url ||= "http://localhost:3000/api/#{API_VERSION}/"
     end
     
     def rest_url=(url)
@@ -43,27 +43,6 @@ module Client
     
     def reload_models
       Models.use_api( her_api )
-    end
-    
-    class Parser < Faraday::Response::Middleware
-      def on_complete(env)
-        json = MultiJson.load(env[:body], symbolize_keys: true)
-        errors = []
-        if json.is_a?(Hash) && json.has_key?(:docs)
-          errors = [json.delete(:error)]
-          data = json.delete(:docs)
-          metadata = json
-        else
-          errors = [json.delete(:error)] if json.is_a?(Hash) && json.has_key?(:error)
-          data = json.present? ? json : {}
-          metadata = {}
-        end
-        env[:body] = {
-          data: data,
-          errors: errors,
-          metadata: metadata
-        }
-      end
     end
     
     class TokenAuthentication < Faraday::Middleware
