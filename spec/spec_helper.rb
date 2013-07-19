@@ -10,7 +10,7 @@ require "quandl/client"
 
 include Quandl::Client
 Quandl::Client.use 'http://staging.quandl.com/api/'
-AUTH_TOKEN = '93yzptKyhdkrqLhmezdi'
+AUTH_TOKEN = ENV['QUANDL_AUTH_TOKEN']
 
 RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
