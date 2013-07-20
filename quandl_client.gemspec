@@ -5,7 +5,7 @@ require "quandl/client/version"
 Gem::Specification.new do |s|
   s.name        = "quandl_client"
   s.version     = Quandl::Client::VERSION
-  s.authors     = ["Blkae Hilscher"]
+  s.authors     = ["Blake Hilscher"]
   s.email       = ["blake@hilscher.ca"]
   s.homepage    = "http://blake.hilscher.ca/"
   s.license     = "MIT"
