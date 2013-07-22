@@ -1,4 +1,4 @@
-require 'scope_builder'
+require 'scope_composer'
 require "quandl/data"
 
 module Quandl

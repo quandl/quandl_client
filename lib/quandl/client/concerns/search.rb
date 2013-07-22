@@ -7,9 +7,9 @@ module Search
 
   included do
 
-    include ScopeBuilder::Model
+    include ScopeComposer::Model
   
-    scope_builder_for :search
+    scope_composer_for :search
 
     search_helper :all, ->{ connection.where(attributes).fetch }
     search_helper :connection, -> { self.class.parent }

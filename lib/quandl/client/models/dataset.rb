@@ -17,7 +17,7 @@ class Dataset
   search_scope :source_code, ->(c){ where( code: c.to_s.upcase )}
   
   # SHOW
-  scope_builder_for :show
+  scope_composer_for :show
   show_scope :rows, :exclude_data, :exclude_headers, :trim_start, :trim_end, :transform, :collapse
   show_helper :find, ->(id){ connection.where(attributes).find( id ) }
   show_helper :connection, -> { self.class.parent }
