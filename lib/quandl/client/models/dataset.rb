@@ -44,12 +44,14 @@ class Dataset
   ##############
   # PROPERTIES #
   ##############
+  
+  attributes :source_code, :code, :name, :urlize_name, 
+    :description, :updated_at, :frequency,
+    :from_date, :to_date, :column_names, :private, :type,
+    :display_url, :column_spec, :import_spec, :import_url,
+    :locations_attributes, :data
     
-  attributes :data, :source_code, :code, :name, :urlize_name, 
-    :description, :updated_at, :frequency, :from_date, 
-    :to_date, :column_names, :private, :type, :display_url
-    
-  attributes :locations_attributes
+  before_save :ensure_data_is_csv
   
   alias_method :locations, :locations_attributes
   alias_method :locations=, :locations_attributes=
@@ -64,6 +66,12 @@ class Dataset
   
   def raw_data
     @raw_data ||= (self.data || Dataset.find(full_code).data || [])
+  end
+  
+  protected
+  
+  def ensure_data_is_csv
+    self.data = Quandl::Data::Table.new(data).to_csv
   end
   
 end
