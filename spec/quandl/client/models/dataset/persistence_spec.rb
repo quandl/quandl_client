@@ -51,7 +51,7 @@ describe Dataset do
     
     it "should change column_spec" do
       subject = Dataset.find(dataset.id)
-      subject.column_spec = "[0,[\"Date \\n\",{}],[\"Column 1 \",{}],[\"Column 2 \",{}]]"
+      subject.column_spec = "[0,[\"Date \\n\",{}],[\"Column 1 \",{}],[\"New Column Name \",{}]]"
       subject.save
       Dataset.find(dataset.id).column_spec.should eq subject.column_spec
     end
