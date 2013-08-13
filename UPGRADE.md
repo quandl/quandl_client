@@ -1,3 +1,3 @@
-## 0.1
+## 0.1.10
 
-Initial
+* Add Dataset#availability_delay

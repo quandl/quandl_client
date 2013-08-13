@@ -16,6 +16,8 @@ gem 'quandl_client'
 require 'quandl/client'
 
 Quandl::Client.use 'http://localhost:3000/api/'
+Quandl::Client.token = ENV['QUANDL_AUTH_TOKEN']
+
 
 ```
 
