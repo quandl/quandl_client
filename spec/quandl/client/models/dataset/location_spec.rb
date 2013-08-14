@@ -18,5 +18,29 @@ describe Dataset do
       
     end
   end
+
+  describe "#locations" do
+    it "should save and return the location data" do
+      locations = [
+        {
+          category:     'js_http',
+          url:      "http://test-#{(Time.now.to_f * 1000).to_i}.com/data",
+          navigation: [
+            {:id => 'id303', :type => 'link'},
+            {:name => 'selectionname', :type => 'text', :value => 'cd' },
+            {:name => 'auswaehlen', :type => 'button'},
+            {:id => "id#cd", :type => 'link'},
+            {:name => 'werteabruf', :type => 'button'}
+          ]
+        }
+      ]
+      subject.locations = locations
+      subject.save
+      dataset = Dataset.find(subject.id)
+      dataset.locations[0][:category].should eq locations[0][:category]
+      dataset.locations[0][:url].should eq locations[0][:url]
+      dataset.locations[0][:navigation].should eq locations[0][:navigation]
+    end
+  end
   
 end

@@ -51,7 +51,7 @@ class Dataset
     :display_url, :column_spec, :import_spec, :import_url,
     :locations_attributes, :data, :availability_delay
     
-  before_save :ensure_data_is_csv
+  before_save :enforce_required_formats
   
   alias_method :locations, :locations_attributes
   alias_method :locations=, :locations_attributes=
@@ -70,8 +70,9 @@ class Dataset
   
   protected
   
-  def ensure_data_is_csv
+  def enforce_required_formats
     self.data = Quandl::Data::Table.new(data).to_csv
+    self.locations_attributes = locations_attributes.to_json if locations_attributes.respond_to?(:to_json) && !locations_attributes.kind_of?(String)
   end
   
 end
