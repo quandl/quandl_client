@@ -4,6 +4,7 @@ require 'spec_helper'
 describe Dataset do
   context "when built" do
     subject{ build(:dataset) }
+    its(:saved?){ should be_false }
     its(:valid?){ should be_true }
   end
   

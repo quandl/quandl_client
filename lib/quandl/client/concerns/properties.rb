@@ -61,7 +61,7 @@ module Properties
     
     def errors_server
       messages = self.attributes[:errors] || {}
-      messages[:message] = self.error if self.error.present?
+      messages[:message] = self.error if self.respond_to?(:error) && self.error.present?
       messages
     end
     
