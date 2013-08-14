@@ -11,7 +11,7 @@ require "quandl/client"
 
 include Quandl::Client
 Quandl::Client.use 'http://localhost:3000/api/'
-AUTH_TOKEN = ENV['QUANDL_AUTH_TOKEN']
+Quandl::Client.token = ENV['QUANDL_AUTH_TOKEN']
 
 RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods

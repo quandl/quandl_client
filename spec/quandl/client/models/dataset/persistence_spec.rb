@@ -11,7 +11,7 @@ describe Dataset do
     context "without token" do
   
       before(:all){ Quandl::Client.token = '' }
-    
+      
       let(:dataset){ create(:dataset) }
       subject{ dataset }
   
@@ -20,9 +20,9 @@ describe Dataset do
     
     end
     context "with token" do
-    
-      before(:all){ Quandl::Client.token = AUTH_TOKEN }
-  
+
+      before(:all){ Quandl::Client.token = ENV['QUANDL_AUTH_TOKEN'] }
+      
       let(:source){ create(:source) }
       let(:dataset){ create(:dataset, source_code: source.code ) }
       subject{ dataset }
@@ -34,8 +34,7 @@ describe Dataset do
   end
   
   context "when updated" do
-    before(:all){ Quandl::Client.token = AUTH_TOKEN }
-  
+
     let(:source){ create(:source) }
     let(:dataset){ create(:dataset, source_code: source.code, data: Quandl::Data::Random.table(rows: 20, columns: 2).to_csv ) }
         

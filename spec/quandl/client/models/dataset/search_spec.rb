@@ -3,8 +3,6 @@ require 'spec_helper'
 
 describe Dataset do
   
-  before(:all){ Quandl::Client.token = AUTH_TOKEN }
-
   let(:source){ create(:source) }
   let(:dataset){ create(:dataset, source_code: source.code ) }
   
