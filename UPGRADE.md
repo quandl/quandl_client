@@ -1,3 +1,7 @@
+## 0.1.12
+
+* fix undefined error method
+
 ## 0.1.11
 
 * add spec for Dataset#availability_delay
