@@ -1,3 +1,7 @@
+## 0.1.14
+
+* add Dataset#locations spec to test that location data is returned in the same order as it is sent.
+
 ## 0.1.12
 
 * fix undefined error method
