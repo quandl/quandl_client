@@ -26,8 +26,20 @@ module Properties
       save
     end
     
+    def blank?
+      !present?
+    end
+    
+    def exists?
+      present?
+    end
+    
+    def present?
+      status >= 200 && status < 300
+    end
+    
     def saved?
-      status == 200 || status == 201
+      status >= 201 && status <= 206
     end
     
     def status
@@ -48,7 +60,9 @@ module Properties
     end
     
     def errors_server
-      self.attributes[:errors] || {}
+      messages = self.attributes[:errors] || {}
+      messages[:message] = self.error if self.error.present?
+      messages
     end
     
     def errors_params
