@@ -39,7 +39,7 @@ module Properties
     end
     
     def saved?
-      status >= 201 && status <= 206
+      status >= 200 && status <= 210
     end
     
     def status
