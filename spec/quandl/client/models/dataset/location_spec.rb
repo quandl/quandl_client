@@ -20,26 +20,39 @@ describe Dataset do
   end
 
   describe "#locations" do
-    it "should save and return the location data" do
-      locations = [
-        {
-          category:     'js_http',
-          url:      "http://test-#{(Time.now.to_f * 1000).to_i}.com/data",
-          navigation: [
-            {:id => 'id303', :type => 'link'},
-            {:name => 'selectionname', :type => 'text', :value => 'cd' },
-            {:name => 'auswaehlen', :type => 'button'},
-            {:id => "id#cd", :type => 'link'},
-            {:name => 'werteabruf', :type => 'button'}
-          ]
-        }
-      ]
-      subject.locations = locations
-      subject.save
-      dataset = Dataset.find(subject.id)
-      dataset.locations[0][:category].should eq locations[0][:category]
-      dataset.locations[0][:url].should eq locations[0][:url]
-      dataset.locations[0][:navigation].should eq locations[0][:navigation]
+    context "with navigation" do      
+      it "should return the data in the right order" do
+        locations = [
+          {
+            category:     'js_http',
+            url:      "http://test-#{(Time.now.to_f * 1000).to_i}.com/data",
+            navigation: [
+              {:id => 'id303', :type => 'link'},
+              {:name => 'selectionname', :type => 'text', :value => 'cd' },
+              {:name => 'auswaehlen', :type => 'button'},
+              {:id => "id#cd", :type => 'link'},
+              {:name => 'werteabruf', :type => 'button'}
+            ]
+          }
+        ]
+        subject.locations = locations
+        subject.save
+        dataset = Dataset.find(subject.id)
+        dataset.locations[0][:category].should eq locations[0][:category]
+        dataset.locations[0][:url].should eq locations[0][:url]
+        dataset.locations[0][:navigation].should eq locations[0][:navigation]
+      end
+    end
+    context "datasets sharing location" do
+      
+      let(:location){ [{ category: "http", url: "http://www.bankofcanada.ca/rates/price-indexes/cpi/"}] }
+      let(:dataset1){ create(:dataset, source_code: create(:source).code, locations: location ) }
+      let(:dataset2){ create(:dataset, source_code: create(:source).code, locations: location ) }
+      
+      it "should share the location" do
+        Dataset.find(dataset1.id).locations.should eq Dataset.find(dataset2.id).locations
+      end
+      
     end
   end
   
