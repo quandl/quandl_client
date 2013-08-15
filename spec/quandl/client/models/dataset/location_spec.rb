@@ -53,6 +53,13 @@ describe Dataset do
         Dataset.find(dataset1.id).locations.should eq Dataset.find(dataset2.id).locations
       end
       
+      it "should update the dataset" do
+        d = Dataset.find(dataset1.id)
+        d.data = [[ Date.today, 42, 68 ]]
+        d.save
+        d.status.should eq 200
+      end
+      
     end
   end
   
