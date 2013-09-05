@@ -11,7 +11,11 @@ describe Dataset do
     let(:dataset){ create(:dataset, source_code: source.code ) }
     let(:invalid_dataset){ create(:dataset, source_code: source.code, code: dataset.code ) }
     subject{ invalid_dataset }
-
+    
+    it "should create the dataset" do
+      dataset.status.should eq 201
+    end
+    
     its(:saved?){ should be_false }
     its(:status){ should eq 422 }
     
