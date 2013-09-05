@@ -14,7 +14,7 @@ class ParseJSON < Faraday::Response::Middleware
   end
 
   def parse(body, env)
-    json = parse_json(body)
+    json = parse_json(body, env)
     errors = json.delete(:errors) || {}
     metadata = json.delete(:metadata) || {}
     # collect some response data
@@ -32,19 +32,23 @@ class ParseJSON < Faraday::Response::Middleware
     object
   end
 
-  def parse_json(body = nil)
+  def parse_json(body = nil, env)
     body ||= '{}'
-    message = "Response from the API must behave like a Hash or an Array (last JSON response was #{body.inspect})"
-
     json = begin
       Yajl.load(body, :symbolize_keys => true)
     rescue Yajl::ParseError
-      { id: 1, errors: { parse_error: message } }
-      
-      # raise Her::Errors::ParseError, message
+      nil
     end
-    # raise Her::Errors::ParseError, message unless json.is_a?(Hash) or json.is_a?(Array)
-
+    # invalid json body?
+    if json.blank?
+      # fallback to error message
+      json = { 
+        id: 1, 
+        errors: {
+          parse_error:  "Quandl::Client::ParseJSON error. status: #{env[:status]}, body: #{body.inspect}"
+        }
+      }
+    end
     json
   end
 
