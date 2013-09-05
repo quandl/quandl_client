@@ -1,3 +1,8 @@
+## 0.1.15
+
+* revise parse_json to respond with more informative error
+* validation errors should return 422
+
 ## 0.1.14
 
 * add Dataset#locations spec to test that location data is returned in the same order as it is sent.
