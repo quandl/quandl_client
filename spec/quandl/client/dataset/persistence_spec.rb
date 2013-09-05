@@ -32,6 +32,18 @@ describe Dataset do
       its(:status){ should eq 201 }
   
     end
+    context "with data" do
+
+      before(:all){ Quandl::Client.token = ENV['QUANDL_AUTH_TOKEN'] }
+      
+      let(:source){ create(:source) }
+      let(:dataset){ create(:dataset, source_code: source.code, data: Quandl::Data::Random.table(rows: 20, columns: 2, nils: false) ) }
+      subject{ dataset }
+  
+      its(:saved?){ should be_true }
+      its(:status){ should eq 201 }
+  
+    end
   end
   
   context "when updated" do
