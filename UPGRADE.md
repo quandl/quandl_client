@@ -1,3 +1,7 @@
+## 0.1.16
+
+* add sheet description
+
 ## 0.1.15
 
 * revise parse_json to respond with more informative error
