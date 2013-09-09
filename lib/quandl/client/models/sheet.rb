@@ -38,7 +38,7 @@ class Sheet
   # PROPERTIES #
   ##############
   
-  attributes :title, :content, :url_title, :full_url_title
+  attributes :title, :content, :url_title, :full_url_title, :description
   
   def html
     @html ||= self.attributes[:html] || Sheet.find(full_url_title).attributes[:html]
