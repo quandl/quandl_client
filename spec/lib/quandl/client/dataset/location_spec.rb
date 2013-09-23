@@ -4,7 +4,7 @@ require 'spec_helper'
 describe Dataset do
   
   subject{
-    build(:dataset, source_code: create(:source).code )
+    build(:dataset, source_code: "QUANDL_CLIENT_TEST_SOURCE" )
   }
   
   describe "#availability_delay" do
@@ -46,8 +46,8 @@ describe Dataset do
     context "datasets sharing location" do
       
       let(:location){ [{ category: "http", url: "http://www.bankofcanada.ca/rates/price-indexes/cpi/"}] }
-      let(:dataset1){ create(:dataset, source_code: create(:source).code, locations: location ) }
-      let(:dataset2){ create(:dataset, source_code: create(:source).code, locations: location ) }
+      let(:dataset1){ create(:dataset, source_code: "QUANDL_CLIENT_TEST_SOURCE", locations: location ) }
+      let(:dataset2){ create(:dataset, source_code: "QUANDL_CLIENT_TEST_SOURCE", locations: location ) }
       
       it "should share the location" do
         Dataset.find(dataset1.id).locations.should eq Dataset.find(dataset2.id).locations

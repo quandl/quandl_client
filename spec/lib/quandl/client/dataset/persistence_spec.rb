@@ -24,8 +24,7 @@ describe Dataset do
 
       before(:all){ Quandl::Client.token = ENV['QUANDL_AUTH_TOKEN'] }
       
-      let(:source){ create(:source) }
-      let(:dataset){ create(:dataset, source_code: source.code ) }
+      let(:dataset){ create(:dataset, source_code: "QUANDL_CLIENT_TEST_SOURCE" ) }
       subject{ dataset }
   
       its(:saved?){ should be_true }
@@ -36,8 +35,7 @@ describe Dataset do
 
       before(:all){ Quandl::Client.token = ENV['QUANDL_AUTH_TOKEN'] }
       
-      let(:source){ create(:source) }
-      let(:dataset){ create(:dataset, source_code: source.code, data: Quandl::Fabricate::Data::Table.rand(rows: 20, columns: 2, nils: false) ) }
+      let(:dataset){ create(:dataset, source_code: "QUANDL_CLIENT_TEST_SOURCE", data: Quandl::Fabricate::Data::Table.rand(rows: 20, columns: 2, nils: false) ) }
       subject{ dataset }
   
       its(:saved?){ should be_true }
@@ -48,8 +46,7 @@ describe Dataset do
   
   context "when updated" do
 
-    let(:source){ create(:source) }
-    let(:dataset){ create(:dataset, source_code: source.code, data: Quandl::Fabricate::Data::Table.rand(rows: 20, columns: 2, nils: false).to_csv ) }
+    let(:dataset){ create(:dataset, source_code: "QUANDL_CLIENT_TEST_SOURCE", data: Quandl::Fabricate::Data::Table.rand(rows: 20, columns: 2, nils: false).to_csv ) }
     subject{ Dataset.find(dataset.id) }
     
     

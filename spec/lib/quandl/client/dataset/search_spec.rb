@@ -2,9 +2,8 @@
 require 'spec_helper'
 
 describe Dataset do
-  
-  let(:source){ create(:source) }
-  let(:dataset){ create(:dataset, source_code: source.code ) }
+
+  let(:dataset){ create(:dataset, source_code: "QUANDL_CLIENT_TEST_SOURCE" ) }
   
   it "should find the dataset by id" do
     Dataset.find(dataset.id).id.should eq dataset.id

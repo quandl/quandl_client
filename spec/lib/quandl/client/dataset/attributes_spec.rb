@@ -2,7 +2,12 @@
 require 'spec_helper'
 
 describe Dataset do
-  let(:source){ create(:source) }
+  
+  let(:source){
+    s = Source.find("QUANDL_CLIENT_TEST_SOURCE")
+    s = create(:source, code: "QUANDL_CLIENT_TEST_SOURCE") unless s.exists?
+    s
+  }
   subject{ create(:dataset, source_code: source.code, private: true ) }
   
   describe "#private" do
