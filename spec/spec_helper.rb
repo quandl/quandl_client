@@ -8,6 +8,7 @@ factory_dir = File.join( File.dirname(__FILE__), 'factories/**/*.rb' )
 Dir.glob( factory_dir ).each{|f| require(f); puts f }
 
 require "quandl/client"
+require "quandl/fabricate"
 
 include Quandl::Client
 # Quandl::Client.use 'http://localhost:3000/api/'
