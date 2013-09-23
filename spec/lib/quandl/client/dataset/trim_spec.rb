@@ -4,7 +4,7 @@ require 'spec_helper'
 describe Dataset do
   
   let(:source){ create(:source) }
-  subject{ build(:dataset, source_code: source.code, data: Quandl::Data::Random.table(rows: 20, columns: 2) ) }
+  subject{ build(:dataset, source_code: source.code, data: Quandl::Fabricate::Data::Table.rand(rows: 20, columns: 2) ) }
   
   describe "#from_date" do
     context "before_save" do
