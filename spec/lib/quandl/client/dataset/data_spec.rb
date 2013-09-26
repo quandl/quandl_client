@@ -24,11 +24,14 @@ describe Dataset do
       before(:each){ dataset.data = Quandl::Fabricate::Data::Table.rand( rows: 12, columns: 4 ) }
       its(:updated_at){ should_not eq previous_attributes['updated_at'] }
       its(:data){ should_not eq previous_attributes['data'] }
+      its(:refreshed_at){ should_not eq previous_attributes['refreshed_at'] }
     end
   
     context "#column_spec" do
       before(:each){ dataset.column_spec = "[0,[\"Date \\n\",{}],[\"Column 1 \",{}],[\"New Column Name \",{}]]" }
+      its(:updated_at){ should_not eq previous_attributes['updated_at'] }
       its(:column_spec){ should_not eq previous_attributes['column_spec'] }
+      its(:refreshed_at){ should eq previous_attributes['refreshed_at'] }
     end
   
   end

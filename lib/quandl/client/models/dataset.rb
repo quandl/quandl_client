@@ -49,7 +49,7 @@ class Dataset
     :description, :updated_at, :frequency,
     :from_date, :to_date, :column_names, :private, :type,
     :display_url, :column_spec, :import_spec, :import_url,
-    :locations_attributes, :data, :availability_delay
+    :locations_attributes, :data, :availability_delay, :refreshed_at
     
   before_save :enforce_required_formats
   
