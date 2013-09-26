@@ -65,6 +65,13 @@ describe Dataset do
       Dataset.find(dataset.id).column_spec.should eq subject.column_spec
     end
     
+    it "should update updated_at" do
+      previously_updated_at = subject.updated_at
+      subject.name = "Updated Name"
+      subject.save
+      Dataset.find(subject.id).updated_at.should_not eq previously_updated_at
+    end
+    
     context "with new rows" do
       
       it "should include new row" do
