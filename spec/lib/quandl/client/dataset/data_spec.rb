@@ -6,7 +6,7 @@ describe Dataset do
   let(:dataset){ 
     create(:dataset, source_code: "QUANDL_CLIENT_TEST_SOURCE", data: Quandl::Fabricate::Data::Table.rand( rows: 10, columns: 4 ) )
   }
-    
+
   describe "#data" do
     subject{ Dataset.find( dataset.id ).data }
     its(:count){ should eq 10 }
@@ -15,8 +15,7 @@ describe Dataset do
   context "updated" do
     
     subject{
-      dataset
-      sleep(0.5)
+      sleep(0.75)
       Dataset.find( dataset.id )
     }
     
