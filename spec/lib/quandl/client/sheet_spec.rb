@@ -14,6 +14,7 @@ describe Sheet do
   context "when saved" do
     
     before(:each){ subject.save }
+    
     its(:saved?){ should be_true }
     
     describe "#description" do

@@ -10,7 +10,6 @@ describe Dataset do
   
   context "when created" do
     context "without token" do
-  
       before(:all){ Quandl::Client.token = '' }
       
       let(:dataset){ create(:dataset) }
@@ -19,10 +18,9 @@ describe Dataset do
       its(:saved?){ should be_false }
       its(:status){ should eq 401 }
     
+      after(:all){ Quandl::Client.token = ENV['QUANDL_AUTH_TOKEN'] }
     end
     context "with token" do
-
-      before(:all){ Quandl::Client.token = ENV['QUANDL_AUTH_TOKEN'] }
       
       let(:dataset){ create(:dataset, source_code: "QUANDL_CLIENT_TEST_SOURCE" ) }
       subject{ dataset }
@@ -32,8 +30,6 @@ describe Dataset do
   
     end
     context "with data" do
-
-      before(:all){ Quandl::Client.token = ENV['QUANDL_AUTH_TOKEN'] }
       
       let(:dataset){ create(:dataset, source_code: "QUANDL_CLIENT_TEST_SOURCE", data: Quandl::Fabricate::Data::Table.rand(rows: 20, columns: 2, nils: false) ) }
       subject{ dataset }
@@ -45,7 +41,7 @@ describe Dataset do
   end
   
   context "when updated" do
-
+  
     let(:dataset){ create(:dataset, source_code: "QUANDL_CLIENT_TEST_SOURCE", data: Quandl::Fabricate::Data::Table.rand(rows: 20, columns: 2, nils: false).to_csv ) }
     subject{ Dataset.find(dataset.id) }
     
@@ -67,6 +63,31 @@ describe Dataset do
       updated_dataset.data_table.count.should eq 30
     end
     
+  end
+  
+  context "when deleted" do
+    
+    let(:dataset){ create(:dataset, private: false ) }
+    
+    it "should delete the dataset" do
+      dataset.destroy
+      dataset.status.should eq 200
+    end
+    
+    context "as a user" do
+
+      it "should not delete the dataset with a user token" do
+        id = dataset.id
+        # behave as a user
+        Quandl::Client.token = ENV['QUANDL_USER_TOKEN']
+        user_dataset = Dataset.find(id)
+        user_dataset.destroy
+        user_dataset.status.should eq 403
+      end
+    
+      after(:all){ Quandl::Client.token = ENV['QUANDL_AUTH_TOKEN'] }
+    
+    end
   end
   
 end
