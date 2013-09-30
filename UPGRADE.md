@@ -1,3 +1,8 @@
+## 0.1.17
+
+* Dataset#source_code is optional
+
+
 ## 0.1.16
 
 * add sheet description
