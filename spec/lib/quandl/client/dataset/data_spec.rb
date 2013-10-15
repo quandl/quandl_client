@@ -20,7 +20,7 @@ describe Dataset do
     }
     
     describe "#data" do
-      before(:each){ subject.data = Quandl::Fabricate::Data::Table.rand( rows: 12, columns: 4 ); subject.save }
+      before(:each){ subject.data = Quandl::Fabricate::Data::Table.rand( rows: 12, columns: 4 ); sleep(1); subject.save }
       its(:updated_at){ should_not eq dataset.updated_at }
       its(:data){ should_not eq dataset.data }
       its(:refreshed_at){ should_not eq dataset.refreshed_at }
@@ -34,5 +34,4 @@ describe Dataset do
   
   end
   
-
 end

@@ -75,7 +75,7 @@ describe Dataset do
     end
     
     context "as a user" do
-
+      
       it "should not delete the dataset with a user token" do
         id = dataset.id
         # behave as a user
