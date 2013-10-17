@@ -13,5 +13,8 @@ require 'quandl/client/models'
 
 module Quandl
   module Client
+    def self.use(url)
+      Quandl::Client::Base.use(url)
+    end
   end
 end
