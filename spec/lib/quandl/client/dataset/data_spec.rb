@@ -27,7 +27,7 @@ describe Dataset do
     end
   
     context "#column_spec" do
-      before(:each){ subject.column_spec = "[0,[\"Date \\n\",{}],[\"Column 1 \",{}],[\"New Column Name \",{}]]"; subject.save }
+      before(:each){ subject.column_spec = "[0,[\"Date \\n\",{}],[\"Column 1 \",{}],[\"New Column Name \",{}]]"; sleep(1); subject.save }
       its(:updated_at){ should_not eq dataset.updated_at }
       its(:column_spec){ should_not eq dataset.column_spec }
     end
