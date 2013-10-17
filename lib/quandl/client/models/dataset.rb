@@ -19,12 +19,6 @@ class Quandl::Client::Dataset < Quandl::Client::Base
     @source ||= Source.find(self.source_code)
   end
   
-  delegate :data, :data=, to: :dataset_data
-  
-  def dataset_data
-    @dataset_data ||= Dataset::Data.find(self.id) || Dataset::Data.new( id: self )
-  end
-  
   ###############
   # VALIDATIONS #
   ###############
@@ -52,7 +46,28 @@ class Quandl::Client::Dataset < Quandl::Client::Base
     @full_code ||= File.join(self.source_code, self.code)
   end
   
+  # DATA
+  
+  def data
+    dataset_data.data? ? dataset_data.data : Dataset::Data.with_id(id)
+  end
+  
+  def data=(value)
+    dataset_data.data = value
+  end
+  
+  def dataset_data
+    @dataset_data ||= Dataset::Data.new( id: id )
+  end
+  
+  after_save :save_dataset_data
+  
   protected
+  
+  def save_dataset_data
+    dataset_data.id = id
+    dataset_data.save
+  end
   
   def enforce_required_formats
     # self.data = Quandl::Data::Table.new(data).to_csv

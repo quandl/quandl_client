@@ -9,13 +9,14 @@ module Search
 
     has_scope_composer
 
+    scope :with_id,      ->(value)   { where( id: value.to_i )}
     scope_helper :all, ->{ connection.where(attributes).fetch }
     scope_helper :connection, -> { self.class.parent }
-
+    
     scope.class_eval do
     
       delegate *Array.forwardable_methods, to: :all
-          
+      
       def fetch_once
         @fetch_once ||= fetch
       end

@@ -52,15 +52,15 @@ attributes :data, :source_code, :code, :name, :urlize_name,
 
 d = Quandl::Client::Dataset.find('OFDP/COBALT_51')
 d.full_code
-d.data_table
+d.data
 
 
 d = Quandl::Client::Dataset.collapse('weekly').trim_start("2012-03-31").trim_end("2013-06-30").find('OFDP/COBALT_51')
-d.data_table
+d.data
 
 
 d = Quandl::Client::Dataset.exclude_data('true').find('OFDP/COBALT_51')
-d.data_table
+d.data
 
 ```
 

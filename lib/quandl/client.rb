@@ -17,5 +17,9 @@ module Quandl
     def self.use(url)
       Quandl::Client::Base.use(url)
     end
+    def self.token=(value)
+      Quandl::Client::Base.token = value
+    end
+    
   end
 end

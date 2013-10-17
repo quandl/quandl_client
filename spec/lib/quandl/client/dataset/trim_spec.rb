@@ -14,7 +14,7 @@ describe Dataset do
     context "after_save" do
       before(:each){ subject.save }
       it "should equal the last date" do
-        subject.from_date.should eq subject.data_table.to_date[-1][0].to_s
+        subject.from_date.should eq subject.data.to_date[-1][0].to_s
       end
     end
   end
@@ -28,7 +28,7 @@ describe Dataset do
     context "after_save" do
       before(:each){ subject.save }
       it "should equal the first date" do
-        subject.to_date.should eq subject.data_table.to_date[0][0].to_s
+        subject.to_date.should eq subject.data.to_date[0][0].to_s
       end
     end
   end

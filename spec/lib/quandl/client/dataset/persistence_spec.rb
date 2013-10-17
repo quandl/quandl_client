@@ -51,7 +51,7 @@ describe Dataset do
       subject.data = new_data
       subject.save
       updated_dataset = Dataset.find(subject.id)
-      updated_dataset.data_table.to_date[0].should eq new_data.to_date[0]
+      updated_dataset.data.to_date[0].should eq new_data.to_date[0]
     end
       
     it "should include old rows" do
@@ -60,7 +60,7 @@ describe Dataset do
       subject.data = new_data
       subject.save
       updated_dataset = Dataset.find(subject.id)
-      updated_dataset.data_table.count.should eq 30
+      updated_dataset.data.count.should eq 30
     end
     
   end

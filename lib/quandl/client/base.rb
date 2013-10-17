@@ -12,15 +12,21 @@ class Quandl::Client::Base
   
   class << self
     
-    attr_accessor :url
+    attr_accessor :url, :token
   
     def use(url)
       self.url = url
       models_use_her_api!
     end
-  
+    
+    def token=(token)
+      @token = token
+      models_use_her_api!
+    end
+    
     def her_api
       Her::API.new.setup url: url do |c|
+        c.use TokenAuthentication
         c.use Faraday::Request::UrlEncoded
         c.use Quandl::Client::Middleware::ParseJSON
         c.use Faraday::Adapter::NetHttp
@@ -53,7 +59,14 @@ class Quandl::Client::Base
     def models_use_her_api!
       models.each{|m| m.use_api( her_api ) }
     end
- 
+    
+    class TokenAuthentication < Faraday::Middleware
+      def call(env)
+        env[:request_headers]["X-API-Token"] = Quandl::Client::Base.token if Quandl::Client::Base.token.present?
+        @app.call(env)
+      end
+    end
+    
   end
   
 end
