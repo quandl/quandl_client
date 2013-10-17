@@ -28,7 +28,8 @@ class Quandl::Client::Base
     end
 
     def url
-      @url ||= 'http://localhost:9292/'
+      @url ||= "http://localhost:3000/api/"
+      File.join( @url, Quandl::Client.api_version )
     end
     
     def inherited(subclass)

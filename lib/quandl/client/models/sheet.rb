@@ -1,17 +1,13 @@
 module Quandl
 module Client
 
-class Sheet
-  
-  include Concerns::Search
-  include Concerns::Properties
-  
+class Sheet < Quandl::Client::Base
   
   ##########  
   # SCOPES #
   ##########
   
-  search_scope :query, :page, :parent_url_title
+  scope :query, :page, :parent_url_title
   
   
   ################

@@ -32,7 +32,7 @@ Quandl::Client.token = ENV['QUANDL_AUTH_TOKEN']
 
 #### Search
 
-search_scope :rows, :exclude_data, :exclude_headers, :trim_start, :trim_end, :transform, :collapse
+scope :rows, :exclude_data, :exclude_headers, :trim_start, :trim_end, :transform, :collapse
 
 ```ruby
 

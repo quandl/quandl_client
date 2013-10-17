@@ -1,4 +1,4 @@
-class Quandl::Cassinatra::Base
+class Quandl::Client::Base
 module Validation
   
   extend ActiveSupport::Concern

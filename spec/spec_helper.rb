@@ -17,3 +17,5 @@ Quandl::Client.token = ENV['QUANDL_AUTH_TOKEN']
 RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
 end
+
+binding.pry

@@ -1,26 +1,38 @@
-module Quandl
-module Client
-module Concerns
-  
+class Quandl::Client::Base
 module Search
+  
   extend ActiveSupport::Concern
 
   included do
 
     include ScopeComposer::Model
-  
-    scope_composer_for :search
 
-    search_helper :all, ->{ connection.where(attributes).fetch }
-    search_helper :connection, -> { self.class.parent }
+    has_scope_composer
 
-    search_scope.class_eval do
+    scope_helper :all, ->{ connection.where(attributes).fetch }
+    scope_helper :connection, -> { self.class.parent }
+
+    scope.class_eval do
+    
       delegate *Array.forwardable_methods, to: :all
+          
+      def fetch_once
+        @fetch_once ||= fetch
+      end
+    
+      def fetch
+        find(attributes[:id])
+      end
+    
+      def find(id)
+        result = self.class.parent.where(attributes).find(id)
+        result = self.class.parent.new(id: id) if result.nil?
+        result
+      end
+    
     end
-
-  end      
+  
+  end
 end
 
-end
-end
 end

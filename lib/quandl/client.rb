@@ -1,15 +1,16 @@
 require "quandl/client/version"
 
-require "active_support"
-require "active_support/inflector"
-require "active_support/core_ext/hash"
-require "active_support/core_ext/object"
+require 'scope_composer'
+require 'her'
+require 'quandl/her/remove_method_data'
+require 'quandl/logger'
+require "quandl/data"
 
 require 'quandl/client/middleware'
-require 'quandl/client/her'
-require 'quandl/client/concerns'
 require 'quandl/client/base'
-require 'quandl/client/models'
+require 'quandl/client/models/dataset'
+require 'quandl/client/models/sheet'
+require 'quandl/client/models/source'
 
 module Quandl
   module Client

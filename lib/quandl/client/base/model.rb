@@ -1,4 +1,4 @@
-class Quandl::Cassinatra::Base
+class Quandl::Client::Base
 module Model
   
   extend ActiveSupport::Concern
