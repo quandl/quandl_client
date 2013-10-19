@@ -15,7 +15,7 @@ class Quandl::Client::Base
     attr_accessor :url, :token
   
     def use(url)
-      self.url = url
+      self.url = File.join( url, Quandl::Client.api_version )
       models_use_her_api!
     end
     
@@ -35,7 +35,6 @@ class Quandl::Client::Base
 
     def url
       @url ||= "http://localhost:3000/api/"
-      File.join( @url, Quandl::Client.api_version )
     end
     
     def inherited(subclass)

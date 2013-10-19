@@ -10,11 +10,12 @@ class Quandl::Client::Dataset::Data < Quandl::Client::Base
   scope_helper :to_table, -> { fetch_once.data }
   
   scope.class_eval do
-    delegate :each, :collect, :to_a, :to_h, :count, :inspect, :[], to: :to_table, allow_nil: true
+    delegate *Quandl::Client::Dataset::Data.forwardable_scope_methods, to: :to_table, allow_nil: true
     delegate *Quandl::Data::Table.forwardable_methods, to: :to_table, allow_nil: true
   end
     
-  attributes :id, :limit, :collapse, :transformation, :trim_start, :trim_end, :rows, :row, :frequency, :data
+  attributes :id, :limit, :collapse, :transformation, :trim_start, :trim_end, 
+    :rows, :row, :frequency, :data, :from_date, :to_date
 
   def data
     read_data

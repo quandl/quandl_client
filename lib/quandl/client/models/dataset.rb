@@ -67,6 +67,8 @@ class Quandl::Client::Dataset < Quandl::Client::Base
   def save_dataset_data
     dataset_data.id = id
     dataset_data.save
+    # update dataset's attributes with dataset_data's attributes
+    attributes.each{|k,v| attributes[k] = dataset_data.attributes[k] if dataset_data.attributes.has_key?(k) }
   end
   
   def enforce_required_formats
