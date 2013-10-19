@@ -124,7 +124,6 @@ Dataset.find('SOME_SOURCE/SOME_CODE')
 
 d = Dataset.find('SOME_SOURCE/SOME_CODE')
 d.delete_data
-
 d.data
 => nil
 
