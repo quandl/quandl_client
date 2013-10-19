@@ -118,6 +118,23 @@ Dataset.find('SOME_SOURCE/SOME_CODE')
 ```
 
 
+#### Delete Data
+
+```ruby
+
+d = Dataset.find('SOME_SOURCE/SOME_CODE')
+d.delete_data
+
+d.data
+=> nil
+
+d.delete_rows( '1998-02-01','1998-03-03' )
+d.data
+=> # given rows are deleted
+
+```
+
+
 #### Error Handling
 
 ```ruby
