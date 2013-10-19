@@ -10,6 +10,7 @@ describe Dataset do
   describe "#data" do
     subject{ Dataset.find( dataset.id ).data }
     its(:count){ should eq 10 }
+    its(:to_h){ should be_a Hash }
   end
   
   context "updated" do
@@ -32,6 +33,38 @@ describe Dataset do
       its(:column_spec){ should_not eq dataset.column_spec }
     end
   
+  end
+  
+  describe "#delete_data" do
+    subject{ Dataset.find( dataset.id ) }
+    before(:each){ subject.delete_data }
+    its(:data){ should be_blank }
+  end
+  
+  describe "#delete_rows" do
+    subject{ Dataset.find( dataset.id ) }
+    
+    let(:dates_slice){ dataset.data.to_h.keys[5..8] }
+    
+    it "should have the dates" do
+      dates = Dataset.find( dataset.id ).data.to_h.keys
+      dates_slice.each{|date| dates.include?(date).should be_true }
+    end
+    
+    context "after deleting rows" do
+    
+      before(:each){ subject.delete_rows(dates_slice) }
+      
+      it "data count should be 16" do
+        Dataset.find( dataset.id ).data.count.should eq 6
+      end
+    
+      it "data should have dates" do
+        dates = Dataset.find( dataset.id ).data.to_h
+        dates.each{|date| dates_slice.include?(date).should be_false }
+      end
+    
+    end
   end
   
 end

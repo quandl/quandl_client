@@ -55,6 +55,22 @@ class Quandl::Client::Dataset < Quandl::Client::Base
   def data=(value)
     dataset_data.data = value
   end
+
+  def delete_data
+    # cant delete unsaved records
+    return false if new_record?
+    # delete and return success / failure
+    self.class.destroy_existing("#{id}/data").saved?
+  end
+
+  def delete_rows(*dates)
+    # cant delete unsaved records
+    return false if new_record?
+    # collect dates
+    query = { dates: Array(dates).flatten }.to_query
+    # delete and return success / failure
+    self.class.destroy_existing("#{id}/data/rows?#{query}").saved?
+  end
   
   def dataset_data
     @dataset_data ||= Dataset::Data.new( id: id )
