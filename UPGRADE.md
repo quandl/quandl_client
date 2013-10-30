@@ -1,3 +1,7 @@
+## 2.0.0
+
+* update client to take advantage of new /api/v2 routes
+
 ## 0.1.17
 
 * Dataset#source_code is optional
