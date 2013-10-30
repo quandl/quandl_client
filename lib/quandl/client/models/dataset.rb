@@ -16,7 +16,7 @@ class Quandl::Client::Dataset < Quandl::Client::Base
   ###############
    
   def source
-    @source ||= Source.find(self.source_code)
+    @source ||= Quandl::Client::Source.find(self.source_code)
   end
   
   ###############
@@ -49,7 +49,7 @@ class Quandl::Client::Dataset < Quandl::Client::Base
   # DATA
   
   def data
-    dataset_data.data? ? dataset_data.data : Dataset::Data.with_id(id)
+    dataset_data.data? ? dataset_data.data : Quandl::Client::Dataset::Data.with_id(id)
   end
   
   def data=(value)
@@ -73,7 +73,7 @@ class Quandl::Client::Dataset < Quandl::Client::Base
   end
   
   def dataset_data
-    @dataset_data ||= Dataset::Data.new( id: id )
+    @dataset_data ||= Quandl::Client::Dataset::Data.new( id: id )
   end
   
   after_save :save_dataset_data

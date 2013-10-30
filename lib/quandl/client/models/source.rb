@@ -17,7 +17,7 @@ class Source < Quandl::Client::Base
   ###############
   
   def datasets
-    Dataset.source_code(code)
+    Quandl::Client::Dataset.source_code(code)
   end
   
   

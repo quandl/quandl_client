@@ -1,3 +1,7 @@
+## 2.0.1
+
+* fully qualified classes to avoid collisions
+
 ## 2.0.0
 
 * update client to take advantage of new /api/v2 routes
