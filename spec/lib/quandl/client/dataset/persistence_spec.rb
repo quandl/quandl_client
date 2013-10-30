@@ -31,7 +31,7 @@ describe Dataset do
     end
     context "with data" do
       
-      let(:dataset){ create(:dataset, source_code: "QUANDL_CLIENT_TEST_SOURCE", data: Quandl::Fabricate::Data::Table.rand(rows: 20, columns: 2, nils: false) ) }
+      let(:dataset){ create(:dataset, source_code: "QUANDL_CLIENT_TEST_SOURCE", data: Quandl::Fabricate::Data.rand(rows: 20, columns: 2, nils: false) ) }
       subject{ dataset }
   
       its(:saved?){ should be_true }
@@ -42,12 +42,12 @@ describe Dataset do
   
   context "when updated" do
   
-    let(:dataset){ create(:dataset, source_code: "QUANDL_CLIENT_TEST_SOURCE", data: Quandl::Fabricate::Data::Table.rand(rows: 20, columns: 2, nils: false).to_csv ) }
+    let(:dataset){ create(:dataset, source_code: "QUANDL_CLIENT_TEST_SOURCE", data: Quandl::Fabricate::Data.rand(rows: 20, columns: 2, nils: false).to_csv ) }
     subject{ Dataset.find(dataset.id) }
     
     it "should include new row" do
       new_data = 10.times.collect{|i| [Date.parse(subject.to_date) + i + 1, rand(12), rand(12) ] }
-      new_data = Quandl::Data::Table.new(new_data).sort_descending
+      new_data = Quandl::Data.new(new_data).sort_descending
       subject.data = new_data
       subject.save
       updated_dataset = Dataset.find(subject.id)
@@ -56,7 +56,7 @@ describe Dataset do
       
     it "should include old rows" do
       new_data = 10.times.collect{|i| [Date.parse(subject.to_date) + i + 2, rand(12), rand(12) ] }
-      new_data = Quandl::Data::Table.new(new_data).sort_descending
+      new_data = Quandl::Data.new(new_data).sort_descending
       subject.data = new_data
       subject.save
       updated_dataset = Dataset.find(subject.id)

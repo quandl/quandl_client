@@ -95,7 +95,7 @@ d = Dataset.create( attributes )
 
 d = Dataset.find( d.full_code )
 d.name = 'New Name'
-d.data = Quandl::Fabricate::Data::Table.rand.to_csv
+d.data = Quandl::Fabricate::Data.rand.to_csv
 d.save
 
 d = Dataset.collapse(:weekly).find( d.full_code )

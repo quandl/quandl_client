@@ -88,7 +88,7 @@ class Quandl::Client::Dataset < Quandl::Client::Base
   end
   
   def enforce_required_formats
-    # self.data = Quandl::Data::Table.new(data).to_csv
+    # self.data = Quandl::Data.new(data).to_csv
     self.locations_attributes = locations_attributes.to_json if locations_attributes.respond_to?(:to_json) && !locations_attributes.kind_of?(String)
   end
   

@@ -3,7 +3,7 @@ require 'spec_helper'
 
 describe Dataset do
   
-  subject{ build(:dataset, source_code: "QUANDL_CLIENT_TEST_SOURCE", data: Quandl::Fabricate::Data::Table.rand(rows: 20, columns: 2) ) }
+  subject{ build(:dataset, source_code: "QUANDL_CLIENT_TEST_SOURCE", data: Quandl::Fabricate::Data.rand(rows: 20, columns: 2) ) }
   
   describe "#from_date" do
     context "before_save" do

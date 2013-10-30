@@ -4,7 +4,7 @@ require 'spec_helper'
 describe Dataset do
 
   let(:dataset){ 
-    create(:dataset, source_code: "QUANDL_CLIENT_TEST_SOURCE", data: Quandl::Fabricate::Data::Table.rand( rows: 10, columns: 4 ) )
+    create(:dataset, source_code: "QUANDL_CLIENT_TEST_SOURCE", data: Quandl::Fabricate::Data.rand( rows: 10, columns: 4 ) )
   }
 
   describe "#data" do
@@ -21,7 +21,7 @@ describe Dataset do
     }
     
     describe "#data" do
-      before(:each){ subject.data = Quandl::Fabricate::Data::Table.rand( rows: 12, columns: 4 ); sleep(1); subject.save }
+      before(:each){ subject.data = Quandl::Fabricate::Data.rand( rows: 12, columns: 4 ); sleep(1); subject.save }
       its(:updated_at){ should_not eq dataset.updated_at }
       its(:data){ should_not eq dataset.data }
       its(:refreshed_at){ should_not eq dataset.refreshed_at }
