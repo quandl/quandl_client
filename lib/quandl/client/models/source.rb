@@ -1,18 +1,15 @@
 module Quandl
 module Client
 
-class Source
-  
-  include Concerns::Search
-  include Concerns::Properties
+class Source < Quandl::Client::Base
   
   ##########  
   # SCOPES #
   ##########
   
-  search_scope :query
-  search_scope :page, ->(p){ where( page: p.to_i )}
-  search_scope :code, ->(c){ where( code: c.to_s.upcase )}
+  scope :query
+  scope :page, ->(p){ where( page: p.to_i )}
+  scope :code, ->(c){ where( code: c.to_s.upcase )}
   
   
   ###############

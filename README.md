@@ -32,7 +32,7 @@ Quandl::Client.token = ENV['QUANDL_AUTH_TOKEN']
 
 #### Search
 
-search_scope :rows, :exclude_data, :exclude_headers, :trim_start, :trim_end, :transform, :collapse
+scope :rows, :exclude_data, :exclude_headers, :trim_start, :trim_end, :transform, :collapse
 
 ```ruby
 
@@ -52,15 +52,15 @@ attributes :data, :source_code, :code, :name, :urlize_name,
 
 d = Quandl::Client::Dataset.find('OFDP/COBALT_51')
 d.full_code
-d.data_table
+d.data
 
 
 d = Quandl::Client::Dataset.collapse('weekly').trim_start("2012-03-31").trim_end("2013-06-30").find('OFDP/COBALT_51')
-d.data_table
+d.data
 
 
 d = Quandl::Client::Dataset.exclude_data('true').find('OFDP/COBALT_51')
-d.data_table
+d.data
 
 ```
 
@@ -95,7 +95,7 @@ d = Dataset.create( attributes )
 
 d = Dataset.find( d.full_code )
 d.name = 'New Name'
-d.data = Quandl::Fabricate::Data::Table.rand.to_csv
+d.data = Quandl::Fabricate::Data.rand.to_csv
 d.save
 
 d = Dataset.collapse(:weekly).find( d.full_code )
@@ -114,6 +114,22 @@ Dataset.destroy_existing(52352)
 
 Dataset.find('SOME_SOURCE/SOME_CODE')
 => nil
+
+```
+
+
+#### Delete Data
+
+```ruby
+
+d = Dataset.find('SOME_SOURCE/SOME_CODE')
+d.delete_data
+d.data
+=> nil
+
+d.delete_rows( '1998-02-01','1998-03-03' )
+d.data
+=> # given rows are deleted
 
 ```
 

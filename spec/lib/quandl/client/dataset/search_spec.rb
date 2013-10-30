@@ -14,7 +14,7 @@ describe Dataset do
   end
   
   it "should exclude_data" do
-    Dataset.exclude_data(true).find(dataset.id).data.should be_blank
+    Dataset.find(dataset.id).attributes[:data].should be_blank
   end
   
 end

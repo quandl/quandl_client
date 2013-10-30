@@ -28,9 +28,9 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency "yajl-ruby", "~> 1.1.0"
   s.add_runtime_dependency 'json', '~> 1.7.7'
   
-  s.add_runtime_dependency "scope_composer", "~> 0.1"
+  s.add_runtime_dependency "scope_composer", "~> 0.3"
   s.add_runtime_dependency "quandl_logger", "~> 0.1"
   s.add_runtime_dependency "quandl_operation", "~> 0.1"
-  s.add_runtime_dependency "quandl_data", "~> 0.1"
+  s.add_runtime_dependency "quandl_data", "~> 1.0"
   
 end
