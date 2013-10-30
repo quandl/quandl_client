@@ -1,27 +1,15 @@
-module Quandl
-module Client
-
-class Dataset
+class Quandl::Client::Dataset < Quandl::Client::Base
   
-  include Concerns::Search
-  include Concerns::Properties
-  
+  require 'quandl/client/models/dataset/data'
   
   ##########  
   # SCOPES #
   ##########
   
   # SEARCH
-  search_scope :query, :rows
-  search_scope :page, ->(p){ where( page: p.to_i )}
-  search_scope :source_code, ->(c){ where( code: c.to_s.upcase )}
-  
-  # SHOW
-  scope_composer_for :show
-  show_scope :rows, :exclude_data, :exclude_headers, :trim_start, :trim_end, :transform, :collapse
-  show_helper :find, ->(id){ connection.where(attributes).find( id ) }
-  show_helper :connection, -> { self.class.parent }
-  
+  scope :query, :rows
+  scope :page, ->(p){ where( page: p.to_i )}
+  scope :source_code, ->(c){ where( code: c.to_s.upcase )}
   
   ###############
   # ASSOCIATIONS #
@@ -30,7 +18,6 @@ class Dataset
   def source
     @source ||= Source.find(self.source_code)
   end
-  
   
   ###############
   # VALIDATIONS #
@@ -48,7 +35,7 @@ class Dataset
     :description, :updated_at, :frequency,
     :from_date, :to_date, :column_names, :private, :type,
     :display_url, :column_spec, :import_spec, :import_url,
-    :locations_attributes, :data, :availability_delay, :refreshed_at
+    :locations_attributes, :availability_delay, :refreshed_at
     
   before_save :enforce_required_formats
   
@@ -58,23 +45,51 @@ class Dataset
   def full_code
     @full_code ||= File.join(self.source_code, self.code)
   end
-
-  def data_table
-    Data::Table.new( raw_data )
+  
+  # DATA
+  
+  def data
+    dataset_data.data? ? dataset_data.data : Dataset::Data.with_id(id)
   end
   
-  def raw_data
-    @raw_data ||= (self.data || Dataset.find(full_code).data || [])
+  def data=(value)
+    dataset_data.data = value
   end
+
+  def delete_data
+    # cant delete unsaved records
+    return false if new_record?
+    # delete and return success / failure
+    self.class.destroy_existing("#{id}/data").saved?
+  end
+
+  def delete_rows(*dates)
+    # cant delete unsaved records
+    return false if new_record?
+    # collect dates
+    query = { dates: Array(dates).flatten }.to_query
+    # delete and return success / failure
+    self.class.destroy_existing("#{id}/data/rows?#{query}").saved?
+  end
+  
+  def dataset_data
+    @dataset_data ||= Dataset::Data.new( id: id )
+  end
+  
+  after_save :save_dataset_data
   
   protected
   
+  def save_dataset_data
+    dataset_data.id = id
+    dataset_data.save
+    # update dataset's attributes with dataset_data's attributes
+    attributes.each{|k,v| attributes[k] = dataset_data.attributes[k] if dataset_data.attributes.has_key?(k) }
+  end
+  
   def enforce_required_formats
-    self.data = Quandl::Data::Table.new(data).to_csv
+    # self.data = Quandl::Data.new(data).to_csv
     self.locations_attributes = locations_attributes.to_json if locations_attributes.respond_to?(:to_json) && !locations_attributes.kind_of?(String)
   end
   
-end
-
-end
 end

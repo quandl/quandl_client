@@ -1,18 +1,10 @@
-module Quandl
-module Client
-module Concerns
+class Quandl::Client::Base
+module Validation
   
-module Properties
   extend ActiveSupport::Concern
 
   included do
-
-    include Her::Model
-    use_api Client.her_api
   
-    before_save :touch_save_time
-    after_save :log_save_time
-    
     before_save :halt_unless_valid!
     
     def valid_with_server?
@@ -42,6 +34,10 @@ module Properties
       status >= 200 && status <= 210
     end
     
+    def queried?
+      status > 0
+    end
+    
     def status
       metadata[:status].to_i
     end
@@ -69,30 +65,12 @@ module Properties
       response_errors.present? ? { response_errors: response_errors } : {}
     end
     
-    
     protected
   
     def halt_unless_valid!
       return false unless valid?
     end
-    
-    private
-    
-    def save_timer
-      @save_timer
-    end
-    
-    def touch_save_time
-      @save_timer = Time.now
-    end
-    
-    def log_save_time
-      Quandl::Logger.info("#{self.class.name}.save (#{save_timer.elapsed_ms})")
-    end
-    
-  end      
-end
-
-end
+     
+  end
 end
 end
