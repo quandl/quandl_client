@@ -34,7 +34,7 @@ class Quandl::Client::Base
     end
 
     def url
-      @url ||= "http://localhost:3000/api/"
+      @url ||= "http://localhost:3000/api/#{Quandl::Client.api_version}/"
     end
     
     def inherited(subclass)

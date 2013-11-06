@@ -12,8 +12,7 @@ require "quandl/fabricate"
 
 include Quandl::Client
 Quandl::Client.use ENV['QUANDL_API_HOST']
-Quandl::Client.use 'http://staging.quandl.com/api/'
-
+# Quandl::Client.use 'http://staging.quandl.com/api/'
 Quandl::Client.token = ENV['QUANDL_AUTH_TOKEN']
 
 RSpec.configure do |config|
