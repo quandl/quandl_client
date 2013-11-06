@@ -16,6 +16,7 @@ describe Dataset do
   context "updated" do
     
     subject{
+      dataset.updated_at
       sleep(0.75)
       Dataset.find( dataset.id )
     }

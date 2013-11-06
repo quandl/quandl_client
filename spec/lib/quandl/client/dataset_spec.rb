@@ -7,9 +7,10 @@ describe Dataset do
   
   describe ".touch_existing(:id)" do
     it "should touch the dataset" do
-      original_updated_at = subject.updated_at
+      dataset.updated_at
+      sleep(0.75)
       Dataset.touch_existing(subject.id).should eq true
-      Dataset.find(subject.id).updated_at.should_not eq original_updated_at
+      Dataset.find(subject.id).updated_at.should_not eq dataset.updated_at
     end
   end
   
