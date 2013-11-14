@@ -1,3 +1,8 @@
+## 2.1.2
+
+* bump quandl_data, operation, logger
+
+
 ## 2.0.1
 
 * fully qualified classes to avoid collisions
