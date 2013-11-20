@@ -21,6 +21,4 @@ new_data = Quandl::Fabricate::Data.rand( rows: 10, columns: 2, nils: false ).to_
 d.data = new_data
 d.save
 
-puts "data matches? #{Dataset.find(d.id).data == Quandl::Data.new(new_data)}"
-
 binding.pry
