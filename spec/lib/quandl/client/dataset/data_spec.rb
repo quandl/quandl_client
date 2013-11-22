@@ -1,12 +1,30 @@
 # encoding: utf-8
 require 'spec_helper'
 
-describe Dataset do
+describe Quandl::Client::Dataset::Data do
 
   let(:dataset){ 
     create(:dataset, source_code: "QUANDL_CLIENT_TEST_SOURCE", data: Quandl::Fabricate::Data.rand( rows: 10, columns: 4 ) )
   }
-
+  
+  describe ".with_id" do
+    subject{ Quandl::Client::Dataset::Data.with_id(6668) }
+    let(:data){ Quandl::Client::Dataset::Data.with_id(6668).to_table }
+    
+    let(:beginning_of_last_week){ Date.today.jd - Date.today.beginning_of_week.jd }
+    
+    it("data"){ data.count.should > 100 }
+    it(".row(:beginning_of_last_week)"){ subject.row( beginning_of_last_week ).to_table.count.should eq 1 }
+    it(".rows(5)"){ subject.rows(5).to_table.count.should eq 5 }
+    it(".limit(2)"){ subject.limit(2).to_table.count.should eq 2 }
+    it(".column(2)"){ subject.column(2).to_table.first.count.should eq 2 }
+    it(".order('asc')"){ subject.order('asc').to_table.first.first.should eq data.sort_ascending!.first.first }
+    it(".order('desc')"){ subject.order('desc').to_table.first.first.should eq data.sort_descending!.first.first }
+    it(".trim_start().trim_end()"){ subject.trim_start( data[11].first ).trim_end(data[10].first).to_table.first.first.should eq data[10].first }
+    it(".collapse('monthly')"){ subject.collapse('monthly').to_table.frequency.should eq :monthly }
+    it(".transform('rdiff')"){ subject.transform('rdiff').to_table[0][1].should_not eq data[0][1] }
+  end
+  
   describe "#data" do
     subject{ Dataset.find( dataset.id ).data }
     its(:count){ should eq 10 }
