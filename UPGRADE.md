@@ -1,3 +1,9 @@
+## 2.1.3
+
+* add specs for data scopes
+* fix failing data scope specs
+
+
 ## 2.1.2
 
 * bump quandl_data, operation, logger
