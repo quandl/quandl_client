@@ -33,7 +33,6 @@ module Search
     
       def find(id)
         attrs = attributes.merge(scope_attributes)
-        puts attrs
         result = self.class.parent.where( attrs ).find(id)
         result = self.class.parent.new(id: id) if result.nil?
         result
