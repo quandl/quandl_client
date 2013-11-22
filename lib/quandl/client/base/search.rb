@@ -20,7 +20,7 @@ module Search
     scope_helper :connection, -> { self.class.parent }
     
     scope.class_eval do
-    
+
       delegate *Array.forwardable_methods.reject{|m| [:find, :fetch].include?(m) }, to: :all
       
       def fetch_once
@@ -32,7 +32,9 @@ module Search
       end
     
       def find(id)
-        result = self.class.parent.where(attributes).find(id)
+        attrs = attributes.merge(scope_attributes)
+        puts attrs
+        result = self.class.parent.where( attrs ).find(id)
         result = self.class.parent.new(id: id) if result.nil?
         result
       end
