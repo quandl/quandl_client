@@ -11,7 +11,6 @@ Quandl::Client.token = ENV['QUANDL_USER_TOKEN']
 # create dataset
 d = Dataset.find('NSE/OIL')
 
-d.data.trim_start( 3.weeks.ago ).limit(10)
-
+data = d.data.trim_start( 3.weeks.ago ).limit(10)
 
 binding.pry
