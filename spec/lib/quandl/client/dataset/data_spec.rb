@@ -63,7 +63,7 @@ describe Quandl::Client::Dataset::Data do
   describe "#delete_rows" do
     subject{ Dataset.find( dataset.id ) }
     
-    let(:dates_slice){ dataset.data.to_h.keys[5..8] }
+    let(:dates_slice){ dataset.data.to_date.to_h.keys[5..8] }
     
     it "should have the dates" do
       dates = Dataset.find( dataset.id ).data.to_h.keys
@@ -74,7 +74,7 @@ describe Quandl::Client::Dataset::Data do
     
       before(:each){ subject.delete_rows(dates_slice) }
       
-      it "data count should be 16" do
+      it "data count should be 6" do
         Dataset.find( dataset.id ).data.count.should eq 6
       end
     
