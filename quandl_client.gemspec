@@ -24,7 +24,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency "pry"
 
   s.add_runtime_dependency "activesupport", ">= 3.0.0"
-  s.add_runtime_dependency "her", "0.6.7"
+  s.add_runtime_dependency "her", "~> 0.6"
   s.add_runtime_dependency "yajl-ruby", "~> 1.1.0"
   s.add_runtime_dependency 'json', '~> 1.7.7'
   

@@ -16,7 +16,7 @@ module Search
     has_scope_composer
 
     scope :with_id,      ->(value)   { where( id: value.to_i )}
-    scope_helper :all, ->{ connection.where(attributes).fetch }
+    scope_helper :all, ->{ connection.where(attributes_with_scopes).fetch }
     scope_helper :connection, -> { self.class.parent }
     
     scope.class_eval do
@@ -28,16 +28,19 @@ module Search
       end
     
       def fetch
-        find(attributes[:id])
+        find(attributes_with_scopes[:id])
       end
     
       def find(id)
-        attrs = attributes.merge(scope_attributes)
-        result = self.class.parent.where( attrs ).find(id)
+        result = self.class.parent.where( attributes_with_scopes ).find(id)
         result = self.class.parent.new(id: id) if result.nil?
         result
       end
-    
+      
+      def attributes_with_scopes
+        attributes.merge(scope_attributes)
+      end
+      
     end
   
   end

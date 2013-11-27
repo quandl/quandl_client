@@ -1,6 +1,9 @@
 class Quandl::Client::Dataset < Quandl::Client::Base
   
   require 'quandl/client/models/dataset/data'
+
+  # parse_root_in_json true
+  # root_element :docs
   
   ##########  
   # SCOPES #

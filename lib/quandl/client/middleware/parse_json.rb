@@ -12,9 +12,13 @@ class ParseJSON < Faraday::Response::Middleware
       parse(env[:body], env)
     end
   end
-
+  
   def parse(body, env)
     json = parse_json(body, env)
+    json.has_key?(:docs) ? format_collection( json, env ) : format_record( json, env )
+  end
+  
+  def format_record(json, env)
     errors = json.delete(:errors) || {}
     metadata = json.delete(:metadata) || {}
     # collect some response data
@@ -25,6 +29,25 @@ class ParseJSON < Faraday::Response::Middleware
     # return object
     object = {
       :data => json,
+      :errors => errors,
+      :metadata => metadata
+    }
+    env[:status] = 200
+    object
+  end
+  
+  def format_collection(json, env)
+    errors = json.delete(:errors) || {}
+    metadata = json.delete(:metadata) || {}
+    docs = json.delete(:docs)
+    # collect some response data
+    metadata.merge!(json).merge!({
+      status:                 env[:status],
+      headers:                env[:response_headers],
+      })
+    # return object
+    object = {
+      :data => docs,
       :errors => errors,
       :metadata => metadata
     }

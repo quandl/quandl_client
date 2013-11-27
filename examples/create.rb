@@ -7,7 +7,7 @@ require 'securerandom'
 
 include Quandl::Client
 
-Quandl::Client.use 'http://quandl.com/api/'
+Quandl::Client.use ENV['QUANDL_API_HOST']
 Quandl::Client.token = ENV['QUANDL_USER_TOKEN']
 
 # create dataset
