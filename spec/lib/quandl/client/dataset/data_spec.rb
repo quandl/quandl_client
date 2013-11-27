@@ -66,7 +66,7 @@ describe Quandl::Client::Dataset::Data do
     let(:dates_slice){ dataset.data.to_date.to_h.keys[5..8] }
     
     it "should have the dates" do
-      dates = Dataset.find( dataset.id ).data.to_h.keys
+      dates = Dataset.find( dataset.id ).data.to_date.to_h.keys
       dates_slice.each{|date| dates.include?(date).should be_true }
     end
     
