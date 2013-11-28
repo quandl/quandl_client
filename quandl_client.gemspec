@@ -29,6 +29,6 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'json', '~> 1.7.7'
   
   s.add_runtime_dependency "scope_composer", "~> 0.3"
-  s.add_runtime_dependency "quandl_data", "~> 1.1"
+  s.add_runtime_dependency "quandl_data", "~> 1.2"
   
 end

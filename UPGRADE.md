@@ -1,3 +1,15 @@
+## 2.2.0
+
+* add specs for Dataset.query
+* Dataset.query.all.metadata should pass
+
+
+## 2.1.4
+
+* add specs for Dataset.query(term).all; make specs pass
+
+
+
 ## 2.1.3
 
 * add specs for data scopes

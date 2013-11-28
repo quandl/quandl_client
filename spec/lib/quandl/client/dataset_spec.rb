@@ -17,6 +17,7 @@ describe Dataset do
   describe ".query" do
     let(:datasets){ Quandl::Client::Dataset.query('oil').all }
     subject{ datasets }
+
     its(:first){ should be_a Quandl::Client::Dataset }
     
     describe "#metadata" do
