@@ -49,8 +49,12 @@ class Quandl::Client::Dataset < Quandl::Client::Base
   alias_method :locations, :locations_attributes
   alias_method :locations=, :locations_attributes=
   
+  def full_url
+    File.join(Quandl::Client::Dataset.url, 'datasets', full_code)
+  end
+  
   def full_code
-    @full_code ||= File.join(self.source_code, self.code)
+    File.join(self.source_code.to_s, self.code.to_s)
   end
   
   # DATA
