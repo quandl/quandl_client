@@ -31,4 +31,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency "scope_composer", "~> 0.3"
   s.add_runtime_dependency "quandl_data", "~> 1.2"
   
+
+  s.add_development_dependency "guard"
+  s.add_development_dependency "guard-rspec"
 end
