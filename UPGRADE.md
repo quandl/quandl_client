@@ -1,3 +1,9 @@
+## 2.2.1
+
+* full_code: dont assume that source_code is present
+* Dataset#data scope is cached to permit building across multiple lines. add Dataset#reload to wipe data_scope, dataset_data
+
+
 ## 2.2.0
 
 * add specs for Dataset.query
