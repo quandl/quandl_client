@@ -56,7 +56,10 @@ class Quandl::Client::Base
     protected
     
     def models_use_her_api!
-      models.each{|m| m.use_api( her_api ) }
+      models.each{|m|
+        m.url = url
+        m.use_api( her_api ) 
+      }
     end
     
     class TokenAuthentication < Faraday::Middleware

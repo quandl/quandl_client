@@ -14,6 +14,14 @@ describe Dataset do
     end
   end
   
+  it "should change url" do
+    Quandl::Client.use('http://url.com/')
+    Quandl::Client::Dataset.url.should eq 'http://url.com/v2'
+    Quandl::Client.use('http://url.com/2/')
+    Quandl::Client::Dataset.url.should eq 'http://url.com/2/v2'
+    Quandl::Client.use ENV['QUANDL_API_HOST']
+  end
+  
   describe ".query" do
     let(:datasets){ Quandl::Client::Dataset.query('oil').all }
     subject{ datasets }
