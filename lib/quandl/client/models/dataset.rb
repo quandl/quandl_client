@@ -56,7 +56,7 @@ class Quandl::Client::Dataset < Quandl::Client::Base
   # DATA
   
   def data
-    dataset_data.data? ? dataset_data.data : Quandl::Client::Dataset::Data.with_id(id)
+    dataset_data.data? ? dataset_data.data : data_scope
   end
   
   def data=(value)
@@ -79,8 +79,18 @@ class Quandl::Client::Dataset < Quandl::Client::Base
     self.class.destroy_existing("#{id}/data/rows?#{query}").saved?
   end
   
+  def data_scope
+    @data_scope ||= Quandl::Client::Dataset::Data.with_id(id)
+  end
+  
   def dataset_data
     @dataset_data ||= Quandl::Client::Dataset::Data.new( id: id )
+  end
+  
+  def reload
+    @dataset_data = nil
+    @data_scope = nil
+    @full_code = nil
   end
   
   after_save :save_dataset_data
