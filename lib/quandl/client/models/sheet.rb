@@ -34,7 +34,7 @@ class Sheet < Quandl::Client::Base
   # PROPERTIES #
   ##############
   
-  attributes :title, :content, :url_title, :full_url_title, :description
+  attributes :title, :content, :url_title, :full_url_title, :description, :skip_browse
   
   def html
     @html ||= self.attributes[:html] || Quandl::Client::Sheet.find(full_url_title).attributes[:html]
