@@ -49,6 +49,14 @@ class Quandl::Client::Dataset < Quandl::Client::Base
   alias_method :locations, :locations_attributes
   alias_method :locations=, :locations_attributes=
   
+  def reference_url
+    self.display_url
+  end
+  def reference_url=(value)
+    value = "http://#{value}" unless value =~ /^http:\/\//
+    self.display_url = value
+  end
+  
   def full_url
     File.join(Quandl::Client::Dataset.url, 'datasets', full_code)
   end

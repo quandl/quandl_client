@@ -10,6 +10,21 @@ describe Dataset do
   }
   subject{ create(:dataset, source_code: source.code, private: true ) }
   
+  describe "#reference_url" do
+    let(:url){ "http://website.com/path/to/reference" }
+    let(:dataset){ Dataset.new( reference_url: url ) }
+    subject{ dataset }
+    
+    its(:reference_url){ should eq url }
+    
+    context "partial url" do
+      let(:partial_url){ "website.com/path/to/reference" }
+      let(:dataset){ Dataset.new( reference_url: partial_url ) }
+      its(:reference_url){ should eq url }
+    end
+    
+  end
+  
   describe "#private" do
     
     it "should update to false" do
