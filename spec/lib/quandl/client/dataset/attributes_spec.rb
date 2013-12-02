@@ -19,15 +19,12 @@ describe Dataset do
     its(:valid?){ should be_true }
     
     context "partial url" do
-      let(:partial_url){ "website.com/path/to/reference" }
-      let(:dataset){ Dataset.new( reference_url: partial_url, code: "VALID" ) }
-      its(:reference_url){ should eq url }
-      its(:valid?){ should be_true }
+      let(:url){ "website.com/path/to/reference" }
+      its(:valid?){ should be_false }
     end
     
     context "invalid url" do
-      let(:partial_url){ "website" }
-      let(:dataset){ Dataset.new( reference_url: partial_url, code: "VALID" ) }
+      let(:url){ "website" }
       its(:valid?){ should be_false }
     end
     

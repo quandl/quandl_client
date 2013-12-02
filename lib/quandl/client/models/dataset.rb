@@ -31,6 +31,7 @@ class Quandl::Client::Dataset < Quandl::Client::Base
   ###############
   
   validates :code, presence: true, format: { with: /[A-Z0-9_]+/ }
+  validates :display_url, allow_blank: true, url: true
   
   
   ##############
@@ -52,7 +53,6 @@ class Quandl::Client::Dataset < Quandl::Client::Base
     self.display_url
   end
   def reference_url=(value)
-    value = "http://#{value}" unless value =~ /^http:\/\//
     self.display_url = value
   end
   
