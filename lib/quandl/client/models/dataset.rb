@@ -31,7 +31,6 @@ class Quandl::Client::Dataset < Quandl::Client::Base
   ###############
   
   validates :code, presence: true, format: { with: /[A-Z0-9_]+/ }
-  validates :name, presence: true, :length => { :maximum => 1000 }
   
   
   ##############
