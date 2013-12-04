@@ -10,6 +10,14 @@ Dir.glob( factory_dir ).each{|f| require(f); puts f }
 require "quandl/client"
 require "quandl/fabricate"
 
+# Expects two env variables:
+
+# administrator:
+# ENV['QUANDL_AUTH_TOKEN'] 
+
+# user:
+# ENV['QUANDL_USER_TOKEN']
+
 include Quandl::Client
 Quandl::Client.token = ENV['QUANDL_AUTH_TOKEN']
 Quandl::Client.use ENV['QUANDL_API_HOST']
