@@ -15,7 +15,7 @@ class Quandl::Client::Base
     attr_accessor :url, :token
   
     def use(url)
-      self.url = File.join( url, Quandl::Client.api_version )
+      self.url = url
       models_use_her_api!
     end
     
@@ -25,7 +25,7 @@ class Quandl::Client::Base
     end
     
     def her_api
-      Her::API.new.setup url: url do |c|
+      Her::API.new.setup url: url_with_version do |c|
         c.use TokenAuthentication
         c.use Faraday::Request::UrlEncoded
         c.use Quandl::Client::Middleware::ParseJSON
@@ -34,7 +34,11 @@ class Quandl::Client::Base
     end
 
     def url
-      @url ||= "http://localhost:3000/api/#{Quandl::Client.api_version}/"
+      @url ||= "http://quandl.com/api/"
+    end
+
+    def url_with_version
+      File.join( url.to_s, Quandl::Client.api_version.to_s )
     end
     
     def inherited(subclass)
@@ -57,7 +61,7 @@ class Quandl::Client::Base
     
     def models_use_her_api!
       models.each{|m|
-        m.url = url
+        m.url = url_with_version
         m.use_api( her_api ) 
       }
     end

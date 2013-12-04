@@ -10,7 +10,7 @@ class Quandl::Client::Dataset < Quandl::Client::Base
   ##########
   
   def self.touch_existing(id)
-    put(File.join(Quandl::Client::Base.url, "datasets/#{id}/touch")).exists?
+    put(File.join(Quandl::Client::Base.url_with_version, "datasets/#{id}/touch")).exists?
   end
   
   # SEARCH
