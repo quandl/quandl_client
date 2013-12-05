@@ -7,6 +7,7 @@ describe Dataset do
   subject{ dataset }
   
   context "admin user" do
+
     its(:saved?){ should be_true }
     its(:source_code){ should be_present }
     

@@ -1,3 +1,12 @@
+## 2.3.0
+
+* add auth_token attribute to user
+* add Quandl::Client::User, .login for authenticating
+* full_url outputs the quandl link instead of the api link. Add human_status and HTTP_STATUS_CODES
+* should validate display_url as a url
+* add reference_url alias for display_url. reference_url will automatically add http when missing
+
+
 ## 2.2.1
 
 * full_code: dont assume that source_code is present
