@@ -49,7 +49,22 @@ module Validation
     def parse_error
       error_messages[:response_errors].try( :[], :parse_error )
     end
-    
+  
+    def human_error_messages
+      return if errors.blank?
+      m = "#{status}\n"
+      m += "  errors: \n"
+      m += error_messages.collect do |error_type, messages|
+        next human_error_message(error_type, messages)  unless messages.is_a?(Hash)
+        messages.collect{|n,m| human_error_message(n, m) }
+      end.flatten.compact.join
+    end
+  
+    def human_error_message(name, message)
+      message = message.join(', ') if message.respond_to?(:join)
+      "    #{name}: #{message}\n"
+    end
+  
     def error_messages
       valid?
       errors_client.deep_merge(errors_server).deep_merge(errors_params)
