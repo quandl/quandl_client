@@ -38,6 +38,10 @@ module Validation
       status > 0
     end
     
+    def human_status
+      Quandl::Client::HTTP_STATUS_CODES[status]
+    end
+    
     def status
       metadata[:status].to_i
     end
