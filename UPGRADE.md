@@ -1,3 +1,9 @@
+## 2.3.1
+
+* bump quandl_data
+* add human_error_messsages
+
+
 ## 2.3.0
 
 * add auth_token attribute to user
