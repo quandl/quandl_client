@@ -18,6 +18,10 @@ module Model
     
   end
   
+  def elapsed_request_time_ms
+    elapsed_request_time.to_f.microseconds.to_s + 'ms'
+  end
+  
   def elapsed_request_time
     return nil unless request_finished_at.is_a?(Time) && request_started_at.is_a?(Time)
     @elapsed_request_time ||= (request_finished_at - request_started_at)

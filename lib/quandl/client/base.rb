@@ -8,6 +8,8 @@ require 'quandl/client/base/attributes'
 require 'quandl/client/base/validation'
 require 'quandl/client/base/search'
 
+I18n.enforce_available_locales = false
+
 class Quandl::Client::Base
   
   class << self
