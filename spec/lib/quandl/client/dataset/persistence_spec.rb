@@ -7,6 +7,10 @@ describe Dataset do
     its(:saved?){ should be_false }
     its(:valid?){ should be_true }
   end
+
+  its(:save_started_at){ should be_nil }
+  its(:save_finished_at){ should be_nil }
+  its(:elapsed_save_time){ should be_nil }
   
   context "when created" do
     context "without token" do
@@ -17,7 +21,11 @@ describe Dataset do
   
       its(:saved?){ should be_false }
       its(:status){ should eq 401 }
-    
+  
+      its(:save_started_at){ should be_a Time }
+      its(:save_finished_at){ should be_a Time }
+      its(:elapsed_save_time){ should be > 0 }
+      
       after(:all){ Quandl::Client.token = ENV['QUANDL_AUTH_TOKEN'] }
     end
     context "with token" do
