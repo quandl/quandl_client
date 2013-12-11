@@ -1,3 +1,10 @@
+# 2.3.2
+
+* add #elapsed_request_time_ms
+* refactor save_time to request_time. Add specs to #destroy for request_started_at, finished_at, elapsed_request_time
+* add Client::Base#save_started_at, #save_finished_at, #elapsed_save_time. before_save :touch_save_started_at, after_save :touch_save_finished_at
+
+
 ## 2.3.1
 
 * bump quandl_data
