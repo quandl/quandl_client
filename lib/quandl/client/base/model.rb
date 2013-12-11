@@ -8,26 +8,29 @@ module Model
     include Her::Model
     use_api Quandl::Client::Base.her_api
     
-    before_save :touch_save_started_at
-    after_save :touch_save_finished_at
+    before_save :touch_request_started_at
+    after_save :touch_request_finished_at
     
-    attr_accessor :save_started_at, :save_finished_at
+    before_destroy :touch_request_started_at
+    after_destroy :touch_request_finished_at
+    
+    attr_accessor :request_started_at, :request_finished_at
     
   end
   
-  def elapsed_save_time
-    return nil unless save_finished_at.is_a?(Time) && save_started_at.is_a?(Time)
-    @elapsed_save_time ||= (save_finished_at - save_started_at)
+  def elapsed_request_time
+    return nil unless request_finished_at.is_a?(Time) && request_started_at.is_a?(Time)
+    @elapsed_request_time ||= (request_finished_at - request_started_at)
   end
   
   private 
   
-  def touch_save_started_at
-    self.save_started_at = Time.now
+  def touch_request_started_at
+    self.request_started_at = Time.now
   end
   
-  def touch_save_finished_at
-    self.save_finished_at = Time.now
+  def touch_request_finished_at
+    self.request_finished_at = Time.now
   end
   
 end
