@@ -30,7 +30,7 @@ class Quandl::Client::Dataset < Quandl::Client::Base
   # VALIDATIONS #
   ###############
   
-  validates :code, presence: true, format: { with: /[A-Z0-9_]+/ }
+  validates :code, presence: true, format: { with: Quandl::Pattern.code, message: "is invalid. Expected format: #{Quandl::Pattern.code.to_example}" }
   validates :display_url, allow_blank: true, url: true
   
   

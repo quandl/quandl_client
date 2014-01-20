@@ -25,7 +25,7 @@ class Source < Quandl::Client::Base
   # VALIDATIONS #
   ###############
    
-  validates :code, presence: true, length: { minimum: 2 }, format: { with: /([A-Z0-9_]+)/ }
+  validates :code, presence: true, length: { minimum: 2 }, format: { with: Quandl::Pattern.code, message: "is invalid. Expected format: #{Quandl::Pattern.code.to_example}" }
   validates :host, :name, presence: true
   
 

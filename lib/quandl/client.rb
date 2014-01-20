@@ -6,15 +6,15 @@ require 'quandl/her/remove_method_data'
 require 'quandl/logger'
 require "quandl/data"
 
+require 'quandl/pattern'
+require 'quandl/pattern/client'
+
 require 'quandl/client/middleware'
 require 'quandl/client/base'
 require 'quandl/client/models/dataset'
 require 'quandl/client/models/sheet'
 require 'quandl/client/models/source'
 require 'quandl/client/models/user'
-
-require 'quandl/pattern'
-require 'quandl/pattern/client'
 
 module Quandl
   module Client
