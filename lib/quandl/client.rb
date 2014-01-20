@@ -13,6 +13,9 @@ require 'quandl/client/models/sheet'
 require 'quandl/client/models/source'
 require 'quandl/client/models/user'
 
+require 'quandl/pattern'
+require 'quandl/pattern/client'
+
 module Quandl
   module Client
     
