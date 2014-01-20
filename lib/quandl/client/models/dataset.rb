@@ -53,6 +53,7 @@ class Quandl::Client::Dataset < Quandl::Client::Base
     self.display_url
   end
   def reference_url=(value)
+    value = "http://#{value}" unless value =~ /http:\/\//
     self.display_url = value
   end
   

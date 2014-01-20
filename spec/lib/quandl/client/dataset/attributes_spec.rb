@@ -20,12 +20,8 @@ describe Dataset do
     
     context "partial url" do
       let(:url){ "website.com/path/to/reference" }
-      its(:valid?){ should be_false }
-    end
-    
-    context "invalid url" do
-      let(:url){ "website" }
-      its(:valid?){ should be_false }
+      its(:reference_url){ should eq "http://website.com/path/to/reference" }
+      its(:valid?){ should be_true }
     end
     
   end
