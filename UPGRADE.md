@@ -1,3 +1,9 @@
+# 2.4.0
+
+* Dataset#reference_url should prepend of http:// when missing
+* add Quandl::Pattern for defining regex patterns with embedded examples
+
+
 # 2.3.2
 
 * add #elapsed_request_time_ms
