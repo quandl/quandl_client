@@ -2,9 +2,6 @@ class Quandl::Client::Dataset < Quandl::Client::Base
   
   require 'quandl/client/models/dataset/data'
 
-  # parse_root_in_json true
-  # root_element :docs
-  
   ##########  
   # SCOPES #
   ##########
@@ -33,7 +30,6 @@ class Quandl::Client::Dataset < Quandl::Client::Base
   validates :code, presence: true, format: { with: Quandl::Pattern.code, message: "is invalid. Expected format: #{Quandl::Pattern.code.to_example}" }
   validates :display_url, allow_blank: true, url: true
   
-  
   ##############
   # PROPERTIES #
   ##############
@@ -45,6 +41,8 @@ class Quandl::Client::Dataset < Quandl::Client::Base
     :locations_attributes, :availability_delay, :refreshed_at
     
   before_save :enforce_required_formats
+  
+  after_save :save_dataset_data
   
   alias_method :locations, :locations_attributes
   alias_method :locations=, :locations_attributes=
@@ -104,8 +102,6 @@ class Quandl::Client::Dataset < Quandl::Client::Base
     @data_scope = nil
     @full_code = nil
   end
-  
-  after_save :save_dataset_data
   
   protected
   

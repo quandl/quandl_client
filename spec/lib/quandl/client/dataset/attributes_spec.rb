@@ -10,6 +10,12 @@ describe Dataset do
   }
   subject{ create(:dataset, source_code: source.code, private: true ) }
   
+  describe "#name" do
+    subject{ create(:dataset, source_code: source.code, private: true, name: '' ) }
+    
+    its(:name){ should match /Untitled Dataset #{Date.today}/ }
+  end
+  
   describe "#reference_url" do
     let(:url){ "http://website.com/path/to/reference" }
     let(:dataset){ Dataset.new( reference_url: url, code: "VALID" ) }
