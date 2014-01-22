@@ -6,7 +6,7 @@ require "quandl/client"
 include Quandl::Client
 
 Quandl::Client.use 'http://quandl.com/api/'
-Quandl::Client.token = ENV['QUANDL_USER_TOKEN']
+Quandl::Client.token = ENV['QUANDL_TEST_TOKEN']
 
 # create dataset
 d = Dataset.find('NSE/OIL')

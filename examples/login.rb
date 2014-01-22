@@ -6,7 +6,7 @@ require "quandl/client"
 include Quandl::Client
 
 Quandl::Client.use ENV['QUANDL_API_HOST']
-Quandl::Client.token = ENV['QUANDL_USER_TOKEN']
+Quandl::Client.token = ENV['QUANDL_TEST_TOKEN']
 
 u = User.login( login: 'blakehil', password: 'example' )
 

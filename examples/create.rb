@@ -13,6 +13,6 @@ include Quandl::Client
 
 # configure quandl client
 Quandl::Client.use ENV['QUANDL_API_HOST']
-Quandl::Client.token = ENV['QUANDL_USER_TOKEN']
+Quandl::Client.token = ENV['QUANDL_TEST_TOKEN']
 
 binding.pry
