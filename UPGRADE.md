@@ -1,3 +1,8 @@
+# 2.4.1
+
+* revise reference_url http prepend
+
+
 # 2.4.0
 
 * Dataset#reference_url should prepend of http:// when missing
