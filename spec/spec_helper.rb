@@ -16,14 +16,11 @@ require "quandl/fabricate"
 # ENV['QUANDL_AUTH_TOKEN'] 
 
 # user:
-# ENV['QUANDL_USER_TOKEN']
+# ENV['QUANDL_TEST_TOKEN']
 
 include Quandl::Client
 Quandl::Client.token = ENV['QUANDL_AUTH_TOKEN']
-Quandl::Client.use ENV['QUANDL_API_HOST']
-# Quandl::Client.use 'http://staging.quandl.com/api/'
-# Quandl::Client.use 'http://67.202.27.116:8080/api/'
-# Quandl::Client.use 'http://quandl.com/api/'
+Quandl::Client.use ENV['QUANDL_TEST_URL']
 
 RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods

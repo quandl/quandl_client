@@ -94,7 +94,7 @@ describe Dataset do
     it "should not delete the dataset with a user token" do
       id = dataset.id
       # behave as a user
-      Quandl::Client.token = ENV['QUANDL_USER_TOKEN']
+      Quandl::Client.token = ENV['QUANDL_TEST_TOKEN']
       user_dataset = Dataset.find(id)
       user_dataset.destroy
       user_dataset.status.should eq 403

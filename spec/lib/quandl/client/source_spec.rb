@@ -10,6 +10,7 @@ describe Source do
     before(:all){ Quandl::Client.token = '' }
     
     subject{ source }
+
     its(:valid?){ should be_true }
     
     describe "#save" do
