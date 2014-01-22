@@ -51,7 +51,7 @@ class Quandl::Client::Dataset < Quandl::Client::Base
     self.display_url
   end
   def reference_url=(value)
-    value = "http://#{value}" if value.present? && !(value =~ /http:\/\//)
+    value = "http://#{value}" if value.present? && !(value =~ /:\/\//)
     self.display_url = value
   end
   
@@ -106,6 +106,8 @@ class Quandl::Client::Dataset < Quandl::Client::Base
   protected
   
   def save_dataset_data
+    return if !saved? && id.blank?
+    
     dataset_data.id = id
     dataset_data.save
     # update dataset's attributes with dataset_data's attributes
