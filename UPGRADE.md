@@ -1,3 +1,8 @@
+# 2.4.2
+
+* Dataset.find will return nil unless the id is an integer, or matches the quandl pattern for full_code
+
+
 # 2.4.1
 
 * revise reference_url http prepend
