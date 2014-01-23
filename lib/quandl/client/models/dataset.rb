@@ -5,13 +5,17 @@ class Quandl::Client::Dataset < Quandl::Client::Base
   ##########  
   # SCOPES #
   ##########
+  class << self
+    def touch_existing(id)
+      put(File.join(Quandl::Client::Base.url_with_version, "datasets/#{id}/touch")).exists?
+    end
   
-  def self.touch_existing(id)
-    put(File.join(Quandl::Client::Base.url_with_version, "datasets/#{id}/touch")).exists?
-  end
+    def find(value)
+      # short-circuit if value is illegal
+      return nil unless value.is_a?(Integer) || value.to_s =~ %r{^#{Quandl::Pattern.full_code}$}
+      super(value)
+    end
   
-  def self.find(value)
-    super(value)
   end
   
   # SEARCH
