@@ -10,6 +10,10 @@ class Quandl::Client::Dataset < Quandl::Client::Base
     put(File.join(Quandl::Client::Base.url_with_version, "datasets/#{id}/touch")).exists?
   end
   
+  def self.find(value)
+    super(value)
+  end
+  
   # SEARCH
   scope :query, :rows
   scope :page, ->(p){ where( page: p.to_i )}

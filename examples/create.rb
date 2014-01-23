@@ -12,7 +12,7 @@ require 'pry'
 include Quandl::Client
 
 # configure quandl client
-Quandl::Client.use ENV['QUANDL_API_HOST']
+Quandl::Client.use ENV['QUANDL_TEST_URL']
 Quandl::Client.token = ENV['QUANDL_TEST_TOKEN']
 
 binding.pry

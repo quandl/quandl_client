@@ -5,6 +5,22 @@ describe Dataset do
   let(:dataset){ create(:dataset) }
   subject{ dataset }
   
+  describe ".find" do
+    subject{ Dataset.find(query) }
+    context "given nil" do
+      let(:query){ nil }
+      it{ should be_nil }
+    end
+    context "given empty string" do
+      let(:query){ '' }
+      it{ should be_nil }
+    end
+    context "given non-code value" do
+      let(:query){ '/' }
+      it{ should be_nil }
+    end
+  end
+  
   describe ".touch_existing(:id)" do
     it "should touch the dataset" do
       dataset.updated_at
