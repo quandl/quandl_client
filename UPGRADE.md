@@ -1,3 +1,9 @@
+# 2.4.4
+
+* Dataset#data to_table assigns column_names to headers
+* add skip_browse to Sheet
+
+
 # 2.4.3
 
 * hotfix for full_code pattern matching ... code can be as short as two characters
