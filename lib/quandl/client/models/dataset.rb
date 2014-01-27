@@ -98,7 +98,7 @@ class Quandl::Client::Dataset < Quandl::Client::Base
   end
   
   def data_scope
-    @data_scope ||= Quandl::Client::Dataset::Data.with_id(id)
+    @data_scope ||= Quandl::Client::Dataset::Data.with_dataset(self)
   end
   
   def dataset_data
