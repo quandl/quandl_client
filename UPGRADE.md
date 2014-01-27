@@ -1,3 +1,8 @@
+# 2.4.3
+
+* hotfix for full_code pattern matching ... code can be as short as two characters
+
+
 # 2.4.2
 
 * Dataset.find will return nil unless the id is an integer, or matches the quandl pattern for full_code
