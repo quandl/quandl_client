@@ -7,26 +7,7 @@ class Quandl::Client::Dataset::Data < Quandl::Client::Base
   scope.class_eval do
     delegate *Quandl::Client::Dataset::Data.forwardable_scope_methods, :to_h, to: :to_table, allow_nil: true
     delegate *Quandl::Data.forwardable_methods, to: :to_table, allow_nil: true
-    
-    attr_accessor :dataset
-    
-    def fetch_once
-      return @fetch_once if defined?(@fetch_once)
-      result = fetch
-      # do we have a result?
-      if dataset.respond_to?(:assign_attributes) && result.respond_to?(:attributes)
-        # then assign any updated attributes to dataset parent object
-        dataset.assign_attributes( result.attributes )
-      end
-      @fetch_once = result
-    end
-    
   end
-  
-  scope :with_dataset, ->(value){
-    self.dataset = value
-    where( id: dataset.id.to_i )
-  }
   
   scope *[:row, :rows, :limit, :offset, :accuracy, :column, :order, 
     :transform, :collapse, :exclude_headers]
@@ -47,7 +28,11 @@ class Quandl::Client::Dataset::Data < Quandl::Client::Base
     end
   }
   
-  scope_helper :to_table, -> { fetch_once.data }
+  scope_helper :to_table, -> { 
+    data = fetch_once.data
+    data.headers = fetch_once.column_names
+    data
+  }
 
   attributes :id, :limit, :collapse, :transformation, :trim_start, :trim_end, 
     :rows, :row, :frequency, :data, :from_date, :to_date, :column_names
