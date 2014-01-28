@@ -12,6 +12,7 @@ class Quandl::Client::Dataset < Quandl::Client::Base
   
     def find(value)
       # short-circuit if value is illegal
+      value = value.gsub("\\","/")
       return nil unless value.is_a?(Integer) || value.to_s =~ %r{^#{Quandl::Pattern.full_code}$}
       super(value)
     end
