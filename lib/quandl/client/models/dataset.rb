@@ -11,8 +11,9 @@ class Quandl::Client::Dataset < Quandl::Client::Base
     end
   
     def find(value)
+      # ensure slashes are forward facing
+      value = value.gsub("\\","/") if value.is_a?(String)
       # short-circuit if value is illegal
-      value = value.gsub("\\","/")
       return nil unless value.is_a?(Integer) || value.to_s =~ %r{^#{Quandl::Pattern.full_code}$}
       super(value)
     end
@@ -38,6 +39,7 @@ class Quandl::Client::Dataset < Quandl::Client::Base
   
   validates :code, presence: true, format: { with: Quandl::Pattern.code, message: "is invalid. Expected format: #{Quandl::Pattern.code.to_example}" }
   validates :display_url, allow_blank: true, url: true
+  validate :data_columns_should_not_exceed_column_names!
   
   ##############
   # PROPERTIES #
@@ -114,13 +116,23 @@ class Quandl::Client::Dataset < Quandl::Client::Base
   
   protected
   
+  def data_columns_should_not_exceed_column_names!
+    if dataset_data.data? && column_names.present? && data.first.count != column_names.count
+      self.errors.add( :data, "You may not change the number of columns in a dataset!" )
+      return false
+    end
+    true 
+  end
+  
   def save_dataset_data
-    return if !saved? && id.blank?
+    return if (!saved? && id.blank?)
+    return if !dataset_data.data?
     
     dataset_data.id = id
     dataset_data.save
     # update dataset's attributes with dataset_data's attributes
     attributes.each{|k,v| attributes[k] = dataset_data.attributes[k] if dataset_data.attributes.has_key?(k) }
+    @metadata[:status] = dataset_data.status
   end
   
   def enforce_required_formats
