@@ -41,9 +41,9 @@ describe Dataset do
       
       let(:dataset){ create(:dataset, source_code: "QUANDL_CLIENT_TEST_SOURCE", data: Quandl::Fabricate::Data.rand(rows: 20, columns: 2, nils: false) ) }
       subject{ dataset }
-  
+      
       its(:saved?){ should be_true }
-      its(:status){ should eq 201 }
+      its(:status){ should eq 200 }
   
     end
   end

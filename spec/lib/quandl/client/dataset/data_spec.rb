@@ -4,8 +4,11 @@ require 'spec_helper'
 describe Quandl::Client::Dataset::Data do
 
   let(:dataset){ 
-    create(:dataset, source_code: "QUANDL_CLIENT_TEST_SOURCE", data: Quandl::Fabricate::Data.rand( rows: 10, columns: 4 ) )
+    create(:dataset, source_code: "QUANDL_CLIENT_TEST_SOURCE", data: Quandl::Fabricate::Data.rand( rows: 10, columns: 4 ), column_names: ["Date", "C1", 'c2', 'c3', 'c4'] )
   }
+  subject{ dataset }
+  
+  its(:valid?){ should be_true }
   
   describe ".with_id('NSE/OIL')" do
     let(:id){ Dataset.find("NSE/OIL").id }
@@ -27,6 +30,7 @@ describe Quandl::Client::Dataset::Data do
   
   describe "#data" do
     subject{ Dataset.find( dataset.id ).data }
+
     its(:count){ should eq 10 }
     its(:to_h){ should be_a Hash }
   end
