@@ -1,3 +1,9 @@
+# 2.4.5
+
+* QUGC-40 add validation to enforce: You may not change number of columns in a dataset
+* QUGC-37 Dataest.find accept backslash or forward slash interchangeably
+
+
 # 2.4.4
 
 * Dataset#data to_table assigns column_names to headers
