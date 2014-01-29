@@ -51,7 +51,7 @@ describe Quandl::Client::Dataset::Data do
     end
   
     context "#column_spec" do
-      before(:each){ subject.column_spec = "[0,[\"Date \\n\",{}],[\"Column 1 \",{}],[\"New Column Name \",{}]]"; sleep(1); subject.save }
+      before(:each){ subject.column_spec = "[0,[\"Date\",{}],[\"c1 \",{}],[\"c2 \",{}],[\"c3 \",{}],[\"c234 \",{}]]"; sleep(1); subject.save }
       its(:updated_at){ should_not eq dataset.updated_at }
       its(:column_spec){ should_not eq dataset.column_spec }
     end
