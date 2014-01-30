@@ -11,8 +11,13 @@ class Quandl::Client::Dataset < Quandl::Client::Base
     end
   
     def find(value)
-      # ensure slashes are forward facing
-      value = value.gsub("\\","/") if value.is_a?(String)
+      # enforce code formatting
+      if value.is_a?(String)
+        # ensure slashes are forward facing
+        value = value.gsub("\\","/")
+        # ensure uppercase
+        value = value.upcase
+      end
       # short-circuit if value is illegal
       return nil unless value.is_a?(Integer) || value.to_s =~ %r{^#{Quandl::Pattern.full_code}$}
       super(value)
