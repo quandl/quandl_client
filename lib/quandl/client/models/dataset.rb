@@ -123,7 +123,7 @@ class Quandl::Client::Dataset < Quandl::Client::Base
   
   def data_columns_should_not_exceed_column_names!
     if dataset_data.data? && column_names.present? && data.first.count != column_names.count
-      self.errors.add( :data, "You may not change the number of columns in a dataset!" )
+      self.errors.add( :data, "You may not change the number of columns in a dataset. This dataset has #{column_names.count} columns but you tried to send #{data.first.count} columns." )
       return false
     end
     true 
