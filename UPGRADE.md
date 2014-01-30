@@ -1,3 +1,11 @@
+# 2.4.6
+
+* QUGC-43 improved message on wrong number of colums
+* QUGC-41 enforce code formatting. always upcase codes
+* improved example of valid code
+* revise code pattern
+
+
 # 2.4.5
 
 * QUGC-40 add validation to enforce: You may not change number of columns in a dataset
