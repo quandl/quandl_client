@@ -29,6 +29,7 @@ class Quandl::Client::Base
     def her_api
       Her::API.new.setup url: url_with_version do |c|
         c.use TokenAuthentication
+        c.use TrackRequestSource
         c.use Faraday::Request::UrlEncoded
         c.use Quandl::Client::Middleware::ParseJSON
         c.use Faraday::Adapter::NetHttp
@@ -71,6 +72,15 @@ class Quandl::Client::Base
     class TokenAuthentication < Faraday::Middleware
       def call(env)
         env[:request_headers]["X-API-Token"] = Quandl::Client::Base.token if Quandl::Client::Base.token.present?
+        @app.call(env)
+      end
+    end
+    
+    class TrackRequestSource < Faraday::Middleware
+      def call(env)
+        env[:body] ||= {}
+        env[:body][:request_source] = Quandl::Client.request_source
+        env[:body][:request_version] = Quandl::Client.request_version
         @app.call(env)
       end
     end

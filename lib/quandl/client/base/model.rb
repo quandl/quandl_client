@@ -27,7 +27,7 @@ module Model
     @elapsed_request_time ||= (request_finished_at - request_started_at)
   end
   
-  private 
+  private
   
   def touch_request_started_at
     self.request_started_at = Time.now
