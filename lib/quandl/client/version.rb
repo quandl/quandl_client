@@ -1,6 +1,6 @@
 module Quandl
 module Client
-  VERSION = '2.4.7'
+  VERSION = '2.4.8'
   API_VERSION = 'v2'
   
   class << self
