@@ -1,3 +1,8 @@
+# 2.4.7
+
+* add middleware to track the origin of requests across quandl packages
+
+
 # 2.4.6
 
 * QUGC-43 improved message on wrong number of colums
