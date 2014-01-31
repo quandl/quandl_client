@@ -19,14 +19,18 @@ require 'quandl/client/models/user'
 module Quandl
   module Client
     
-    attr_accessor :request_source, :request_version
+    class << self
     
-    def request_source
-      @request_source ||= "quandl_client"
-    end
+      attr_accessor :request_source, :request_version
     
-    def request_version
-      @request_version ||= Quandl::Client::VERSION
+      def request_source
+        @request_source ||= "quandl_client"
+      end
+    
+      def request_version
+        @request_version ||= Quandl::Client::VERSION
+      end
+    
     end
     
     def self.use(url)
