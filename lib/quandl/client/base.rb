@@ -81,6 +81,7 @@ class Quandl::Client::Base
         env[:body] ||= {}
         env[:body][:request_source] = Quandl::Client.request_source
         env[:body][:request_version] = Quandl::Client.request_version
+        env[:body][:request_platform] = RUBY_PLATFORM
         @app.call(env)
       end
     end
