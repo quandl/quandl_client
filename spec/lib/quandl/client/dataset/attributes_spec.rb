@@ -10,6 +10,17 @@ describe Dataset do
   }
   subject{ create(:dataset, source_code: source.code, private: true ) }
   
+  describe "#code" do
+    subject{ build(:dataset, source_code: source.code.downcase ) }
+    before(:each){}
+    it "lowercase code should be valid" do
+      subject.code = subject.code.downcase
+      subject.save
+      subject.saved?.should be_true
+    end
+    
+  end
+  
   describe "#name" do
     subject{ create(:dataset, source_code: source.code, private: true, name: '' ) }
     
