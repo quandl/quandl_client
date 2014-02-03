@@ -1,3 +1,8 @@
+# 2.4.9
+
+* observe ruby platform
+
+
 # 2.4.7
 
 * add middleware to track the origin of requests across quandl packages
