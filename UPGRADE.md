@@ -1,3 +1,8 @@
+# 2.5.0
+
+* remove yajl
+
+
 # 2.4.9
 
 * observe ruby platform
