@@ -1,3 +1,5 @@
+require 'json'
+
 module Quandl
 module Client
 module Middleware
@@ -58,8 +60,8 @@ class ParseJSON < Faraday::Response::Middleware
   def parse_json(body = nil, env)
     body ||= '{}'
     json = begin
-      Yajl.load(body, :symbolize_keys => true)
-    rescue Yajl::ParseError
+      JSON.parse(body).symbolize_keys!
+    rescue JSON::ParserError
       nil
     end
     # invalid json body?
