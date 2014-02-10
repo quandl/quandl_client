@@ -127,7 +127,8 @@ class Quandl::Client::Dataset < Quandl::Client::Base
   
   def ambiguous_code_requires_source_code!
     if code.to_s.numeric? && source_code.blank?
-      self.errors.add( :data, "The code '#{code}' is ambiguous. Please provide the full path to the dataset. EG: SOURCE/#{code}" )
+      message = %Q{Pure numerical codes like "#{code}" are not allowed unless you prefix them with a source code. Do this:\ncode: <your-username>/#{code}}
+      self.errors.add( :data, message )
       return false
     end
     true 
