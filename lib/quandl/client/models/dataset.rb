@@ -45,6 +45,9 @@ class Quandl::Client::Dataset < Quandl::Client::Base
   validates :code, presence: true, format: { with: Quandl::Pattern.code, message: "is invalid. Expected format: #{Quandl::Pattern.code.to_example}" }
   validates :display_url, allow_blank: true, url: true
   validate :data_columns_should_not_exceed_column_names!
+  validate :data_rows_should_have_equal_columns!
+  validate :data_row_count_should_match_column_count!
+  
   
   ##############
   # PROPERTIES #
@@ -127,6 +130,40 @@ class Quandl::Client::Dataset < Quandl::Client::Base
       return false
     end
     true 
+  end
+  
+  def data_rows_should_have_equal_columns!
+    # skip validation unless data is present
+    return true unless dataset_data.data?
+    # use first row as expected column count
+    column_count = data[0].count
+    # check each row
+    data.each_with_index do |row, index|
+      # the row is valid if it's count matches the first row's count
+      next if row.count == column_count
+      # the row is invalid if the count is mismatched
+      self.errors.add( :data, "Unexpected number of points in this row '#{row}'. Expected #{column_count} but found #{row.count} based on #{data[0]}" )
+      # return validation failure
+      return false
+    end
+    true
+  end
+  
+  def data_row_count_should_match_column_count!
+    # skip validation unless data and column_names present
+    return true unless dataset_data.data? && column_names.present?
+    # count the number of expected columns
+    column_count = column_names.count
+    # check each row
+    data.each_with_index do |row, index|
+      # the row is valid if it's count matches the first row's count
+      next if row.count == column_count
+      # the row is invalid if the count is mismatched
+      self.errors.add( :data, "Unexpected number of points in this row '#{row}'. Expected #{column_names.count} but found #{row.count} based on #{column_names}" )
+      # return validation failure
+      return false
+    end
+    true
   end
   
   def save_dataset_data
