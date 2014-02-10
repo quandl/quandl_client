@@ -14,7 +14,7 @@ class Quandl::Client::Dataset < Quandl::Client::Base
       # enforce code formatting
       if value.is_a?(String)
         # ensure slashes are forward facing
-        value = value.gsub("\\","/")
+        value = value.gsub("\\","/").gsub(".","/")
         # ensure uppercase
         value = value.upcase
       end
