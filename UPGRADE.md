@@ -1,3 +1,9 @@
+# 2.5.1
+
+* QUGC-57 move data validation from Quandl::Format into Quandl::Client. Data validations only run on #valid?
+* QUGC-53 numeric codes require the full code
+
+
 # 2.5.0
 
 * remove yajl
