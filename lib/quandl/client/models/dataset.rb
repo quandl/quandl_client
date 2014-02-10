@@ -47,6 +47,7 @@ class Quandl::Client::Dataset < Quandl::Client::Base
   validate :data_columns_should_not_exceed_column_names!
   validate :data_rows_should_have_equal_columns!
   validate :data_row_count_should_match_column_count!
+  validate :ambiguous_code_requires_source_code!
   
   
   ##############
@@ -123,6 +124,14 @@ class Quandl::Client::Dataset < Quandl::Client::Base
   end
   
   protected
+  
+  def ambiguous_code_requires_source_code!
+    if code.to_s.numeric? && source_code.blank?
+      self.errors.add( :data, "The code '#{code}' is ambiguous. Please provide the full path to the dataset. EG: SOURCE/#{code}" )
+      return false
+    end
+    true 
+  end
   
   def data_columns_should_not_exceed_column_names!
     if dataset_data.data? && column_names.present? && data.first.count != column_names.count

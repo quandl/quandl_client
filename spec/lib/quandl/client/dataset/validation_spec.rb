@@ -6,6 +6,16 @@ describe Dataset do
   let(:dataset){ build(:dataset, source_code: "QUANDL_CLIENT_TEST_SOURCE" ) }
   subject{ dataset }
   
+  context "given ambiguous code" do
+    before(:each){ 
+      dataset.source_code = nil
+      dataset.code = '12345'
+      dataset.valid?
+    }
+    its(:valid?){ should be_false }
+    its('errors.messages'){ should eq({ data: ["The code '12345' is ambiguous. Please provide the full path to the dataset. EG: SOURCE/12345"]}) }
+  end
+  
   context "mismatch row count" do
     before(:each){ dataset.data = [[2012, 1,2],[2011, 1,2,3]] }
     its(:valid?){ should be_false }
