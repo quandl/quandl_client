@@ -15,4 +15,18 @@ include Quandl::Client
 Quandl::Client.use ENV['QUANDL_TEST_URL']
 Quandl::Client.token = ENV['QUANDL_TEST_TOKEN']
 
-binding.pry
+# set some attributes
+d = Dataset.new(
+  code:           "MY_DATASET_#{Time.now.to_i.to_s(16)}", 
+  name:           "My dataset has a name.",
+  description:    "This is the description.",
+  data:           [[ 2014, 1, 2 ]]
+)
+# POST to server
+d.save
+
+if d.saved?
+  puts "View your new dataset at: #{d.full_url}"
+else
+  puts "Something went wrong:\n#{d.human_status}\n#{d.human_error_messages}"
+end
