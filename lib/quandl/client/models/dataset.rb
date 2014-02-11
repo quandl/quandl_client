@@ -44,9 +44,9 @@ class Quandl::Client::Dataset < Quandl::Client::Base
   
   validates :code, presence: true, format: { with: Quandl::Pattern.code, message: "is invalid. Expected format: #{Quandl::Pattern.code.to_example}" }
   validates :display_url, allow_blank: true, url: true
+  validate :data_row_count_should_match_column_count!
   validate :data_columns_should_not_exceed_column_names!
   validate :data_rows_should_have_equal_columns!
-  validate :data_row_count_should_match_column_count!
   validate :ambiguous_code_requires_source_code!
   
   
@@ -135,7 +135,7 @@ class Quandl::Client::Dataset < Quandl::Client::Base
   end
   
   def data_columns_should_not_exceed_column_names!
-    if dataset_data.data? && column_names.present? && data.first.count != column_names.count
+    if errors.size == 0 && dataset_data.data? && column_names.present? && data.first.count != column_names.count
       self.errors.add( :data, "You may not change the number of columns in a dataset. This dataset has #{column_names.count} columns but you tried to send #{data.first.count} columns." )
       return false
     end
@@ -152,7 +152,7 @@ class Quandl::Client::Dataset < Quandl::Client::Base
       # the row is valid if it's count matches the first row's count
       next if row.count == column_count
       # the row is invalid if the count is mismatched
-      self.errors.add( :data, "Unexpected number of points in this row '#{row}'. Expected #{column_count} but found #{row.count} based on #{data[0]}" )
+      self.errors.add( :data, "Unexpected number of points in this row:\n#{row.join(',')}\nFound #{row.size-1} but expected #{data[0].size-1} based on precedent from the first row (#{data[0].join(',')})" )
       # return validation failure
       return false
     end
@@ -169,7 +169,7 @@ class Quandl::Client::Dataset < Quandl::Client::Base
       # the row is valid if it's count matches the first row's count
       next if row.count == column_count
       # the row is invalid if the count is mismatched
-      self.errors.add( :data, "Unexpected number of points in this row '#{row}'. Expected #{column_names.count} but found #{row.count} based on #{column_names}" )
+      self.errors.add( :data, "Unexpected number of points in this row:\n#{row.join(',')}\nFound #{row.size-1} but expected #{column_names.count-1} based on precedent from the header row (#{column_names.join(',')})" )
       # return validation failure
       return false
     end
