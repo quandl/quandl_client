@@ -13,6 +13,8 @@ class Quandl::Client::Dataset < Quandl::Client::Base
     def find(value)
       # enforce code formatting
       if value.is_a?(String)
+        # strip extra whitespace
+        value = value.strip.rstrip
         # ensure slashes are forward facing
         value = value.gsub("\\","/").gsub(".","/")
         # ensure uppercase
