@@ -7,6 +7,10 @@ describe Dataset do
     its(:saved?){ should be_false }
     its(:valid?){ should be_true }
   end
+
+  its(:request_started_at){ should be_nil }
+  its(:request_finished_at){ should be_nil }
+  its(:elapsed_request_time){ should be_nil }
   
   context "when created" do
     context "without token" do
@@ -17,7 +21,11 @@ describe Dataset do
   
       its(:saved?){ should be_false }
       its(:status){ should eq 401 }
-    
+  
+      its(:request_started_at){ should be_a Time }
+      its(:request_finished_at){ should be_a Time }
+      its(:elapsed_request_time){ should be > 0 }
+      
       after(:all){ Quandl::Client.token = ENV['QUANDL_AUTH_TOKEN'] }
     end
     context "with token" do
@@ -33,9 +41,9 @@ describe Dataset do
       
       let(:dataset){ create(:dataset, source_code: "QUANDL_CLIENT_TEST_SOURCE", data: Quandl::Fabricate::Data.rand(rows: 20, columns: 2, nils: false) ) }
       subject{ dataset }
-  
+      
       its(:saved?){ should be_true }
-      its(:status){ should eq 201 }
+      its(:status){ should eq 200 }
   
     end
   end
@@ -65,29 +73,35 @@ describe Dataset do
     
   end
   
-  context "when deleted" do
+  context "#destroy" do
+    
+    let(:dataset){ create(:dataset, private: false ) }
+    before(:each){ dataset.destroy }
+    subject{ dataset }
+    
+    its(:status){ should eq 200 }
+
+    its(:request_started_at){ should be_a Time }
+    its(:request_finished_at){ should be_a Time }
+    its(:elapsed_request_time){ should be > 0 }
+    
+  end
+  
+  context "#destroy when user" do
     
     let(:dataset){ create(:dataset, private: false ) }
     
-    it "should delete the dataset" do
-      dataset.destroy
-      dataset.status.should eq 200
+    it "should not delete the dataset with a user token" do
+      id = dataset.id
+      # behave as a user
+      Quandl::Client.token = ENV['QUANDL_TEST_TOKEN']
+      user_dataset = Dataset.find(id)
+      user_dataset.destroy
+      user_dataset.status.should eq 403
     end
-    
-    context "as a user" do
-      
-      it "should not delete the dataset with a user token" do
-        id = dataset.id
-        # behave as a user
-        Quandl::Client.token = ENV['QUANDL_USER_TOKEN']
-        user_dataset = Dataset.find(id)
-        user_dataset.destroy
-        user_dataset.status.should eq 403
-      end
-    
-      after(:all){ Quandl::Client.token = ENV['QUANDL_AUTH_TOKEN'] }
-    
-    end
+  
+    after(:all){ Quandl::Client.token = ENV['QUANDL_AUTH_TOKEN'] }
+  
   end
   
 end

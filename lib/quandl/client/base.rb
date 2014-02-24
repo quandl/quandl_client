@@ -8,6 +8,8 @@ require 'quandl/client/base/attributes'
 require 'quandl/client/base/validation'
 require 'quandl/client/base/search'
 
+I18n.enforce_available_locales = false
+
 class Quandl::Client::Base
   
   class << self
@@ -15,7 +17,7 @@ class Quandl::Client::Base
     attr_accessor :url, :token
   
     def use(url)
-      self.url = File.join( url, Quandl::Client.api_version )
+      self.url = url
       models_use_her_api!
     end
     
@@ -25,8 +27,9 @@ class Quandl::Client::Base
     end
     
     def her_api
-      Her::API.new.setup url: url do |c|
+      Her::API.new.setup url: url_with_version do |c|
         c.use TokenAuthentication
+        c.use TrackRequestSource
         c.use Faraday::Request::UrlEncoded
         c.use Quandl::Client::Middleware::ParseJSON
         c.use Faraday::Adapter::NetHttp
@@ -34,7 +37,11 @@ class Quandl::Client::Base
     end
 
     def url
-      @url ||= "http://localhost:3000/api/"
+      @url ||= "http://quandl.com/api/"
+    end
+
+    def url_with_version
+      File.join( url.to_s, Quandl::Client.api_version.to_s )
     end
     
     def inherited(subclass)
@@ -56,12 +63,25 @@ class Quandl::Client::Base
     protected
     
     def models_use_her_api!
-      models.each{|m| m.use_api( her_api ) }
+      models.each{|m|
+        m.url = url_with_version
+        m.use_api( her_api ) 
+      }
     end
     
     class TokenAuthentication < Faraday::Middleware
       def call(env)
         env[:request_headers]["X-API-Token"] = Quandl::Client::Base.token if Quandl::Client::Base.token.present?
+        @app.call(env)
+      end
+    end
+    
+    class TrackRequestSource < Faraday::Middleware
+      def call(env)
+        env[:body] ||= {}
+        env[:body][:request_source] = Quandl::Client.request_source
+        env[:body][:request_version] = Quandl::Client.request_version
+        env[:body][:request_platform] = RUBY_PLATFORM
         @app.call(env)
       end
     end

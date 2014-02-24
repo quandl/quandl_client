@@ -10,6 +10,39 @@ describe Dataset do
   }
   subject{ create(:dataset, source_code: source.code, private: true ) }
   
+  describe "#code" do
+    subject{ build(:dataset, source_code: source.code.downcase ) }
+    before(:each){}
+    it "lowercase code should be valid" do
+      subject.code = subject.code.downcase
+      subject.save
+      subject.saved?.should be_true
+    end
+    
+  end
+  
+  describe "#name" do
+    subject{ create(:dataset, source_code: source.code, private: true, name: '' ) }
+    
+    its(:name){ should match /Untitled Dataset #{Date.today}/ }
+  end
+  
+  describe "#reference_url" do
+    let(:url){ "http://website.com/path/to/reference" }
+    let(:dataset){ Dataset.new( reference_url: url, code: "VALID" ) }
+    subject{ dataset }
+    
+    its(:reference_url){ should eq url }
+    its(:valid?){ should be_true }
+    
+    context "partial url" do
+      let(:url){ "website.com/path/to/reference" }
+      its(:reference_url){ should eq "http://website.com/path/to/reference" }
+      its(:valid?){ should be_true }
+    end
+    
+  end
+  
   describe "#private" do
     
     it "should update to false" do

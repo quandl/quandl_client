@@ -7,6 +7,7 @@ describe Dataset do
   subject{ dataset }
   
   context "admin user" do
+    
     its(:saved?){ should be_true }
     its(:source_code){ should be_present }
     
@@ -23,7 +24,7 @@ describe Dataset do
   
   context "normal user" do
     # behave as a user
-    before(:all){ Quandl::Client.token = ENV['QUANDL_USER_TOKEN'] }
+    before(:all){ Quandl::Client.token = ENV['QUANDL_TEST_TOKEN'] }
   
     its(:saved?){ should be_true }
     its(:source_code){ should be_present }
