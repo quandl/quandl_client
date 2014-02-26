@@ -9,7 +9,7 @@ describe Scraper do
   its(:valid?){ should be_false }
   
   context "name='file'" do
-    before(:each){ scraper.name = "file-#{Time.now.to_i}.rb" }
+    before(:each){ scraper.name = "file-#{uuid}.rb" }
     
     its(:save){ should be_false }
     
@@ -40,17 +40,16 @@ describe Scraper do
     end
     
     context "git_url='git@github.com:tammer/scrapers.git' & git_reference='master'" do
-      let(:git_url){ "git@github.com:tammer/scrapers-#{Time.now.to_i}.git"  }
       before(:each){
-        scraper.git_url = git_url
-        scraper.git_reference = "master" 
-        scraper.save
+        subject.git_url = "git@github.com:tammer/scrapers-#{uuid}.git" 
+        subject.git_reference = "master" 
+        subject.save
       }
       its(:valid?){ should be_true }
       its(:saved?){ should be_true }
       its(:id){ should be_present }
       its(:scraper_url){ should be_blank }
-      its(:git_url){ should eq git_url }
+      its(:git_url){ should match /git@github.com:tammer\/scrapers/ }
       its(:type){ should eq 'Scraper::Git' }
     end
     
