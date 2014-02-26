@@ -18,6 +18,19 @@ describe Scraper do
       its(:error_messages){ should eq( {:response_errors => {"location" => ["You must provide one of: [ scraper_url, git_url ]"]}}) }
     end
     
+    context "scraper= File" do
+      before(:each){ 
+        scraper.scraper = "spec/fixtures/scraper.rb"
+        scraper.save
+      }
+      its(:valid?){ should be_true }
+      its(:saved?){ should be_true }
+      its(:id){ should be_present }
+      its(:scraper_url){ should match /s3/}
+      its(:git_url){ should be_blank }
+      its(:type){ should eq 'Scraper::Script' }
+    end
+    
     context "scraper_url='https://github.com/tammer/scrapers/blob/master/shibor.rb'" do
       before(:each){ 
         scraper.scraper_url = "https://github.com/tammer/scrapers/blob/master/shibor.rb" 
