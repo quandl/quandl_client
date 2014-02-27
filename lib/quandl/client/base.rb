@@ -30,6 +30,7 @@ class Quandl::Client::Base
       Her::API.new.setup url: url_with_version do |c|
         c.use TokenAuthentication
         c.use TrackRequestSource
+        c.use Faraday::Request::Multipart
         c.use Faraday::Request::UrlEncoded
         c.use Quandl::Client::Middleware::ParseJSON
         c.use Faraday::Adapter::NetHttp

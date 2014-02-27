@@ -15,6 +15,8 @@ require 'quandl/client/models/dataset'
 require 'quandl/client/models/sheet'
 require 'quandl/client/models/source'
 require 'quandl/client/models/user'
+require 'quandl/client/models/location'
+require 'quandl/client/models/scraper'
 
 module Quandl
   module Client

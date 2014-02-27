@@ -25,3 +25,7 @@ Quandl::Client.use ENV['QUANDL_TEST_URL']
 RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
 end
+
+def uuid
+  SecureRandom.uuid.to_s
+end
