@@ -13,7 +13,7 @@ describe Dataset do
       dataset.valid?
     }
     its(:valid?){ should be_false }
-    its('errors.messages'){ should eq({ data: ["Pure numerical codes like \"12345\" are not allowed unless you prefix them with a source code. Do this:\ncode: <your-username>/12345"]}) }
+    its('errors.messages'){ should eq({ data: ["Pure numerical codes like \"12345\" are not allowed unless you include a source code. Do this:\nsource_code: <USERNAME>\ncode: 12345"]}) }
   end
   
   context "mismatch row count" do
