@@ -47,6 +47,8 @@ class ParseJSON < Faraday::Response::Middleware
       status:                 env[:status],
       headers:                env[:response_headers],
       })
+    # each doc metadata references metadata
+    docs.each{|d| d[:metadata] = metadata }
     # return object
     object = {
       :data => docs,

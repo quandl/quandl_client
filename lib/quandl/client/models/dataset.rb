@@ -46,6 +46,7 @@ class Quandl::Client::Dataset < Quandl::Client::Base
   
   validates :code, presence: true, format: { with: Quandl::Pattern.code, message: "is invalid. Expected format: #{Quandl::Pattern.code.to_example}" }
   validates :display_url, allow_blank: true, url: true
+  validate :data_should_be_valid!
   validate :data_row_count_should_match_column_count!
   validate :data_columns_should_not_exceed_column_names!
   validate :data_rows_should_have_equal_columns!
@@ -88,11 +89,15 @@ class Quandl::Client::Dataset < Quandl::Client::Base
   # DATA
   
   def data
-    dataset_data.data? ? dataset_data.data : data_scope
+    defined?(@data) ? @data : data_scope
   end
   
   def data=(value)
-    dataset_data.data = value
+    @data = Quandl::Data.new(value)
+  end
+  
+  def data?
+    @data.is_a?(Quandl::Data) && @data.first.is_a?(Array)
   end
 
   def delete_data
@@ -127,6 +132,14 @@ class Quandl::Client::Dataset < Quandl::Client::Base
   
   protected
   
+  def data_should_be_valid!
+    if data? && !data.valid?
+      data.errors.each{|data_err| self.errors.add( :data, data_err ) }
+      return false
+    end
+    true
+  end
+  
   def ambiguous_code_requires_source_code!
     if code.to_s.numeric? && source_code.blank?
       message = %Q{Pure numerical codes like "#{code}" are not allowed unless you include a source code. Do this:\nsource_code: <USERNAME>\ncode: #{code}}
@@ -137,7 +150,7 @@ class Quandl::Client::Dataset < Quandl::Client::Base
   end
   
   def data_columns_should_not_exceed_column_names!
-    if errors.size == 0 && dataset_data.data? && column_names.present? && data.first.count != column_names.count
+    if errors.size == 0 && data? && column_names.present? && data.first.count != column_names.count
       self.errors.add( :data, "You may not change the number of columns in a dataset. This dataset has #{column_names.count} columns but you tried to send #{data.first.count} columns." )
       return false
     end
@@ -146,7 +159,7 @@ class Quandl::Client::Dataset < Quandl::Client::Base
   
   def data_rows_should_have_equal_columns!
     # skip validation unless data is present
-    return true unless dataset_data.data?
+    return true unless data?
     # use first row as expected column count
     column_count = data[0].count
     # check each row
@@ -163,7 +176,7 @@ class Quandl::Client::Dataset < Quandl::Client::Base
   
   def data_row_count_should_match_column_count!
     # skip validation unless data and column_names present
-    return true unless dataset_data.data? && column_names.present?
+    return true unless data? && column_names.present?
     # count the number of expected columns
     column_count = column_names.count
     # check each row
@@ -180,13 +193,14 @@ class Quandl::Client::Dataset < Quandl::Client::Base
   
   def save_dataset_data
     return if (!saved? && id.blank?)
-    return if !dataset_data.data?
+    return if !data?
     
     dataset_data.id = id
+    dataset_data.data = data.to_csv
     dataset_data.save
     # update dataset's attributes with dataset_data's attributes
     attributes.each{|k,v| attributes[k] = dataset_data.attributes[k] if dataset_data.attributes.has_key?(k) }
-    @metadata[:status] = dataset_data.status
+    @metadata[:status] = dataset_data.status unless dataset_data.saved?
   end
   
   def enforce_required_formats

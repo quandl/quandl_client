@@ -40,17 +40,17 @@ class Quandl::Client::Dataset::Data < Quandl::Client::Base
   def data
     read_data
   end
-  
+
   def data=(value)
     write_data(value)
   end
-  
+
   protected
-  
+
   def read_data
     Quandl::Data.new( read_attribute(:data) )
   end
-  
+
   def write_data(value )
     write_attribute(:data, Quandl::Data.new(value).to_csv )
   end

@@ -1,3 +1,8 @@
+# 2.5.2
+
+* WIKI-153 Add scrapers
+
+
 # 2.5.1
 
 * QUGC-57 move data validation from Quandl::Format into Quandl::Client. Data validations only run on #valid?

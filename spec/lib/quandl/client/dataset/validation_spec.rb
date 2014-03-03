@@ -22,7 +22,7 @@ describe Dataset do
       dataset.valid?
     }
     its(:valid?){ should be_false }
-    its('errors.messages'){ should eq({ data: ["Unexpected number of points in this row:\n2011-12-31,1.0,2.0,3.0\nFound 3 but expected 2 based on precedent from the first row (2012-12-31,1.0,2.0)"]}) }
+    its('errors.messages'){ should eq({ data: ["Unexpected number of points in this row:\n2011,1,2,3\nFound 3 but expected 2 based on precedent from the first row (2012,1,2)"]}) }
   end
   
   context "mismatch column_names count" do
@@ -32,7 +32,7 @@ describe Dataset do
       dataset.valid?
     }
     its(:valid?){ should be_false }
-    its('errors.messages'){ should eq({ data: ["Unexpected number of points in this row:\n2012-12-31,18.0,21.0\nFound 2 but expected 1 based on precedent from the header row (Date,Value)"]}) }
+    its('errors.messages'){ should eq({ data: ["Unexpected number of points in this row:\n2012,18,21\nFound 2 but expected 1 based on precedent from the header row (Date,Value)"]}) }
   end
   
   describe "#code" do
