@@ -43,7 +43,7 @@ describe Dataset do
       subject{ dataset }
       
       its(:saved?){ should be_true }
-      its(:status){ should eq 200 }
+      its(:status){ should eq 201 }
   
     end
   end
