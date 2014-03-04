@@ -93,7 +93,7 @@ class Quandl::Client::Dataset < Quandl::Client::Base
   end
   
   def data=(value)
-    @data = Quandl::Data.new(value)
+    @data = value.is_a?(Quandl::Data) ? value : Quandl::Data.new(value)
   end
   
   def data?
