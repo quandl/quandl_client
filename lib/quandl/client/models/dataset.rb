@@ -93,7 +93,7 @@ class Quandl::Client::Dataset < Quandl::Client::Base
   end
   
   def data=(value)
-    @data = Quandl::Data.new(value)
+    @data = Quandl::Data.new(value).sort_descending
   end
   
   def data?
