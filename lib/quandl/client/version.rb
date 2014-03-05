@@ -1,6 +1,6 @@
 module Quandl
 module Client
-  VERSION = '2.5.3'
+  VERSION = File.read(File.expand_path(File.join(File.dirname(__FILE__), '../../../VERSION'))).strip.rstrip
   API_VERSION = 'v2'
   
   class << self
