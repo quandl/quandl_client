@@ -93,11 +93,11 @@ class Quandl::Client::Dataset < Quandl::Client::Base
   end
   
   def data=(value)
-    @data = Quandl::Data.new(value)
+    @data = Quandl::Data.new(value).sort_descending
   end
   
   def data?
-    @data.is_a?(Quandl::Data) && @data.first.is_a?(Array)
+    @data.is_a?(Quandl::Data)
   end
 
   def delete_data
@@ -134,7 +134,7 @@ class Quandl::Client::Dataset < Quandl::Client::Base
   
   def data_should_be_valid!
     if data? && !data.valid?
-      data.errors.each{|data_err| self.errors.add( :data, data_err ) }
+      data.errors.each{|k,v| self.errors.add( k,v ) }
       return false
     end
     true
@@ -150,7 +150,7 @@ class Quandl::Client::Dataset < Quandl::Client::Base
   end
   
   def data_columns_should_not_exceed_column_names!
-    if errors.size == 0 && data? && column_names.present? && data.first.count != column_names.count
+    if errors.size == 0 && data? && data.present? && column_names.present? && data.first.count != column_names.count
       self.errors.add( :data, "You may not change the number of columns in a dataset. This dataset has #{column_names.count} columns but you tried to send #{data.first.count} columns." )
       return false
     end
@@ -159,7 +159,7 @@ class Quandl::Client::Dataset < Quandl::Client::Base
   
   def data_rows_should_have_equal_columns!
     # skip validation unless data is present
-    return true unless data?
+    return true unless data? && data.present?
     # use first row as expected column count
     column_count = data[0].count
     # check each row
@@ -176,7 +176,7 @@ class Quandl::Client::Dataset < Quandl::Client::Base
   
   def data_row_count_should_match_column_count!
     # skip validation unless data and column_names present
-    return true unless data? && column_names.present?
+    return true unless data? && data.present? && column_names.present?
     # count the number of expected columns
     column_count = column_names.count
     # check each row
@@ -193,7 +193,7 @@ class Quandl::Client::Dataset < Quandl::Client::Base
   
   def save_dataset_data
     return if (!saved? && id.blank?)
-    return if !data?
+    return if !data? || data.blank?
     
     dataset_data.id = id
     dataset_data.data = data.to_csv
