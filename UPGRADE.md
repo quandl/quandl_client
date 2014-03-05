@@ -1,6 +1,7 @@
 ## 2.6.0 
 
-
+* QUGC-104 Fixes when upload fails output is not json
+* QUGC-103 Fixes quandl upload test -F json does not include metadata
 
 
 
