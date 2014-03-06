@@ -1,4 +1,11 @@
-# Installation
+# Quandl::Client
+
+## Purpose
+
+The purpose of this gem is to interact with the [quandl api](http://www.quandl.com/help/api)
+
+
+## Installation
 
 ```ruby
 
@@ -9,7 +16,7 @@ gem 'quandl_client'
 
 
 
-# Configuration
+## Configuration
 
 ```ruby
 
@@ -24,10 +31,10 @@ Quandl::Client.token = ENV['QUANDL_AUTH_TOKEN']
 
 
 
-# Usage
+## Usage
 
 
-## Quandl::Client::Dataset
+### Quandl::Client::Dataset
 
 
 #### Search
@@ -151,7 +158,7 @@ d.error_messages
 
 
 
-## Quandl::Client::Source
+### Quandl::Client::Source
 
 
 #### Search
@@ -214,7 +221,7 @@ Source.destroy_existing(52352)
 
 
 
-## Quandl::Client::Sheet
+### Quandl::Client::Sheet
 
 
 #### Search
@@ -277,7 +284,7 @@ Quandl::Client::Sheet.destroy_existing(15252)
 
 
 
-# Authentication
+### Authentication
 
 ```ruby
 
