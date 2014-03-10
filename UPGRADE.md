@@ -1,3 +1,10 @@
+## 2.6.1 
+
+* QUGC-113 fix Dataset#data errors dont propagate to parent object
+* QUGC-113 Write failing specs for Dataset#data errors dont propagate to parent object
+
+
+
 ## 2.6.0 
 
 * QUGC-104 Fixes when upload fails output is not json
