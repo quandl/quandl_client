@@ -7,6 +7,18 @@ module Validation
   
     before_save :halt_unless_valid!
     
+    validate :response_errors_should_be_blank!
+    
+    def response_errors_should_be_blank!
+      return unless response_errors.respond_to?(:each)
+      response_errors.each do |key, messages|
+        if messages.respond_to?(:each)
+          messages.each{|message| errors.add(key, message) }
+        end
+      end
+      true
+    end
+    
     def valid_with_server?
       return false unless valid?
       return false unless errors_params.blank?
