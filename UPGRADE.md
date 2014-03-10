@@ -12,33 +12,33 @@
 
 
 
-# 2.5.2
+## 2.5.2
 
 * WIKI-153 Add scrapers
 
 
-# 2.5.1
+## 2.5.1
 
 * QUGC-57 move data validation from Quandl::Format into Quandl::Client. Data validations only run on #valid?
 * QUGC-53 numeric codes require the full code
 
 
-# 2.5.0
+## 2.5.0
 
 * remove yajl
 
 
-# 2.4.9
+## 2.4.9
 
 * observe ruby platform
 
 
-# 2.4.7
+## 2.4.7
 
 * add middleware to track the origin of requests across quandl packages
 
 
-# 2.4.6
+## 2.4.6
 
 * QUGC-43 improved message on wrong number of colums
 * QUGC-41 enforce code formatting. always upcase codes
@@ -46,34 +46,34 @@
 * revise code pattern
 
 
-# 2.4.5
+## 2.4.5
 
 * QUGC-40 add validation to enforce: You may not change number of columns in a dataset
 * QUGC-37 Dataest.find accept backslash or forward slash interchangeably
 
 
-# 2.4.4
+## 2.4.4
 
 * Dataset#data to_table assigns column_names to headers
 * add skip_browse to Sheet
 
 
-# 2.4.3
+## 2.4.3
 
 * hotfix for full_code pattern matching ... code can be as short as two characters
 
 
-# 2.4.2
+## 2.4.2
 
 * Dataset.find will return nil unless the id is an integer, or matches the quandl pattern for full_code
 
 
-# 2.4.1
+## 2.4.1
 
 * revise reference_url http prepend
 
 
-# 2.4.0
+## 2.4.0
 
 * Dataset#reference_url should prepend of http:// when missing
 * add Quandl::Pattern for defining regex patterns with embedded examples
