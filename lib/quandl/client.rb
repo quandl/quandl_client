@@ -17,6 +17,7 @@ require 'quandl/client/models/source'
 require 'quandl/client/models/user'
 require 'quandl/client/models/location'
 require 'quandl/client/models/scraper'
+require 'quandl/client/models/report'
 
 module Quandl
   module Client
