@@ -1,3 +1,9 @@
+## 2.6.2 
+
+* QUGC-55 Add Report for filing reports
+
+
+
 ## 2.6.1 
 
 * QUGC-113 fix Dataset#data errors dont propagate to parent object
