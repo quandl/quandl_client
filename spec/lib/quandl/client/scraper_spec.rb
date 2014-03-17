@@ -15,7 +15,8 @@ describe Scraper do
     
     context "save" do
       before(:each){ scraper.save }
-      its(:error_messages){ should eq( {:response_errors => {"location" => ["You must provide one of: [ scraper_url, git_url ]"]}}) }
+      its("error_messages.to_s"){ should match "You must provide one of" }
+      its("error_messages.to_s"){ should match "scraper_url, git_url" }
     end
     
     context "scraper= File" do
@@ -49,7 +50,7 @@ describe Scraper do
         scraper.git_url = "git@github.com:tammer/scrapers.git" 
         scraper.save
       }
-      its(:error_messages){ should eq({:response_errors=>{"location.reference"=>["can't be blank"]}}) }
+      its("error_messages.to_s"){ should match %Q{can't be blank} }
     end
     
     context "git_url='git@github.com:tammer/scrapers.git' & git_reference='master'" do

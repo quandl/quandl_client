@@ -47,6 +47,7 @@ class Quandl::Client::Dataset < Quandl::Client::Base
   validates :code, presence: true, format: { with: Quandl::Pattern.code, message: "is invalid. Expected format: #{Quandl::Pattern.code.to_example}" }
   validates :display_url, allow_blank: true, url: true
   validate :data_should_be_valid!
+  validate :dataset_data_should_be_valid!
   validate :data_row_count_should_match_column_count!
   validate :data_columns_should_not_exceed_column_names!
   validate :data_rows_should_have_equal_columns!
@@ -124,6 +125,10 @@ class Quandl::Client::Dataset < Quandl::Client::Base
     @dataset_data ||= Quandl::Client::Dataset::Data.new( id: id )
   end
   
+  def dataset_data?
+    @dataset_data.is_a?(Quandl::Client::Dataset::Data)
+  end
+  
   def reload
     @dataset_data = nil
     @data_scope = nil
@@ -135,6 +140,14 @@ class Quandl::Client::Dataset < Quandl::Client::Base
   def data_should_be_valid!
     if data? && !data.valid?
       data.errors.each{|k,v| self.errors.add( k,v ) }
+      return false
+    end
+    true
+  end
+  
+  def dataset_data_should_be_valid!
+    if dataset_data? && !dataset_data.valid?
+      dataset_data.errors.each{|k,v| self.errors.add( k,v ) }
       return false
     end
     true
@@ -200,7 +213,20 @@ class Quandl::Client::Dataset < Quandl::Client::Base
     dataset_data.save
     # update dataset's attributes with dataset_data's attributes
     attributes.each{|k,v| attributes[k] = dataset_data.attributes[k] if dataset_data.attributes.has_key?(k) }
+    # update dataset errors with dataset_data
     @metadata[:status] = dataset_data.status unless dataset_data.saved?
+    # inherit_errors(dataset_data) unless dataset_data.saved?
+  end
+  
+  def inherit_errors(object)
+    return unless object.respond_to?(:response_errors) && object.response_errors.respond_to?(:each)
+    object.response_errors.each do |key, messages|
+      if messages.respond_to?(:each)
+        messages.each{|message| errors.add(key, message) }
+      end
+    end
+    @metadata[:status] = object.status
+    object
   end
   
   def enforce_required_formats
