@@ -9,8 +9,10 @@ require "quandl/client"
 
 include Quandl::Client
 
-Quandl::Client.use ENV['QUANDL_URL']
-Quandl::Client.token = ENV['QUANDL_AUTH_TOKEN']
+config = OpenStruct.new(YAML.load(File.read("#{ENV['HOME']}/.quandl/config")))
+
+Quandl::Client.use config.quandl_url
+Quandl::Client.token = config.token
 
 task :default => :spec
 
