@@ -18,6 +18,7 @@ require 'quandl/client/models/user'
 require 'quandl/client/models/location'
 require 'quandl/client/models/scraper'
 require 'quandl/client/models/report'
+require 'quandl/client/models/superset'
 
 module Quandl
   module Client

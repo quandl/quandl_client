@@ -72,7 +72,7 @@ class ParseJSON < Faraday::Response::Middleware
       json = { 
         id: 1, 
         errors: {
-          parse_error:  "Quandl::Client::ParseJSON error. status: #{env[:status]}, body: #{body.inspect}"
+          parse_errors:  [ "Quandl::Client::ParseJSON error. status: #{env[:status]}, body: #{body.inspect}" ]
         }
       }
     end
