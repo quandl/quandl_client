@@ -41,6 +41,19 @@ module Search
         attributes.merge(scope_attributes)
       end
       
+      def each_in_page(&block)
+        # fetch records
+        records = all
+        # pass each record upstream
+        records.each{|r| block.call( r ) }
+        # blank array indidcates last page
+        return if records.blank?
+        # next page
+        scope_attributes[:page] = scope_attributes[:page].to_i + 1
+        # call recursively until we reach the end
+        each_in_page(&block)
+      end
+      
     end
   
   end
