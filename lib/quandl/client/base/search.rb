@@ -47,8 +47,9 @@ module Search
         # pass each record upstream
         records.each{|r| block.call( r ) }
         # blank array indidcates last page
-        return if records.blank?
+        return if records.blank? || records.count < records.try(:metadata).try(:[], :per_page).to_i
         # next page
+        scope_attributes[:page] = 1 if scope_attributes[:page].blank?
         scope_attributes[:page] = scope_attributes[:page].to_i + 1
         # call recursively until we reach the end
         each_in_page(&block)
