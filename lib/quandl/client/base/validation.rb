@@ -12,7 +12,7 @@ module Validation
     def apply_response_errors
       return unless response_errors.respond_to?(:each)
       response_errors.each do |key, messages|
-        if messages.respond_to?(:each)
+        if messages.respond_to?(:each) && @errors.respond_to?(:add)
           messages.each{|message| @errors.add(key.to_sym, message) unless @errors.has_key?(key.to_sym) }
         end
       end
