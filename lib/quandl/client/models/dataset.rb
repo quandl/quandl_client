@@ -28,7 +28,7 @@ class Quandl::Client::Dataset < Quandl::Client::Base
   end
   
   # SEARCH
-  scope :query, :rows
+  scope :query, :rows, :owner
   scope :page, ->(p){ where( page: p.to_i )}
   scope :source_code, ->(c){ where( code: c.to_s.upcase )}
   
