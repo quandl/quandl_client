@@ -1,3 +1,9 @@
+## 2.7.0 
+
+
+
+
+
 ## 2.6.2 
 
 * QUGC-55 Add Report for filing reports
