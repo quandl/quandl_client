@@ -1,8 +1,6 @@
 source "https://rubygems.org"
 gemspec
 
-ruby '2.1.1'
-
 use_local_gems = ENV['BUNDLE_LOCAL_GEMS'] == "true" && ENV['BUNDLE_LOCAL_DIR']
 local_gem_dir = ENV['BUNDLE_LOCAL_DIR']
 
