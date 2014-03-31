@@ -23,7 +23,6 @@ describe Dataset do
       its(:status){ should eq 401 }
   
       its(:request_started_at){ should be_a Time }
-      its(:request_finished_at){ should be_a Time }
       
       after(:all){ Quandl::Client.token = ENV['QUANDL_AUTH_TOKEN'] }
     end
