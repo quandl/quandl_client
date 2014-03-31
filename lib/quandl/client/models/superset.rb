@@ -10,8 +10,16 @@ class Quandl::Client::Superset < Quandl::Client::Base
   validates :column_codes, presence: true
   validate :column_codes_should_be_valid!
   
+  def self.find_or_build( attributes={} )
+    record = self.find(attributes[:id]) if attributes[:id].present?
+    record = self.where( attributes.slice(:code, :source_code).merge( owner: 'myself' ) ).first unless record.try(:exists?)
+    record = self.new unless record.try(:exists?)
+    record.assign_attributes(attributes)
+    record
+  end
+  
   def self.example
-    self.new( code: "EXAMPLE", name: "Superset Name", description: "Superset description", column_codes: ['SOURCE.DATASET.1'], column_names: ['Column Name'] )
+    self.new( code: "SUPERSET_EXAMPLE", name: "Superset Name", description: "Superset description", column_codes: ['NSE.OIL.1'], column_names: ['Column Name'] )
   end
   
   def data

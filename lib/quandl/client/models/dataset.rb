@@ -11,6 +11,15 @@ class Quandl::Client::Dataset < Quandl::Client::Base
     end
   
     def find(value)
+      # preformat
+      value = format_id(value)
+      # short-circuit if value is illegal
+      return nil unless value.is_a?(Integer) || value.to_s =~ %r{^#{Quandl::Pattern.full_code}$}
+      # search
+      super(value)
+    end
+    
+    def format_id(value)
       # enforce code formatting
       if value.is_a?(String)
         # strip extra whitespace
@@ -20,9 +29,7 @@ class Quandl::Client::Dataset < Quandl::Client::Base
         # ensure uppercase
         value = value.upcase
       end
-      # short-circuit if value is illegal
-      return nil unless value.is_a?(Integer) || value.to_s =~ %r{^#{Quandl::Pattern.full_code}$}
-      super(value)
+      value
     end
   
   end

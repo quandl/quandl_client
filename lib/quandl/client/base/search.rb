@@ -4,6 +4,7 @@ module Search
   extend ActiveSupport::Concern
   
   module ClassMethods
+    
     def forwardable_scope_methods
       @forwardable_scope_methods ||= Array.forwardable_methods.reject{|m| [:find, :fetch].include?(m) }
     end
