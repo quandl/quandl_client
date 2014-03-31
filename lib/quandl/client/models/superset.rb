@@ -10,6 +10,10 @@ class Quandl::Client::Superset < Quandl::Client::Base
   validates :column_codes, presence: true
   validate :column_codes_should_be_valid!
   
+  def self.example
+    self.new( code: "EXAMPLE", name: "Superset Name", description: "Superset description", column_codes: ['SOURCE.DATASET.1'], column_names: ['Column Name'] )
+  end
+  
   def data
     @data ||= Quandl::Client::Dataset::Data.with_id(id)
   end
