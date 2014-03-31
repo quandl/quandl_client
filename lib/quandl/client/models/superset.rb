@@ -26,6 +26,14 @@ class Quandl::Client::Superset < Quandl::Client::Base
     @data ||= Quandl::Client::Dataset::Data.with_id(id)
   end
   
+  def full_url
+    File.join(Quandl::Client::Base.url.gsub('api/', ''), full_code)
+  end
+  
+  def full_code
+    File.join(self.source_code.to_s, self.code.to_s)
+  end
+  
   protected
   
   def column_codes_should_be_valid!
