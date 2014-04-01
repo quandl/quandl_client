@@ -26,7 +26,7 @@ describe Source do
   
   context "with token" do
 
-    before(:all){ Quandl::Client.token = ENV['QUANDL_AUTH_TOKEN'] }
+    before(:all){ Quandl::Client.token = ENV['QUANDL_USER_TOKEN'] }
     
     describe "#save" do
       
