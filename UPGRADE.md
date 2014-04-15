@@ -1,4 +1,7 @@
-## 2.7.3 
+## 2.7.4
+full url bug fixed when "api" has no / at the end
+
+## 2.7.3
 
 
 
