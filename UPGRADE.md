@@ -1,3 +1,6 @@
+## 2.7.5
+add 'at' option for scraper scheduling
+
 ## 2.7.4
 full url bug fixed when "api" has no / at the end
 
