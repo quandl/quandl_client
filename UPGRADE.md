@@ -1,6 +1,6 @@
 ## 2.7.6 
 
-
+* QUGC-140 if a source_code is given but does not exist, it should warn the user
 
 
 
@@ -9,35 +9,6 @@ add 'at' option for scraper scheduling
 
 ## 2.7.4
 full url bug fixed when "api" has no / at the end
-
-## 2.7.3
-
-
-
-
-
-## 2.7.2 
-
-
-
-
-
-## 2.7.1 
-
-
-
-
-
-## 2.7.0 
-
-
-
-
-
-## 2.7.0 
-
-
-
 
 
 ## 2.6.2 
