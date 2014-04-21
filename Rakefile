@@ -21,10 +21,6 @@ RSpec::Core::RakeTask.new(:spec) do |task|
   task.pattern = "spec/**/*_spec.rb"
 end
 
-task :console do |t, args|
-  binding.pry
-end
-
 require 'quandl/utility/rake_tasks'
 Quandl::Utility::Tasks.configure do |c|
   c.name              = 'quandl'

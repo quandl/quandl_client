@@ -1,7 +1,7 @@
 class Quandl::Client::Dataset < Quandl::Client::Base
   
   require 'quandl/client/models/dataset/data'
-
+  
   ##########  
   # SCOPES #
   ##########
@@ -59,6 +59,8 @@ class Quandl::Client::Dataset < Quandl::Client::Base
   validate :data_columns_should_not_exceed_column_names!
   validate :data_rows_should_have_equal_columns!
   validate :ambiguous_code_requires_source_code!
+  
+  validate :source_code_should_exist!
   
   
   ##############
@@ -158,6 +160,16 @@ class Quandl::Client::Dataset < Quandl::Client::Base
       return false
     end
     true
+  end
+  
+  def source_code_should_exist!
+    if source_code.present?
+      Source.cached[source_code] = Source.find(source_code) unless Source.cached.has_key?(source_code)
+      source = Source.cached[source_code]
+      self.errors.add( :source_code, "Could not find a source with the source_code '#{source_code}'" ) if source.blank? || source.code.blank?
+      return false
+    end
+    true 
   end
   
   def ambiguous_code_requires_source_code!

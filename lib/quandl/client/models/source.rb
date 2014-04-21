@@ -3,6 +3,14 @@ module Client
 
 class Source < Quandl::Client::Base
   
+  class << self
+  
+    def cached
+      @@cached ||= {}
+    end
+  
+  end
+  
   ##########  
   # SCOPES #
   ##########
