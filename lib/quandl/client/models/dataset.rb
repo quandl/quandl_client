@@ -50,7 +50,7 @@ class Quandl::Client::Dataset < Quandl::Client::Base
   ###############
   # VALIDATIONS #
   ###############
-  
+    
   validates :code, presence: true, format: { with: Quandl::Pattern.code, message: "is invalid. Expected format: #{Quandl::Pattern.code.to_example}" }
   validates :display_url, allow_blank: true, url: true
   validate :data_should_be_valid!
@@ -108,6 +108,10 @@ class Quandl::Client::Dataset < Quandl::Client::Base
   
   def data?
     @data.is_a?(Quandl::Data)
+  end
+  
+  def source_code=(v)
+    write_attribute(:source_code, v.to_s.upcase)
   end
 
   def delete_data
