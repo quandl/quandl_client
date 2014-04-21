@@ -89,7 +89,7 @@ class Quandl::Client::Dataset < Quandl::Client::Base
   end
   
   def full_url
-    File.join(Quandl::Client::Base.url.gsub('api/', ''), full_code)
+    File.join(Quandl::Client::Base.url.gsub(/api\/?/, ''), full_code)
   end
   
   def full_code
