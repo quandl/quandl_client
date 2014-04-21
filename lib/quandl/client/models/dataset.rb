@@ -168,8 +168,8 @@ class Quandl::Client::Dataset < Quandl::Client::Base
   
   def source_code_should_exist!
     if source_code.present?
-      Source.cached[source_code] = Source.find(source_code) unless Source.cached.has_key?(source_code)
-      source = Source.cached[source_code]
+      Quandl::Client::Source.cached[source_code] = Quandl::Client::Source.find(source_code) unless Quandl::Client::Source.cached.has_key?(source_code)
+      source = Quandl::Client::Source.cached[source_code]
       self.errors.add( :source_code, "Could not find a source with the source_code '#{source_code}'" ) if source.blank? || source.code.blank?
       return false
     end
