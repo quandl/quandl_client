@@ -110,8 +110,16 @@ class Quandl::Client::Dataset < Quandl::Client::Base
     @data.is_a?(Quandl::Data)
   end
   
+  def code=(v)
+    write_attribute(:code, sanitize_code(v) )
+  end
+  
   def source_code=(v)
-    write_attribute(:source_code, v.to_s.upcase)
+    write_attribute(:source_code, sanitize_code(v) )
+  end
+  
+  def sanitize_code(code)
+    code.to_s.upcase.gsub(',','')
   end
 
   def delete_data
