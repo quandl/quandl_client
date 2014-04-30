@@ -12,7 +12,7 @@ class Quandl::Client::Superset < Quandl::Client::Base
   
   def self.find_or_build( attributes={} )
     record = self.find(attributes[:id]) if attributes[:id].present?
-    record = self.where( attributes.slice(:code, :source_code).merge( owner: 'myself' ) ).first unless record.try(:exists?)
+    record = self.where( attributes.symbolize_keys!.slice(:code, :source_code).merge( owner: 'myself' ) ).first unless record.try(:exists?)
     record = self.new unless record.try(:exists?)
     record.assign_attributes(attributes)
     record
