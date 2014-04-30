@@ -1,3 +1,11 @@
+## 2.7.9 
+
+* QUGC-164 also search by code
+* QUGC-164 find by id or source_code/code, or build
+* QUGC-164 attributes slice needs to ensure that keys are symbols
+
+
+
 ## 2.7.8 
 
 
