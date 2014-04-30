@@ -16,6 +16,8 @@ class Quandl::Client::Superset < Quandl::Client::Base
     record = self.find(attrs[:id]) if attrs[:id].present?
     # by source_code/code
     record = self.find(File.join(attrs[:source_code], attrs[:code])) if !record.try(:exists?) && attrs[:source_code].present? && attrs[:code].present?
+    # by code
+    record = self.find(attrs[:code]) if !record.try(:exists?) && attrs[:code].present?
     # build
     record = self.new unless record.try(:exists?)
     record.assign_attributes(attrs)
