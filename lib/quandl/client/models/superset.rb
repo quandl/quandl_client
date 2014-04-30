@@ -11,10 +11,14 @@ class Quandl::Client::Superset < Quandl::Client::Base
   validate :column_codes_should_be_valid!
   
   def self.find_or_build( attributes={} )
-    record = self.find(attributes[:id]) if attributes[:id].present?
-    record = self.where( attributes.symbolize_keys!.slice(:code, :source_code).merge( owner: 'myself' ) ).first unless record.try(:exists?)
+    attrs = attributes.symbolize_keys!
+    # by id
+    record = self.find(attrs[:id]) if attrs[:id].present?
+    # by source_code/code
+    record = self.find(File.join(attrs[:source_code], attrs[:code])) if !record.try(:exists?) && attrs[:source_code].present? && attrs[:code].present?
+    # build
     record = self.new unless record.try(:exists?)
-    record.assign_attributes(attributes)
+    record.assign_attributes(attrs)
     record
   end
   
