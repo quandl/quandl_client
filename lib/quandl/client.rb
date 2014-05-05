@@ -26,7 +26,7 @@ module Quandl
     
     class << self
     
-      attr_accessor :request_source, :request_version
+      attr_accessor :request_source, :request_version, :request_platform
     
       def request_source
         @request_source ||= "quandl_client"
