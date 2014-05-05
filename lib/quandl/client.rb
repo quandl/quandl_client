@@ -34,6 +34,10 @@ module Quandl
       def request_version
         @request_version ||= Quandl::Client::VERSION
       end
+
+      def request_platform
+        @request_platform ||= RUBY_PLATFORM
+      end
     
     end
     
