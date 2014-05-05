@@ -1,4 +1,8 @@
-## 2.7.9 
+## 2.7.10
+* QUGC-168 can pass request_platform
+
+
+## 2.7.9
 
 * QUGC-164 also search by code
 * QUGC-164 find by id or source_code/code, or build
