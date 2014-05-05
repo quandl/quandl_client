@@ -3,6 +3,7 @@ require "quandl/client/version"
 require 'scope_composer'
 require 'her'
 require 'quandl/her/remove_method_data'
+require 'quandl/her/collection'
 require 'quandl/logger'
 require "quandl/data"
 
