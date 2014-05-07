@@ -27,6 +27,7 @@ class ParseJSON < Faraday::Response::Middleware
     metadata.merge!({
       status:                 env[:status],
       headers:                env[:response_headers],
+      method:                 env[:method],
       })
     # return object
     object = {
@@ -46,6 +47,7 @@ class ParseJSON < Faraday::Response::Middleware
     metadata.merge!(json).merge!({
       status:                 env[:status],
       headers:                env[:response_headers],
+      method:                 env[:method],
       })
     # each doc metadata references metadata
     docs.each{|d| d[:metadata] = metadata }

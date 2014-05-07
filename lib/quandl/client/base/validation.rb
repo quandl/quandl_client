@@ -44,6 +44,8 @@ module Validation
     end
     
     def human_status
+      return 'Deleted' if metadata[:method] == :delete && status == 200
+      return 'Updated' if metadata[:method] == :put && status == 200
       Quandl::Client::HTTP_STATUS_CODES[status]
     end
     
