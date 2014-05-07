@@ -1,3 +1,9 @@
+## 2.7.12 
+
+
+
+
+
 ## 2.7.10
 * QUGC-168 can pass request_platform
 
