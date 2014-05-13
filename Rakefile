@@ -5,14 +5,8 @@ require "rspec/core/rake_task"
 $:.unshift File.join(File.dirname(__FILE__), *%w[.. lib])
 
 require 'pry'
-require "quandl/client"
 
-include Quandl::Client
-
-config = OpenStruct.new(YAML.load(File.read("#{ENV['HOME']}/.quandl/config")))
-
-Quandl::Client.use config.quandl_url
-Quandl::Client.token = config.token
+require_relative 'spec/config/quandl'
 
 task :default => :spec
 
