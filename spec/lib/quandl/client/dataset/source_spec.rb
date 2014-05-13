@@ -24,7 +24,7 @@ describe Dataset do
   
   context "normal user" do
     # behave as a user
-    before(:all){ Quandl::Client.token = ENV['QUANDL_TEST_TOKEN'] }
+    before(:all){ Quandl::Client.token = Spec::Config::Quandl.user_token }
   
     its(:saved?){ should be_true }
     its(:source_code){ should be_present }
@@ -41,7 +41,7 @@ describe Dataset do
       its(:status){ should be 422 }
     end
     
-    after(:all){ Quandl::Client.token = ENV['QUANDL_AUTH_TOKEN'] }
+    after(:all){ Quandl::Client.token = Spec::Config::Quandl.token}
   end
   
 end

@@ -3,7 +3,7 @@ require 'spec_helper'
 
 describe Sheet do
 
-  before(:all){ Quandl::Client.token = ENV['QUANDL_AUTH_TOKEN'] }
+  before(:all){ Quandl::Client.token = Spec::Config::Quandl.token}
   
   let(:sheet){ build(:sheet) }
   

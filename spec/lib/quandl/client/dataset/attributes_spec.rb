@@ -12,12 +12,12 @@ describe Dataset do
   
   describe "#code" do
     subject{ build(:dataset, source_code: source.code.downcase ) }
-    before(:each){}
-    it "lowercase code should be valid" do
-      subject.code = subject.code.downcase
+    before(:each){ 
+      subject.code = subject.code.downcase 
       subject.save
-      subject.saved?.should be_true
-    end
+    }
+    its('errors.messages'){ should eq({}) }
+    its(:saved?){ should be_true }
     
   end
   

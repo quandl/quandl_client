@@ -1,5 +1,7 @@
 $:.unshift File.join(File.dirname(__FILE__), *%w[.. lib])
 
+require_relative 'config/quandl'
+
 require "rspec"
 require 'factory_girl'
 require 'pry'
@@ -10,17 +12,10 @@ Dir.glob( factory_dir ).each{|f| require(f); puts f }
 require "quandl/client"
 require "quandl/fabricate"
 
-# Expects two env variables:
-
-# administrator:
-# ENV['QUANDL_AUTH_TOKEN'] 
-
-# user:
-# ENV['QUANDL_TEST_TOKEN']
-
 include Quandl::Client
-Quandl::Client.token = ENV['QUANDL_AUTH_TOKEN']
-Quandl::Client.use ENV['QUANDL_TEST_URL']
+
+Quandl::Client.token = Spec::Config::Quandl.token
+Quandl::Client.use( Spec::Config::Quandl.quandl_url )
 
 RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods

@@ -50,7 +50,7 @@ describe Dataset do
   
   describe "#code" do
 
-    before(:all){ Quandl::Client.token = ENV['QUANDL_AUTH_TOKEN'] }
+    before(:all){ Quandl::Client.token = Spec::Config::Quandl.token}
     
     let(:dataset){ create(:dataset, source_code: "QUANDL_CLIENT_TEST_SOURCE" ) }
     let(:invalid_dataset){ create(:dataset, source_code: "QUANDL_CLIENT_TEST_SOURCE", code: dataset.code ) }
