@@ -62,7 +62,6 @@ describe Scraper do
       its(:valid?){ should be_true }
       its(:saved?){ should be_true }
       its(:id){ should be_present }
-      its(:scraper_url){ should be_blank }
       its(:git_url){ should match /git@github.com:tammer\/scrapers/ }
       its(:type){ should eq 'Scraper::Git' }
     end
