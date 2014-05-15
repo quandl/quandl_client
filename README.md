@@ -58,16 +58,11 @@ attributes :data, :source_code, :code, :name, :urlize_name,
 ```ruby
 
 d = Quandl::Client::Dataset.find('OFDP/COBALT_51')
-d.full_code
 d.data
 
 
-d = Quandl::Client::Dataset.collapse('weekly').trim_start("2012-03-31").trim_end("2013-06-30").find('OFDP/COBALT_51')
-d.data
-
-
-d = Quandl::Client::Dataset.exclude_data('true').find('OFDP/COBALT_51')
-d.data
+d = Quandl::Client::Dataset.find('OFDP/COBALT_51')
+d.data.collapse('weekly').trim_start("2012-03-31").trim_end("2013-06-30")
 
 ```
 
@@ -79,17 +74,7 @@ d.data
 attributes = {
   code:         "TEST_#{Time.now.to_i}",
   source_code:  'OFDP',
-  name:         "Test Upload #{Time.now.to_i}",
   frequency:    'daily',
-  locations: 
-  [
-    { 
-      type:       'http', 
-      url:        'http://test.com',
-      post_data:  '[magic]', 
-      cookie_url: 'http://cookies.com' 
-    }
-  ]
 }
 d = Dataset.create( attributes )
 
@@ -104,10 +89,6 @@ d = Dataset.find( d.full_code )
 d.name = 'New Name'
 d.data = Quandl::Fabricate::Data.rand.to_csv
 d.save
-
-d = Dataset.collapse(:weekly).find( d.full_code )
-d.data
-=> [[...],...]
 
 ```
 
