@@ -14,21 +14,17 @@ gem 'quandl_client'
 ```
 
 
-
-
 ## Configuration
 
 ```ruby
 
 require 'quandl/client'
 
-Quandl::Client.use 'http://localhost:3000/api/'
+Quandl::Client.use 'http://quandl.com/api/'
 Quandl::Client.token = ENV['QUANDL_AUTH_TOKEN']
 
 
 ```
-
-
 
 
 ## Usage
@@ -37,19 +33,28 @@ Quandl::Client.token = ENV['QUANDL_AUTH_TOKEN']
 ### Quandl::Client::Dataset
 
 
-#### Search
-
-scope :rows, :exclude_data, :exclude_headers, :trim_start, :trim_end, :transform, :collapse
+#### Dataset Search
 
 ```ruby
 
-datasets = Quandl::Client::Dataset.query('cobalt').source_code('ofdp').all
-=> [#<Quandl::Client::Dataset(datasets) source_code="OFDP" code="COBALT_51">, ...]
+datasets = Quandl::Client::Dataset.query('oil').where(frequency: 'annual', source_code: 'OFDP', page: 2).all
+datasets.first.data.limit(10).to_a
+=> [[Tue, 22 Oct 1974, 40.45, 41.5, 40.45, 41.35, 191.0, 262.0], ... ]
 
 ```
 
+Available parameters:
 
-#### Show
+    query
+    source_code
+    frequency
+    page
+    per_page
+    owner
+
+
+
+#### Dataset Data
 
 attributes :data, :source_code, :code, :name, :urlize_name, 
   :description, :updated_at, :frequency, :from_date, 
@@ -58,13 +63,25 @@ attributes :data, :source_code, :code, :name, :urlize_name,
 ```ruby
 
 d = Quandl::Client::Dataset.find('OFDP/COBALT_51')
-d.data
-
+d.data.first
+=> [Wed, 14 May 2014, 29500.0, 30500.0, 30000.0]
 
 d = Quandl::Client::Dataset.find('OFDP/COBALT_51')
-d.data.collapse('weekly').trim_start("2012-03-31").trim_end("2013-06-30")
+d.data.collapse('weekly').trim_start("2012-03-31").trim_end("2013-06-30").first
+=> [Sun, 30 Jun 2013, 31050.0, 32550.0, 31800.0]
 
 ```
+
+Available parameters:
+
+    collapse
+    transformation
+    trim_start
+    trim_end
+    rows
+    exclude_headers
+    row
+    limit
 
 
 #### Create
@@ -72,9 +89,9 @@ d.data.collapse('weekly').trim_start("2012-03-31").trim_end("2013-06-30")
 ```ruby
 
 attributes = {
-  code:         "TEST_#{Time.now.to_i}",
-  source_code:  'OFDP',
+  code:         "TEST_DATASET",
   frequency:    'daily',
+  data:         '2012,10,20',
 }
 d = Dataset.create( attributes )
 
@@ -85,9 +102,9 @@ d = Dataset.create( attributes )
 
 ```ruby
 
-d = Dataset.find( d.full_code )
+d = Dataset.find("TEST_DATASET")
 d.name = 'New Name'
-d.data = Quandl::Fabricate::Data.rand.to_csv
+d.data = [['2014',10,20],['2013',20,30]]
 d.save
 
 ```
@@ -97,11 +114,8 @@ d.save
 
 ```ruby
 
-Dataset.destroy_existing('SOME_SOURCE/SOME_CODE')
-Dataset.destroy_existing(52352)
-
-Dataset.find('SOME_SOURCE/SOME_CODE')
-=> nil
+d = Dataset.find('TEST_DATASET')
+d.destroy
 
 ```
 
@@ -110,7 +124,7 @@ Dataset.find('SOME_SOURCE/SOME_CODE')
 
 ```ruby
 
-d = Dataset.find('SOME_SOURCE/SOME_CODE')
+d = Dataset.find('TEST_DATASET')
 d.delete_data
 d.data
 => nil
@@ -122,23 +136,6 @@ d.data
 ```
 
 
-#### Error Handling
-
-```ruby
-
-d = Dataset.create(code: 'TEST', source_code: 'OFDP', locations: [{ type: 'http', url: 'test.com' }] )
-d.error_messages
-=>  {:name=>["can't be blank"]}
-
-d = Dataset.create(name: 'asdfs', code: 'TEST', source_code: 'OFDP', locations: [{ type: 'http', url: 'test.com' }] )
-d.error_messages
-=>  {"code"=>["has already been taken"], "frequency"=>["is not included in the list"]}
-
-```
-
-
-
-
 ### Quandl::Client::Source
 
 
@@ -146,7 +143,7 @@ d.error_messages
 
 ```ruby
 
-sources = Quandl::Client::Source.query('can').all
+sources = Quandl::Client::Source.query('oil').all
 
 => [#<Quandl::Client::Source(sources/413) code="STATSCAN5" datasets_count=1>...]
 
@@ -157,128 +154,6 @@ sources = Quandl::Client::Source.query('can').all
 
 ```ruby
 
-s = Quandl::Client::Source.find('STATSCAN5')
+s = Quandl::Client::Source.find('NSE')
 
 ```
-
-
-#### Create
-
-```ruby
-
-s = Source.create( code: 'test' )
-s.valid?
-s.error_messages
-=> {:code=>["is invalid"], :host=>["can't be blank"], :name=>["can't be blank"]}
-
-s = Source.create(code: %Q{TEST_#{Time.now.to_i}}, name: 'asdf', host: "http://asdf#{Time.now}.com" )
-s.saved?
-=> true
-
-```
-
-
-#### Update
-
-```ruby
-
-s = Source.find(s.code)
-s.name = "Updated Name #{Time.now.to_i}"
-s.code = "DATA_#{Time.now.to_i}"
-s.save
-
-```
-
-
-#### Delete
-
-```ruby
-
-Source.destroy_existing('SOMESOURCE')
-Source.destroy_existing(52352)
-
-```
-
-
-
-
-### Quandl::Client::Sheet
-
-
-#### Search
-
-```ruby
-
-sheets = Quandl::Client::Sheet.query('canada').all
-=> [[#<Quandl::Client::Sheet(sheets) title="La Canada Flintridge>,...]
-
-```
-
-
-#### Show
-
-```ruby
-
-sheet = Quandl::Client::Sheet.find('housing/hood')
-
-```
-
-
-#### Create
-
-```ruby
-
-s = Quandl::Client::Sheet.create( title: 'ocean' )
-s = Quandl::Client::Sheet.create( full_url_title: 'ocean/river', title: 'River' )
-s = Quandl::Client::Sheet.create( full_url_title: 'ocean/river/lake', title: 'Lake!' )
-
-Sheet.find('ocean/river/lake').title
-=> 'Lake!'
-
-Sheet.find('ocean').children.first.title
-=> River
-
-```
-
-
-#### Update
-
-```ruby
-
-s = Quandl::Client::Sheet.find('ocean/river')
-s.title = "River #{Time.now.to_i}"
-s.save
-
-```
-
-
-#### Delete
-
-```ruby
-
-Quandl::Client::Sheet.destroy_existing('ocean/river/lake')
-
-Quandl::Client::Sheet.destroy_existing(15252)
-
-```
-
-
-
-
-### Authentication
-
-```ruby
-
-require 'quandl/client'
-
-Quandl::Client.use 'http://localhost:3000/api/'
-Quandl::Client.token = 'xyz'
-
-
-s = Quandl::Client::Sheet.find_by_url_title('testing')
-s.title = 'more testing'
-s.save
-=> true
-
-```
-
