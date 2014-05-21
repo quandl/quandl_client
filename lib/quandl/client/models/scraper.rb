@@ -11,7 +11,12 @@ class Scraper < Quandl::Client::Base
   def scraper=(value)
     write_attribute(:scraper, Faraday::UploadIO.new(value, 'text/plain') )
   end
-  
+
+  def run_now
+    Scraper::Job.create( scraper_id: id )
+  end
+
+
 end
 
 end
