@@ -1,6 +1,6 @@
 ## 2.10.0 
 
-
+* add Quandl::Client::Job
 
 
 
