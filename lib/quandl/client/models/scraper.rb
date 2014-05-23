@@ -3,6 +3,8 @@ module Client
 
 class Scraper < Quandl::Client::Base
   
+  has_many :jobs
+  
   attributes  :id, :name, :scraper, :scraper_url, :git_url, :git_reference, :created_at, :updated_at, 
               :type, :schedule_at, :schedule_run_time, :schedule_next
   
@@ -13,9 +15,8 @@ class Scraper < Quandl::Client::Base
   end
 
   def run_now
-    Scraper::Job.create( scraper_id: id )
+    jobs.create
   end
-
 
 end
 
