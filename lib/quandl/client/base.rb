@@ -4,6 +4,7 @@ require "active_support/core_ext/hash"
 require "active_support/core_ext/object"
 
 require 'quandl/client/base/model'
+require 'quandl/client/base/benchmark'
 require 'quandl/client/base/attributes'
 require 'quandl/client/base/validation'
 require 'quandl/client/base/search'
@@ -51,6 +52,7 @@ class Quandl::Client::Base
       # include model behaviour
       subclass.class_eval do
         include Quandl::Client::Base::Model
+        include Quandl::Client::Base::Benchmark
         include Quandl::Client::Base::Attributes
         include Quandl::Client::Base::Validation
         include Quandl::Client::Base::Search

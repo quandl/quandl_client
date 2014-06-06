@@ -26,7 +26,7 @@ module Model
     return nil unless request_finished_at.is_a?(Time) && request_started_at.is_a?(Time)
     @elapsed_request_time ||= (request_finished_at - request_started_at)
   end
-  
+
   private
   
   def touch_request_started_at
