@@ -52,11 +52,6 @@ class Quandl::Client::Dataset < Quandl::Client::Base
     @source ||= Quandl::Client::Source.find(self.source_code)
   end
   
-  ###############
-  # VALIDATIONS #
-  ###############
-    
-  
   ##############
   # PROPERTIES #
   ##############
@@ -65,7 +60,7 @@ class Quandl::Client::Dataset < Quandl::Client::Base
     :description, :updated_at, :frequency,
     :from_date, :to_date, :column_names, :private, :type,
     :display_url, :column_spec, :import_spec, :import_url,
-    :locations_attributes, :availability_delay, :refreshed_at
+    :locations_attributes, :availability_delay, :refreshed_at, :access
     
   alias_method :locations, :locations_attributes
   alias_method :locations=, :locations_attributes=
