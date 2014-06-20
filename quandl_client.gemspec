@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
 
   s.add_runtime_dependency "quandl_data", "~> 1.5"
   s.add_runtime_dependency "activesupport", ">= 3.0.0"
-  s.add_runtime_dependency "her", "~> 0.6"
+  s.add_runtime_dependency "her", "~> 0.6.0"
   s.add_runtime_dependency 'json', '~> 1.7.7'
   s.add_runtime_dependency "scope_composer", "~> 0.3"
 
