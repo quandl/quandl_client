@@ -1,15 +1,13 @@
 module Quandl
-module Client
+  module Client
+    class Report < Quandl::Client::Base
 
-class Report < Quandl::Client::Base
-  
-  ###############
-  # VALIDATIONS #
-  ###############
-  
-  validates :message, presence: true
-  
-end
+      ###############
+      # VALIDATIONS #
+      ###############
 
-end
+      validates :message, presence: true
+
+    end
+  end
 end

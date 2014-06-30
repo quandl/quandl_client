@@ -1,11 +1,9 @@
 module Quandl
-module Client
+  module Client
+    class Location < Quandl::Client::Base
 
-class Location < Quandl::Client::Base
-  
-  attributes :id, :type, :scraper_url
-  
-end
+      attributes :id, :type, :scraper_url
 
-end
+    end
+  end
 end
