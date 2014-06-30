@@ -2,9 +2,9 @@ require 'faraday'
 require 'quandl/client/middleware/parse_json'
 
 module Quandl
-module Client
-module Middleware
+  module Client
+    module Middleware
 
-end
-end
+    end
+  end
 end
