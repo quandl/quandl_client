@@ -39,7 +39,7 @@ class Quandl::Client::Base
     end
 
     def url
-      @url ||= "http://quandl.com/api/"
+      @url ||= "https://www.quandl.com/api/"
     end
 
     def url_with_version
