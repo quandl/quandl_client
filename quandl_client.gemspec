@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.version     = Quandl::Client::VERSION
   s.authors     = ["Blake Hilscher"]
   s.email       = ["blake@hilscher.ca"]
-  s.homepage    = "http://blake.hilscher.ca/"
+  s.homepage    = "https://www.quandl.com"
   s.license     = "MIT"
   s.summary     = "Client rest orm."
   s.description = "An orm for the cassinatra rest interface."
