@@ -32,10 +32,10 @@ describe Dataset do
   
   it "should change url" do
     original_url = Quandl::Client::Base.url
-    Quandl::Client.use('http://url.com/')
-    Quandl::Client::Dataset.url.should eq 'http://url.com/v2'
-    Quandl::Client.use('http://url.com/2/')
-    Quandl::Client::Dataset.url.should eq 'http://url.com/2/v2'
+    Quandl::Client.use('https://url.com/')
+    Quandl::Client::Dataset.url.should eq 'https://url.com/v2'
+    Quandl::Client.use('https://url.com/2/')
+    Quandl::Client::Dataset.url.should eq 'https://url.com/2/v2'
     Quandl::Client.use original_url
   end
   
