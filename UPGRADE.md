@@ -1,38 +1,22 @@
+## 2.11.0
+
+* Default URL includes www subdomain and HTTPS
+
 ## 2.10.2 
 
-
-
-
-
 ## 2.10.1 
-
-
-
-
 
 ## 2.10.0 
 
 * add Quandl::Client::Job
 
-
-
 ## 2.9.0 
 
 * QUGC-189 bump data
 
-
-
 ## 2.8.0 
 
-
-
-
-
 ## 2.7.12 
-
-
-
-
 
 ## 2.7.10
 * QUGC-168 can pass request_platform
