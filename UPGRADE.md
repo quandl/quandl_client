@@ -1,26 +1,30 @@
+## 2.12.0
+
+* Add redirect_path attribute to Sheets
+
 ## 2.11.0
 
 * Default URL includes www subdomain and HTTPS
 
-## 2.10.2 
+## 2.10.2
 
-## 2.10.1 
+## 2.10.1
 
-## 2.10.0 
+## 2.10.0
 
 * add Quandl::Client::Job
 
-## 2.9.0 
+## 2.9.0
 
 * QUGC-189 bump data
 
-## 2.8.0 
+## 2.8.0
 
-## 2.7.12 
+## 2.7.12
 
 ## 2.7.10
-* QUGC-168 can pass request_platform
 
+* QUGC-168 can pass request_platform
 
 ## 2.7.9
 
@@ -28,25 +32,14 @@
 * QUGC-164 find by id or source_code/code, or build
 * QUGC-164 attributes slice needs to ensure that keys are symbols
 
+## 2.7.8
+
+## 2.7.7
 
 
-## 2.7.8 
-
-
-
-
-
-## 2.7.7 
-
-
-
-
-
-## 2.7.6 
+## 2.7.6
 
 * QUGC-140 if a source_code is given but does not exist, it should warn the user
-
-
 
 ## 2.7.5
 add 'at' option for scraper scheduling
@@ -55,20 +48,20 @@ add 'at' option for scraper scheduling
 full url bug fixed when "api" has no / at the end
 
 
-## 2.6.2 
+## 2.6.2
 
 * QUGC-55 Add Report for filing reports
 
 
 
-## 2.6.1 
+## 2.6.1
 
 * QUGC-113 fix Dataset#data errors dont propagate to parent object
 * QUGC-113 Write failing specs for Dataset#data errors dont propagate to parent object
 
 
 
-## 2.6.0 
+## 2.6.0
 
 * QUGC-104 Fixes when upload fails output is not json
 * QUGC-103 Fixes quandl upload test -F json does not include metadata
