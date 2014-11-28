@@ -10,7 +10,7 @@ class Quandl::Client::Dataset::Data < Quandl::Client::Base
   end
   
   scope *[:row, :rows, :limit, :offset, :accuracy, :column, :order, 
-    :transform, :collapse, :exclude_headers]
+    :transformation, :collapse, :exclude_headers]
 
   scope :trim_start,  ->(date){ date = parse_date(date); where( trim_start: date ) if date }
   scope :trim_end,    ->(date){ date = parse_date(date); where( trim_end:   date ) if date }

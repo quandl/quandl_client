@@ -40,7 +40,7 @@ module Quandl
       # PROPERTIES #
       ##############
 
-      attributes :code, :name, :host, :description, :datasets_count, :use_proxy, :type, :concurrency
+      attributes :code, :name, :host, :description, :datasets_count, :use_proxy, :type, :concurrency, :documentation
 
     end
   end
