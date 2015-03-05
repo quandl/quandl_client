@@ -1,3 +1,7 @@
+## 2.13.0
+
+* Add threadsafe_token option
+
 ## 2.12.0
 
 * Add redirect_path attribute to Sheets
