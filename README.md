@@ -2,7 +2,7 @@
 
 ## Deprecation
 
-This client has been deprecated. Please use our new [Quandl Ruby client](https://github.com/quandl/quandl_client) instead.
+This client has been deprecated. Please use our new [Quandl Ruby client](https://github.com/quandl/quandl-ruby) instead.
 
 ## Purpose
 
