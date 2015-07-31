@@ -1,5 +1,9 @@
 # Quandl::Client
 
+## Deprecation
+
+This client has been deprecated. Please use our new [Quandl Ruby client](https://github.com/quandl/quandl_client) instead.
+
 ## Purpose
 
 The purpose of this gem is to interact with the [quandl api](http://www.quandl.com/help/api)
