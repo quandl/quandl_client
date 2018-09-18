@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    quandl_client (2.14.0)
+    quandl_client (2.15.0)
       activesupport (~> 4.0)
       her (~> 0.6.0)
       json (>= 1.7.7)
