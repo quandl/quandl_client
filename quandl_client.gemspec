@@ -11,6 +11,7 @@ Gem::Specification.new do |s|
   s.license     = "MIT"
   s.summary     = "(Deprecated) Quandl REST ORM."
   s.description = "A deprecated ORM for the Quandl REST interface."
+  s.required_ruby_version = '~> 2.3'
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")

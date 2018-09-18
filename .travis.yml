@@ -5,11 +5,12 @@ rvm:
   - 2.5
   - 2.4
   - 2.3
-  - 2.2
-  - 2.1
-  - 2.0
 
 gemfile:
   - Gemfile
 
-script: "bundle exec rake spec"
+before_script:
+  - "echo 'Deprecated!!!! These are not exhaustive'"
+
+script:
+  - "bundle exec rspec spec/lib/quandl/client/base_spec.rb"

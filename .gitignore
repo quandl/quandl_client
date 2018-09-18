@@ -1,5 +1,4 @@
 .idea/
-/Gemfile.lock
 /pkg
 /tmp
 quandl_client-*
