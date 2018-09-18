@@ -3,7 +3,7 @@ require 'spec_helper'
 
 describe Base do
   it "should have https in base url by default" do
-    Quandl::Client::Base.url.should include 'https://www.'
+    Quandl::Client::Base.url.should include 'https://'
   end
 
   describe '.token' do

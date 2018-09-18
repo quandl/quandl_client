@@ -2,10 +2,9 @@ $:.unshift File.join(File.dirname(__FILE__), *%w[.. lib])
 
 require "rspec"
 require 'factory_girl'
-require 'pry'
 
 factory_dir = File.join( File.dirname(__FILE__), 'factories/**/*.rb' )
-Dir.glob( factory_dir ).each{|f| require(f); puts f }
+Dir.glob( factory_dir ).each{ |f| require(f) }
 
 require_relative 'config/quandl'
 
