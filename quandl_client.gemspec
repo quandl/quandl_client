@@ -5,12 +5,12 @@ require "quandl/client/version"
 Gem::Specification.new do |s|
   s.name        = "quandl_client"
   s.version     = Quandl::Client::VERSION
-  s.authors     = ["Blake Hilscher"]
-  s.email       = ["blake@hilscher.ca"]
+  s.authors     = ["Quandl"]
+  s.email       = ["administrator@quandl.com"]
   s.homepage    = "https://www.quandl.com"
   s.license     = "MIT"
-  s.summary     = "Client rest orm."
-  s.description = "An orm for the cassinatra rest interface."
+  s.summary     = "(Deprecated) Quandl REST ORM."
+  s.description = "A deprecated ORM for the Quandl REST interface."
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
@@ -27,7 +27,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency "rspec", "~> 2.13"
   s.add_development_dependency "factory_girl_rails"
   s.add_development_dependency "fivemat", "~> 1.2"
-  s.add_development_dependency "pry"
   s.add_development_dependency "guard"
   s.add_development_dependency "guard-rspec"
   s.add_development_dependency "quandl_utility"
