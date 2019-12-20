@@ -148,7 +148,7 @@ GEM
       rubocop
       thor
       thor-foodcritic
-    rack (1.6.10)
+    rack (1.6.12)
     rack-test (0.6.3)
       rack (>= 1.0)
     rails-deprecated_sanitizer (1.0.3)
