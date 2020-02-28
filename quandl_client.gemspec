@@ -24,7 +24,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'json', '>= 1.7.7'
   s.add_runtime_dependency "scope_composer", "~> 0.3"
 
-  s.add_development_dependency "rake", "~> 10.0"
+  s.add_development_dependency "rake", "~> 13.0"
   s.add_development_dependency "rspec", "~> 2.13"
   s.add_development_dependency "factory_girl_rails"
   s.add_development_dependency "fivemat", "~> 1.2"
